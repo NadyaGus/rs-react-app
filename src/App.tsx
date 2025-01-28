@@ -11,13 +11,21 @@ import "./App.css";
 function App(): ReactElement {
   const [count, setCount] = useState(0);
 
+  async function showData(): Promise<void> {
+    await fetch("https://api.jikan.moe/v4/anime?q=naruto&limit=10&page=1")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
+
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
+        <a href="https://vite.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
+        <a href="https://react.dev" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
@@ -26,6 +34,7 @@ function App(): ReactElement {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+        <button onClick={() => showData()}>Show Data</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
