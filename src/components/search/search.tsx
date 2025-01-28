@@ -1,18 +1,39 @@
-import { Component, FormEvent } from 'react';
-import { showData } from '../../api/showData';
+import { ChangeEvent, Component, FormEvent } from 'react';
+import { fetchData } from '../../api/fetchData';
+import { CardProps } from '../../types/cardTypes';
 
-class Search extends Component {
+interface SearchProps {
+  handleSubmitForm: (search: string) => void;
+  handleResults: (results: CardProps[]) => void;
+}
+
+class Search extends Component<SearchProps> {
+  state = { search: '' };
+
+  handleInput(e: ChangeEvent<HTMLInputElement>) {
+    this.setState({ search: e.target.value });
+  }
+
   async handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = await showData();
-    console.log(data);
+    const { search } = this.state;
+    const data = await fetchData(search);
+    this.props.handleResults(data.data);
   }
 
   render() {
     return (
       <search>
-        <form onSubmit={(event) => this.handleSubmit(event)}>
-          <input type="search" placeholder="Search..." />
+        <form
+          onSubmit={(event) => {
+            this.handleSubmit(event);
+          }}
+        >
+          <input
+            type="search"
+            placeholder="Search..."
+            onChange={(e) => this.handleInput(e)}
+          />
           <button type="submit">Search</button>
         </form>
       </search>

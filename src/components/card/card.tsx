@@ -1,18 +1,16 @@
 import { Component } from 'react';
-
-interface CardProps {
-  image: string;
-  title: string;
-  description: string;
-}
+import { CardProps } from '../../types/cardTypes';
 
 class Card extends Component<CardProps> {
   render() {
     return (
       <div className="card">
-        <h2>{this.props.title}</h2>
-        <img src={this.props.image} alt={this.props.title} />
-        <p>{this.props.description}</p>
+        <h2>{this.props.title_english}</h2>
+        <img
+          src={this.props.images.webp.image_url}
+          alt={this.props.title_english}
+        />
+        <p>{this.props.synopsis}</p>
       </div>
     );
   }
