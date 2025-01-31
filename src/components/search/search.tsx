@@ -1,14 +1,18 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
-import { fetchData } from '../../api/fetchData';
-import { CardProps } from '../../types/cardTypes';
 
 interface SearchProps {
   handleSubmitForm: (search: string) => void;
-  handleResults: (results: CardProps[]) => void;
+  value: string;
 }
 
 class Search extends Component<SearchProps> {
   state = { search: '' };
+
+  componentDidUpdate(prevProps: SearchProps) {
+    if (prevProps.value !== this.props.value) {
+      this.setState({ search: this.props.value });
+    }
+  }
 
   handleInput(e: ChangeEvent<HTMLInputElement>) {
     this.setState({ search: e.target.value });
@@ -16,9 +20,7 @@ class Search extends Component<SearchProps> {
 
   async handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const { search } = this.state;
-    const data = await fetchData(search);
-    this.props.handleResults(data.data);
+    this.props.handleSubmitForm(this.state.search);
   }
 
   render() {
@@ -32,6 +34,7 @@ class Search extends Component<SearchProps> {
           <input
             type="search"
             placeholder="Search..."
+            value={this.state.search}
             onChange={(e) => this.handleInput(e)}
           />
           <button type="submit">Search</button>
