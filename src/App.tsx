@@ -6,6 +6,7 @@ import { CardProps } from './types/cardTypes';
 import { Card } from './components/card/card';
 import { fetchData } from './api/fetchData';
 import { Loader } from './components/loader/loader';
+import { ErrorButton } from './components/errorButton/errorButton';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
 
@@ -16,7 +17,7 @@ type AppState = {
   isFetchError: boolean;
 };
 
-class App extends Component<AppState> {
+class App extends Component {
   state: AppState = {
     search: '',
     results: [],
@@ -69,6 +70,7 @@ class App extends Component<AppState> {
           handleSubmitForm={this.handleSubmitForm}
           value={this.state.search}
         />
+        <ErrorButton />
         <div className="cards">
           {this.state.isLoading && <Loader />}
           {this.state.isFetchError && <p>Something went wrong</p>}
