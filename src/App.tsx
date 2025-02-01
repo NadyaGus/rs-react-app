@@ -39,17 +39,13 @@ class App extends Component {
     this.handleFetch(value);
   };
 
-  handleResults = (results: CardProps[]) => {
-    this.setState({ results });
-  };
-
   handleFetch = (value: string) => {
     this.setState({ isLoading: true, isFetchError: false, results: [] });
 
     const data = fetchData(value);
     data
       .then((results) => {
-        this.handleResults(results.data);
+        this.setState({ results: results.data });
       })
       .catch(() => {
         this.setState({ isFetchError: true });
@@ -67,14 +63,12 @@ class App extends Component {
           value={this.state.search}
         />
         <ErrorButton />
-        <div className="cards">
-          {this.state.isLoading && <Loader />}
-          {this.state.isFetchError && <p>Something went wrong</p>}
-          {this.state.results &&
-            this.state.results.map((result) => {
-              return <Card key={result.mal_id} {...result} />;
-            })}
-        </div>
+        {this.state.isLoading && <Loader />}
+        {this.state.isFetchError && <p>Something went wrong</p>}
+        {this.state.results &&
+          this.state.results.map((result) => {
+            return <Card key={result.mal_id} {...result} />;
+          })}
       </div>
     );
   }
