@@ -44,23 +44,19 @@ class App extends Component {
   };
 
   handleFetch = (value: string) => {
-    this.setState({ isLoading: true });
-    this.setState({ results: [] });
+    this.setState({ isLoading: true, isFetchError: false, results: [] });
+
     const data = fetchData(value);
     data
       .then((results) => {
         this.handleResults(results.data);
       })
       .catch(() => {
-        this.handleError();
+        this.setState({ isFetchError: true });
       })
       .finally(() => {
         this.setState({ isLoading: false });
       });
-  };
-
-  handleError = () => {
-    this.setState({ isFetchError: true });
   };
 
   render(): ReactElement {
