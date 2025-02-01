@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import styles from './errorButton.module.css';
 
 export class ErrorButton extends Component {
   state = { hasError: false };
@@ -11,6 +12,10 @@ export class ErrorButton extends Component {
     if (this.state.hasError) {
       throw new Error('Something went wrong.');
     }
-    return <button onClick={() => this.handleClick()}>Error</button>;
+    return (
+      <div className={styles.container}>
+        <button onClick={() => this.handleClick()}>Check Error Boundary</button>
+      </div>
+    );
   }
 }

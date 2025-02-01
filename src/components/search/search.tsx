@@ -1,4 +1,5 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
+import styles from './search.module.css';
 
 interface SearchProps {
   handleSubmitForm: (search: string) => void;
@@ -25,17 +26,19 @@ class Search extends Component<SearchProps> {
 
   render() {
     return (
-      <search>
+      <search className={styles.search}>
         <form
           onSubmit={(event) => {
             this.handleSubmit(event);
           }}
+          className={styles.form}
         >
           <input
             type="search"
             placeholder="Search..."
             value={this.state.search}
             onChange={(e) => this.handleInput(e)}
+            className={styles.input}
           />
           <button type="submit">Search</button>
         </form>
