@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { CardProps } from '../../types/cardTypes';
 import styles from './card.module.css';
 
-const MAX_SYNOPSIS_LENGTH = 800;
+const MAX_SYNOPSIS_LENGTH = 750;
 
 class Card extends Component<CardProps> {
   handleSynopsis(str: string) {
