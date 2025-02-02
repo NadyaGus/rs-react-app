@@ -62,13 +62,13 @@ class App extends Component {
           handleSubmitForm={this.handleSubmitForm}
           value={this.state.search}
         />
-        <ErrorButton />
         {this.state.isLoading && <Loader />}
         {this.state.isFetchError && <p>Something went wrong</p>}
         {this.state.results &&
           this.state.results.map((result) => {
             return <Card key={result.mal_id} {...result} />;
           })}
+        <ErrorButton />
       </div>
     );
   }
