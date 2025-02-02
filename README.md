@@ -57,7 +57,7 @@ git clone https://github.com/NadyaGus/rs-react-app
 2. Navigate to the project directory:
 
 ```
-cd your-path-to/rs-react-app
+cd rs-react-app
 ```
 
 3. Install dependencies:
