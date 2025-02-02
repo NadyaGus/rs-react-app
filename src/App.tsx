@@ -26,7 +26,7 @@ class App extends Component {
   };
 
   componentDidMount(): void {
-    const search = localStorage.getItem(LS_KEY);
+    const search = localStorage.getItem(LS_KEY) ?? '';
     this.setState({ search });
 
     this.handleFetch(search || '');
