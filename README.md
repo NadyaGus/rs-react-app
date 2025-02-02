@@ -60,19 +60,24 @@ git clone https://github.com/NadyaGus/rs-react-app
 cd rs-react-app
 ```
 
-3. Install dependencies:
+3. Switch to task branch (e.g. class-components)
+```
+git checkout class-components
+```
+
+4. Install dependencies:
 
 ```
 npm install
 ```
 
-4. Start the development server:
+5. Start the development server:
 
 ```
 npm run dev
 ```
 
-Open your browser and visit http://localhost:5174 to view the application.
+Open your browser and visit http://localhost:5173 to view the application.
 
 ### Usage
 
