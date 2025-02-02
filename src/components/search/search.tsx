@@ -21,7 +21,7 @@ class Search extends Component<SearchProps> {
 
   async handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    this.props.handleSubmitForm(this.state.search);
+    this.props.handleSubmitForm(this.state.search.trim());
   }
 
   render() {
