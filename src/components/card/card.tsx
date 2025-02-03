@@ -17,11 +17,11 @@ class Card extends Component<CardProps> {
   }
 
   render() {
+    const title =
+      this.props.title_english ?? this.props.title_japanese ?? 'No title';
     return (
       <div className={styles.card}>
-        <h2 className={styles.title}>
-          {this.props.title_english ?? this.props.title_japanese ?? 'No title'}
-        </h2>
+        <h2 className={styles.title}>{title}</h2>
         <div className={styles.container}>
           <div className={styles.imageContainer}>
             <img

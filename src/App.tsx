@@ -29,7 +29,7 @@ class App extends Component {
     const search = localStorage.getItem(LS_KEY) ?? '';
     this.setState({ search });
 
-    this.handleFetch(search || '');
+    this.handleFetch(search);
   }
 
   handleSubmitForm = (value: string) => {
@@ -62,12 +62,11 @@ class App extends Component {
           handleSubmitForm={this.handleSubmitForm}
           value={this.state.search}
         />
-        {this.state.isLoading && <Loader />}
+        <Loader isLoading={this.state.isLoading} />
         {this.state.isFetchError && <p>Something went wrong</p>}
-        {this.state.results &&
-          this.state.results.map((result) => {
-            return <Card key={result.mal_id} {...result} />;
-          })}
+        {this.state.results.map((result) => {
+          return <Card key={result.mal_id} {...result} />;
+        })}
         <ErrorButton />
       </div>
     );
