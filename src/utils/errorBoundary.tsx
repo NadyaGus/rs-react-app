@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { type ErrorInfo } from 'react-dom/client';
 
-import { Fallback } from './fallback';
+import { FallbackUI } from './fallbackUI';
 
 interface Props {
   children?: React.ReactNode;
@@ -25,7 +25,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return <Fallback />;
+      return <FallbackUI />;
     }
 
     return this.props.children;

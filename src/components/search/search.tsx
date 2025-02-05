@@ -1,4 +1,4 @@
-import { ChangeEvent, Component, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import styles from './search.module.css';
 
 interface SearchProps {
@@ -6,45 +6,41 @@ interface SearchProps {
   value: string;
 }
 
-class Search extends Component<SearchProps> {
-  state = { search: '' };
+const Search = (props: SearchProps) => {
+  const [searchValue, setSearchValue] = useState('');
 
-  componentDidUpdate(prevProps: SearchProps) {
-    if (prevProps.value !== this.props.value) {
-      this.setState({ search: this.props.value });
-    }
-  }
+  useEffect(() => {
+    setSearchValue(props.value);
+  }, [props.value]);
 
-  handleInput(e: ChangeEvent<HTMLInputElement>) {
-    this.setState({ search: e.target.value });
-  }
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
 
-  async handleSubmit(e: FormEvent<HTMLFormElement>) {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.handleSubmitForm(this.state.search.trim());
-  }
+    props.handleSubmitForm(searchValue.trim());
+  };
 
-  render() {
-    return (
-      <search className={styles.search}>
-        <form
-          onSubmit={(event) => {
-            this.handleSubmit(event);
-          }}
-          className={styles.form}
-        >
-          <input
-            type="search"
-            placeholder="Search..."
-            value={this.state.search}
-            onChange={(e) => this.handleInput(e)}
-            className={styles.input}
-          />
-          <button type="submit">Search</button>
-        </form>
-      </search>
-    );
-  }
-}
+  return (
+    <search className={styles.search}>
+      <form
+        onSubmit={(event) => {
+          handleSubmit(event);
+        }}
+        className={styles.form}
+      >
+        <input
+          type="search"
+          placeholder="Search..."
+          value={searchValue}
+          onChange={(e) => handleInput(e)}
+          className={styles.input}
+        />
+        <button type="submit">Search</button>
+      </form>
+    </search>
+  );
+};
 
 export { Search };

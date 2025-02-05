@@ -1,21 +1,22 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import styles from './errorButton.module.css';
 
-export class ErrorButton extends Component {
-  state = { hasError: false };
+const ErrorButton = () => {
+  const [isError, setIsError] = useState(false);
 
-  handleClick(): void {
-    this.setState({ hasError: true });
+  const handleClick = () => {
+    setIsError(true);
+  };
+
+  if (isError) {
+    throw new Error('Something went wrong.');
   }
 
-  render(): React.ReactNode {
-    if (this.state.hasError) {
-      throw new Error('Something went wrong.');
-    }
-    return (
-      <div className={styles.container}>
-        <button onClick={() => this.handleClick()}>Check Error Boundary</button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={styles.container}>
+      <button onClick={() => handleClick()}>Check Error Boundary</button>
+    </div>
+  );
+};
+
+export { ErrorButton };
