@@ -6,25 +6,24 @@ import { Loader } from '../components/loader/loader';
 import { Card } from '../components/card/card';
 import { ErrorButton } from '../components/errorButton/errorButton';
 import { fetchData } from '../api/fetchData';
+import { useLocalStorage } from '../utils/hooks/useLocalStorage';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
 
 const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
-  const [search, setSearch] = useState('');
+  const [storedValue, setStoredValue] = useLocalStorage(localStorageKey);
+  const [search, setSearch] = useState(storedValue);
   const [results, setResults] = useState<CardProps[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchError, setIsFetchError] = useState(false);
 
   useEffect(() => {
-    const search = localStorage.getItem(localStorageKey) ?? '';
-    setSearch(search);
-    handleFetch(search);
-  }, [localStorageKey]);
+    handleFetch(storedValue);
+  }, [storedValue]);
 
   const handleSubmitForm = (searchValue: string) => {
     setSearch(searchValue);
-    localStorage.setItem(LS_KEY, searchValue);
-    handleFetch(searchValue);
+    setStoredValue(searchValue);
   };
 
   const handleFetch = (value: string) => {
