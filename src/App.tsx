@@ -7,11 +7,11 @@ import { DetailsPage } from './pages/details/detailsPage';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
 
-const ROUTES = {
+export const ROUTES = {
   root: '/',
   details: '/anime/:animeId',
   notFound: '*',
-};
+} as const;
 
 const App = () => {
   return (

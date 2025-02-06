@@ -6,7 +6,7 @@ interface SearchProps {
   value: string;
 }
 
-const Search = (props: SearchProps) => {
+const SearchComponent = (props: SearchProps) => {
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
@@ -43,4 +43,4 @@ const Search = (props: SearchProps) => {
   );
 };
 
-export { Search };
+export { SearchComponent };
