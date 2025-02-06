@@ -8,6 +8,8 @@ export default defineConfig({
     coverage: {
       include: ['src/**/*.tsx'],
       exclude: ['src/**/*.test.tsx', '/node_modules/**'],
+      provider: 'v8',
+      reporter: ['text'],
     },
   },
 });
