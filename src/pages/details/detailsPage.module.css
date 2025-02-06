@@ -7,4 +7,12 @@
     padding: 1rem;
     overflow: scroll;
     background-color: black;
+    z-index: 2;
+}
+
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }

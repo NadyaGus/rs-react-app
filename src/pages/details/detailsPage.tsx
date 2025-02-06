@@ -20,13 +20,15 @@ const DetailsPage = () => {
         .then((data) => setData(data.data))
         .catch((err) => console.error(err))
         .finally(() => setIsLoading(false));
-    }, 1000);
+    }, 1500);
   }, [params.animeId]);
 
   if (!data) {
     return (
       <div className={styles.container}>
-        <Loader />
+        <div className={styles.loaderContainer}>
+          <Loader />
+        </div>
       </div>
     );
   }
@@ -34,7 +36,9 @@ const DetailsPage = () => {
   return (
     <div className={styles.container}>
       {isLoading ? (
-        <Loader />
+        <div className={styles.loaderContainer}>
+          <Loader />
+        </div>
       ) : (
         <>
           <button onClick={() => window.history.back()}>Go Back</button>

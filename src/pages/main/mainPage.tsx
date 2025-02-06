@@ -8,7 +8,9 @@ import { ErrorButton } from '../../components/errorButton/errorButton';
 import { fetchData } from '../../api/fetchData';
 import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
 import { Pagination } from '../../components/pagination/pagination';
-import { Outlet } from 'react-router';
+import { Link, Outlet, useParams } from 'react-router';
+import styles from './mainPage.module.css';
+import { ROUTES } from '../../App';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
 
@@ -24,6 +26,15 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchError, setIsFetchError] = useState(false);
+
+  const params = useParams();
+  const [isOpen, setIsOpen] = useState(params.animeId ? true : false);
+
+  useEffect(() => {
+    if (params.animeId) {
+      setIsOpen(true);
+    }
+  }, [params]);
 
   useEffect(() => {
     handleFetch(storedValue, page);
@@ -56,7 +67,14 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
 
   return (
     <div className="content">
-      <div className="results">
+      <div className={isOpen ? 'main open' : 'main'}>
+        {isOpen && (
+          <Link
+            to={`${ROUTES.root}?page=${page}`}
+            className={styles.overlay}
+            onClick={() => setIsOpen(false)}
+          />
+        )}
         <Search handleSubmitForm={handleSubmitForm} value={search} />
         {isLoading && <Loader />}
         {isFetchError && <p>Something went wrong</p>}
