@@ -8,7 +8,7 @@ import { ErrorButton } from '../../components/errorButton/errorButton';
 import { fetchData } from '../../api/fetchData';
 import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
 import { Pagination } from '../../components/pagination/pagination';
-import { Link, Outlet, useParams } from 'react-router';
+import { Link, Outlet, useNavigate, useParams } from 'react-router';
 import styles from './mainPage.module.css';
 import { ROUTES } from '../../App';
 
@@ -29,20 +29,25 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
 
   const params = useParams();
   const [isOpen, setIsOpen] = useState(params.animeId ? true : false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (params.animeId) {
       setIsOpen(true);
+    } else {
+      setIsOpen(false);
     }
   }, [params]);
 
   useEffect(() => {
-    handleFetch(storedValue, page);
-  }, [storedValue, page]);
+    handleFetch(search, page);
+  }, [search, page]);
 
   const handleSubmitForm = (searchValue: string) => {
     setSearch(searchValue);
     setStoredValue(searchValue);
+    setPage(1);
+    navigate(`?page=1`);
   };
 
   const handleFetch = (value: string, page = 1) => {
@@ -67,7 +72,7 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
 
   return (
     <div className="content">
-      <div className={isOpen ? 'main open' : 'main'}>
+      <div>
         {isOpen && (
           <Link
             to={`${ROUTES.root}?page=${page}`}
@@ -82,11 +87,13 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
           results.map((result) => {
             return <Card key={result.mal_id} {...result} />;
           })}
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          handlePageChange={setPage}
-        />
+        {!isLoading && (
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            handlePageChange={setPage}
+          />
+        )}
         <ErrorButton />
       </div>
       <div className="sidebar">

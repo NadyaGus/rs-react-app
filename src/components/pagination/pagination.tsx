@@ -10,6 +10,7 @@ const Pagination = (props: PaginationProps) => {
   const navigate = useNavigate();
   const handlePageChange = (page: number) => {
     props.handlePageChange(page);
+    window.scrollTo(0, 0);
     navigate(`?page=${page}`);
   };
 
