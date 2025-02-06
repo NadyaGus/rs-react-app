@@ -6,7 +6,7 @@ interface SearchProps {
   value: string;
 }
 
-const SearchComponent = (props: SearchProps) => {
+const Search = (props: SearchProps) => {
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const SearchComponent = (props: SearchProps) => {
   };
 
   return (
-    <search className={styles.search}>
+    <div className={styles.search}>
       <form
         onSubmit={(event) => {
           handleSubmit(event);
@@ -39,8 +39,8 @@ const SearchComponent = (props: SearchProps) => {
         />
         <button type="submit">Search</button>
       </form>
-    </search>
+    </div>
   );
 };
 
-export { SearchComponent };
+export { Search };

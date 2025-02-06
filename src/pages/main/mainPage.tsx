@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { CardProps } from '../../types/cardTypes';
-import { SearchComponent } from '../../components/search/search';
+import { Search } from '../../components/search/search';
 import { Loader } from '../../components/loader/loader';
 import { Card } from '../../components/card/card';
 import { ErrorButton } from '../../components/errorButton/errorButton';
@@ -57,7 +57,7 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
   return (
     <div className="content">
       <div className="results">
-        <SearchComponent handleSubmitForm={handleSubmitForm} value={search} />
+        <Search handleSubmitForm={handleSubmitForm} value={search} />
         {isLoading && <Loader />}
         {isFetchError && <p>Something went wrong</p>}
         {results &&
