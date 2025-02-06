@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import { CardProps } from '../../types/cardTypes';
 import styles from './card.module.css';
 
@@ -17,19 +18,21 @@ const Card = (props: CardProps) => {
 
   return (
     <div className={styles.card}>
-      <h2 className={styles.title}>
-        {props.title_english ?? props.title_japanese ?? 'No title'}
-      </h2>
-      <div className={styles.container}>
-        <div className={styles.imageContainer}>
-          <img
-            className={styles.image}
-            src={props.images.webp.image_url}
-            alt={props.title_english}
-          />
+      <Link to={`/anime/${props.mal_id}`}>
+        <h2 className={styles.title}>
+          {props.title_english ?? props.title_japanese ?? 'No title'}
+        </h2>
+        <div className={styles.container}>
+          <div className={styles.imageContainer}>
+            <img
+              className={styles.image}
+              src={props.images.webp.image_url}
+              alt={props.title_english}
+            />
+          </div>
+          <p className={styles.synopsis}>{handleSynopsis(props.synopsis)}</p>
         </div>
-        <p className={styles.synopsis}>{handleSynopsis(props.synopsis)}</p>
-      </div>
+      </Link>
     </div>
   );
 };

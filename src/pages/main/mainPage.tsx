@@ -8,6 +8,7 @@ import { ErrorButton } from '../../components/errorButton/errorButton';
 import { fetchData } from '../../api/fetchData';
 import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
 import { Pagination } from '../../components/pagination/pagination';
+import { Outlet } from 'react-router';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
 
@@ -55,19 +56,24 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
 
   return (
     <div className="content">
-      <Search handleSubmitForm={handleSubmitForm} value={search} />
-      {isLoading && <Loader />}
-      {isFetchError && <p>Something went wrong</p>}
-      {results &&
-        results.map((result) => {
-          return <Card key={result.mal_id} {...result} />;
-        })}
-      <Pagination
-        currentPage={page}
-        totalPages={totalPages}
-        handlePageChange={setPage}
-      />
-      <ErrorButton />
+      <div className="results">
+        <Search handleSubmitForm={handleSubmitForm} value={search} />
+        {isLoading && <Loader />}
+        {isFetchError && <p>Something went wrong</p>}
+        {results &&
+          results.map((result) => {
+            return <Card key={result.mal_id} {...result} />;
+          })}
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          handlePageChange={setPage}
+        />
+        <ErrorButton />
+      </div>
+      <div className="sidebar">
+        <Outlet />
+      </div>
     </div>
   );
 };
