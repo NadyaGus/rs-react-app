@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import { CardProps } from '../types/cardTypes';
-import { Search } from '../components/search/search';
-import { Loader } from '../components/loader/loader';
-import { Card } from '../components/card/card';
-import { ErrorButton } from '../components/errorButton/errorButton';
-import { fetchData } from '../api/fetchData';
-import { useLocalStorage } from '../utils/hooks/useLocalStorage';
+import { CardProps } from '../../types/cardTypes';
+import { Search } from '../../components/search/search';
+import { Loader } from '../../components/loader/loader';
+import { Card } from '../../components/card/card';
+import { ErrorButton } from '../../components/errorButton/errorButton';
+import { fetchData } from '../../api/fetchData';
+import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
 

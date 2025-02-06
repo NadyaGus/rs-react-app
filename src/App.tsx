@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router';
 import './App.css';
 
-import { MainPage } from './pages/mainPage';
+import { MainPage } from './pages/main/mainPage';
 import { ErrorPage } from './pages/errorPage';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
