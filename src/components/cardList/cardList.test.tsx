@@ -5,6 +5,7 @@ import { LS_KEY, ROUTES } from '../../App';
 import { MainPage } from '../../pages/main/mainPage';
 import { DetailsPage } from '../../pages/details/detailsPage';
 import userEvent from '@testing-library/user-event';
+import { mockConstants } from '../../__test__/mock/mockConstants';
 
 const routes = [
   {
@@ -25,14 +26,28 @@ const router = createMemoryRouter(routes, {
 
 const user = userEvent.setup();
 
-describe('main page', () => {
+describe('card list tests', () => {
   it('should render 10 cards in result', async () => {
     render(<RouterProvider router={router} />);
-    await user.type(screen.getByRole('searchbox'), 'naruto');
+    await user.type(
+      screen.getByRole('searchbox'),
+      mockConstants.mockAnimeWithData
+    );
     await screen.findByRole('button', { name: 'Search' });
     await user.click(screen.getByRole('button', { name: 'Search' }));
     await screen.findByText('Naruto');
 
     expect(screen.getAllByRole('article')).toHaveLength(10);
+  });
+
+  it('should render fallback message if no results', async () => {
+    render(<RouterProvider router={router} />);
+    await user.type(
+      screen.getByRole('searchbox'),
+      mockConstants.mockAnimeNoData
+    );
+    await screen.findByRole('button', { name: 'Search' });
+    await user.click(screen.getByRole('button', { name: 'Search' }));
+    await screen.findByText('No results found');
   });
 });
