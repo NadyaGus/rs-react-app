@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { CardProps } from '../../types/cardTypes';
 import { Search } from '../../components/search/search';
 import { Loader } from '../../components/loader/loader';
-import { Card } from '../../components/card/card';
 import { ErrorButton } from '../../components/errorButton/errorButton';
 import { fetchData } from '../../api/fetchData';
 import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
@@ -11,6 +10,7 @@ import { Pagination } from '../../components/pagination/pagination';
 import { Link, Outlet, useNavigate, useParams } from 'react-router';
 import styles from './mainPage.module.css';
 import { ROUTES } from '../../App';
+import { CardList } from '../../components/cardList/cardList';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
 
@@ -83,10 +83,7 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
         <Search handleSubmitForm={handleSubmitForm} value={search} />
         {isLoading && <Loader />}
         {isFetchError && <p>Something went wrong</p>}
-        {results &&
-          results.map((result) => {
-            return <Card key={result.mal_id} {...result} />;
-          })}
+        {results && <CardList results={results} />}
         {!isLoading && (
           <Pagination
             currentPage={page}
