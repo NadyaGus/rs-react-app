@@ -17,7 +17,7 @@ const Card = (props: CardProps) => {
   };
 
   return (
-    <div className={styles.card}>
+    <article className={styles.card}>
       <Link to={`/anime/${props.mal_id}`}>
         <h2 className={styles.title}>
           {props.title_english ?? props.title_japanese ?? 'No title'}
@@ -33,7 +33,7 @@ const Card = (props: CardProps) => {
           <p className={styles.synopsis}>{handleSynopsis(props.synopsis)}</p>
         </div>
       </Link>
-    </div>
+    </article>
   );
 };
 
