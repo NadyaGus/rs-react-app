@@ -7,11 +7,12 @@ export default defineConfig({
   test: {
     coverage: {
       include: ['src/**/*.tsx'],
-      exclude: ['src/**/*.test.tsx', '/node_modules/**'],
+      exclude: ['src/**/*.test.tsx', 'node_modules/**', 'src/App.tsx'],
       provider: 'v8',
       reporter: ['text'],
     },
     environment: 'jsdom',
     globals: true,
+    setupFiles: ['src/__test__/setup-test.ts'],
   },
 });

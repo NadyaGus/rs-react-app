@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { findByText, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { LS_KEY, ROUTES } from '../../App';
 import { DetailsPage } from '../details/detailsPage';
 import { MainPage } from './mainPage';
@@ -22,18 +22,10 @@ const router = createMemoryRouter(routes, {
   initialEntries: [ROUTES.root],
 });
 
-render(<RouterProvider router={router} />);
-
-describe('Test', () => {
-  it('Test', () => {
-    expect(2 + 2).toBe(4);
-  });
-});
-
-describe('should render', () => {
+describe('main page', () => {
   it('should render', async () => {
     render(<RouterProvider router={router} />);
-
-    expect(findByText(document.body, 'Search')).toBeTruthy();
+    await screen.findByRole('button', { name: 'Search' });
+    expect(await screen.findByText('Search')).toBeInTheDocument();
   });
 });
