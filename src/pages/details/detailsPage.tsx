@@ -4,24 +4,25 @@ import { CardProps } from '../../types/cardTypes';
 import { Loader } from '../../components/loader/loader';
 
 import styles from './detailsPage.module.css';
+import { fetchData } from '../../api/fetchData';
 
 const DetailsPage = () => {
   const params = useParams();
+  const paramsId = params.animeId;
   const [data, setData] = useState<CardProps>();
   const [isLoading, setIsLoading] = useState(false);
 
   // use timeout for debounce request to api (api limit is 3 requests per second)
-  // TODO: use api function
   useEffect(() => {
     setIsLoading(true);
     setTimeout(() => {
-      fetch(`https://api.jikan.moe/v4/anime/${params.animeId}`)
-        .then((res) => res.json())
+      fetchData
+        .getDetails(paramsId ?? '')
         .then((data) => setData(data.data))
         .catch((err) => console.error(err))
         .finally(() => setIsLoading(false));
     }, 1500);
-  }, [params.animeId]);
+  }, [paramsId]);
 
   if (!data) {
     return (

@@ -55,7 +55,7 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
     setIsFetchError(false);
     setResults([]);
 
-    const data = fetchData(value, page);
+    const data = fetchData.getPageForSearch(value, page);
     data
       .then((results) => {
         setResults(results.data);

@@ -9,7 +9,8 @@ export const LS_KEY = 'NADYA_GUS_KEY';
 
 export const ROUTES = {
   root: '/',
-  details: '/anime/:animeId',
+  details: '/anime',
+  detailsWithId: '/anime/:animeId',
   notFound: '*',
 } as const;
 
@@ -21,7 +22,7 @@ const App = () => {
           path={ROUTES.root}
           element={<MainPage localStorageKey={LS_KEY} />}
         >
-          <Route path={ROUTES.details} element={<DetailsPage />} />
+          <Route path={ROUTES.detailsWithId} element={<DetailsPage />} />
         </Route>
 
         <Route path={ROUTES.notFound} element={<ErrorPage />} />
