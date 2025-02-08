@@ -9,6 +9,9 @@ export const handlers = [
     if (searchQuery === 'naruto') {
       return HttpResponse.json(animeData);
     }
+    if (searchQuery === '') {
+      return HttpResponse.json(animeData);
+    }
     if (searchQuery === 'naruto12345') {
       return HttpResponse.json({
         pagination: {

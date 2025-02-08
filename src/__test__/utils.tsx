@@ -32,8 +32,7 @@ const configureRouter = () => {
   return router;
 };
 
-const userTypeAndSearch = async () => {
-  const user = userEvent.setup();
+const userTypeAndSearch = async (user: ReturnType<typeof userEvent.setup>) => {
   await user.clear(screen.getByRole('searchbox'));
   await user.type(
     screen.getByRole('searchbox'),
@@ -41,6 +40,7 @@ const userTypeAndSearch = async () => {
   );
   await screen.findByRole('button', { name: 'Search' });
   await user.click(screen.getByRole('button', { name: 'Search' }));
+  await screen.findByText('Naruto');
 };
 
 export { configureRouter, userTypeAndSearch };

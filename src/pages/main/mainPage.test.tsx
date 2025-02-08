@@ -19,8 +19,7 @@ describe('main page', () => {
   it('should navigate to details page and update url', async () => {
     render(<RouterProvider router={router} />);
 
-    await userTypeAndSearch();
-    await screen.findByText('Naruto');
+    await userTypeAndSearch(user);
 
     const card = await screen.findByText(animeData.data[0].title_english);
     await user.click(card);

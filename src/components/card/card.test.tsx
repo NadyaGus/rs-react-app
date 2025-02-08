@@ -13,7 +13,7 @@ describe('card tests', () => {
   it('should show relevant data', async () => {
     render(<RouterProvider router={router} />);
 
-    await userTypeAndSearch();
+    await userTypeAndSearch(user);
     await screen.findByText('Naruto');
 
     const cards = await screen.findAllByRole('article');
@@ -28,7 +28,7 @@ describe('card tests', () => {
 
     render(<RouterProvider router={router} />);
 
-    await userTypeAndSearch();
+    await userTypeAndSearch(user);
 
     const card = await screen.findByText(animeData.data[0].title_english);
     await user.click(card);

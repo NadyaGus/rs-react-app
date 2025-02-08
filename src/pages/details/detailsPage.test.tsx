@@ -13,15 +13,16 @@ describe('details page', () => {
   it('should show loader when details page is loading', async () => {
     render(<RouterProvider router={router} />);
 
-    userTypeAndSearch();
-    await screen.findByText('Naruto');
+    await userTypeAndSearch(user);
 
     const card = await screen.findByText(animeData.data[0].title_english);
     await user.click(card);
 
-    expect(router.state.location.pathname).toBe(
-      `${ROUTES.details}/${animeData.data[0].mal_id}`
-    );
+    waitFor(async () => {
+      expect(router.state.location.pathname).toBe(
+        `${ROUTES.details}/${animeData.data[0].mal_id}`
+      );
+    });
 
     await screen.findByTestId('loader');
     expect(screen.getByTestId('loader')).toBeInTheDocument();
@@ -30,8 +31,7 @@ describe('details page', () => {
   it('should show relevant data', async () => {
     render(<RouterProvider router={router} />);
 
-    userTypeAndSearch();
-    await screen.findByText('Naruto');
+    await userTypeAndSearch(user);
 
     const card = await screen.findByText(animeData.data[0].title_english);
     await user.click(card);
