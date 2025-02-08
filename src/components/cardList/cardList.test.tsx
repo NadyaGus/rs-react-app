@@ -1,11 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { describe, expect, it } from 'vitest';
-import { LS_KEY, ROUTES } from '../../App';
+import { LS_KEY } from '../../App';
 import { MainPage } from '../../pages/main/mainPage';
 import { DetailsPage } from '../../pages/details/detailsPage';
 import userEvent from '@testing-library/user-event';
 import { mockConstants } from '../../__test__/mock/mockConstants';
+import { ROUTES } from '../../utils/constants';
 
 const routes = [
   {

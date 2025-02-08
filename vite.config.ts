@@ -6,8 +6,13 @@ export default defineConfig({
   plugins: [react()],
   test: {
     coverage: {
-      include: ['src/**/*.tsx'],
-      exclude: ['src/**/*.test.tsx', 'node_modules/**', 'src/App.tsx'],
+      include: ['**/*.tsx'],
+      exclude: [
+        '**/*.test.tsx',
+        '**/node_modules/**',
+        '**/`*.spec.tsx',
+        'src/__test__/setup-test.ts',
+      ],
       provider: 'v8',
       reporter: ['text'],
     },

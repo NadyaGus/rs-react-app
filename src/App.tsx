@@ -4,15 +4,9 @@ import './App.css';
 import { MainPage } from './pages/main/mainPage';
 import { ErrorPage } from './pages/error/errorPage';
 import { DetailsPage } from './pages/details/detailsPage';
+import { ROUTES } from './utils/constants';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
-
-export const ROUTES = {
-  root: '/',
-  details: '/anime',
-  detailsWithId: '/anime/:animeId',
-  notFound: '*',
-} as const;
 
 const App = () => {
   return (

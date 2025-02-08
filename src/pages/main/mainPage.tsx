@@ -9,8 +9,8 @@ import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
 import { Pagination } from '../../components/pagination/pagination';
 import { Link, Outlet, useNavigate, useParams } from 'react-router';
 import styles from './mainPage.module.css';
-import { ROUTES } from '../../App';
 import { CardList } from '../../components/cardList/cardList';
+import { ROUTES } from '../../utils/constants';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
 

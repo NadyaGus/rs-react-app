@@ -1,11 +1,12 @@
 import { createMemoryRouter } from 'react-router';
-import { LS_KEY, ROUTES } from '../App';
+import { LS_KEY } from '../App';
 import { DetailsPage } from '../pages/details/detailsPage';
 import { MainPage } from '../pages/main/mainPage';
 import animeData from './mock/animeData.json';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/dom';
 import { mockConstants } from './mock/mockConstants';
+import { ROUTES } from '../utils/constants';
 
 const configureRouter = () => {
   const routes = [
