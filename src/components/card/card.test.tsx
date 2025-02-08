@@ -1,44 +1,19 @@
 import { render, screen } from '@testing-library/react';
-import { createMemoryRouter, RouterProvider } from 'react-router';
+import { RouterProvider } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
-import { LS_KEY, ROUTES } from '../../App';
-import { MainPage } from '../../pages/main/mainPage';
-import { DetailsPage } from '../../pages/details/detailsPage';
 import userEvent from '@testing-library/user-event';
-import { mockConstants } from '../../__test__/mock/mockConstants';
 import animeData from '../../__test__/mock/animeData.json';
 import { fetchData } from '../../api/fetchData';
+import { configureRouter, userTypeAndSearch } from '../../__test__/utils';
 
-const routes = [
-  {
-    path: ROUTES.root,
-    element: <MainPage localStorageKey={LS_KEY} />,
-    children: [
-      {
-        path: ROUTES.detailsWithId,
-        element: <DetailsPage />,
-      },
-    ],
-  },
-];
-
-const router = createMemoryRouter(routes, {
-  initialEntries: [ROUTES.root, `${ROUTES.details}/20`],
-  initialIndex: 0,
-});
-
+const router = configureRouter();
 const user = userEvent.setup();
 
 describe('card tests', () => {
   it('should show relevant data', async () => {
     render(<RouterProvider router={router} />);
 
-    await user.type(
-      screen.getByRole('searchbox'),
-      mockConstants.mockAnimeWithData
-    );
-    await screen.findByRole('button', { name: 'Search' });
-    await user.click(screen.getByRole('button', { name: 'Search' }));
+    await userTypeAndSearch();
     await screen.findByText('Naruto');
 
     const cards = await screen.findAllByRole('article');
@@ -53,13 +28,7 @@ describe('card tests', () => {
 
     render(<RouterProvider router={router} />);
 
-    await user.clear(screen.getByRole('searchbox'));
-    await user.type(
-      screen.getByRole('searchbox'),
-      mockConstants.mockAnimeWithData
-    );
-    await screen.findByRole('button', { name: 'Search' });
-    await user.click(screen.getByRole('button', { name: 'Search' }));
+    await userTypeAndSearch();
 
     const card = await screen.findByText(animeData.data[0].title_english);
     await user.click(card);
