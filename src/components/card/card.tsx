@@ -22,7 +22,7 @@ const Card = (props: CardProps) => {
 
   return (
     <article className={styles.card}>
-      <Link to={`${endPoints.details}/${props.mal_id}?page=${page}`}>
+      <Link to={`${endPoints.details}${props.mal_id}?page=${page}`}>
         <h2 className={styles.title}>
           {props.title_english ?? props.title_japanese ?? 'No title'}
         </h2>

@@ -11,18 +11,38 @@ const DetailsPage = () => {
   const paramsId = params.animeId;
   const [data, setData] = useState<CardProps>();
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetchError, setIsFetchError] = useState(false);
+
+  const handle404Error = () => {
+    setTimeout(() => {
+      setIsFetchError(true);
+      setIsLoading(false);
+    }, 6000);
+  };
 
   // use timeout for debounce request to api (api limit is 3 requests per second)
   useEffect(() => {
     setIsLoading(true);
+    setIsFetchError(false);
     setTimeout(() => {
       fetchData
         .getDetails(paramsId ?? '')
         .then((data) => setData(data.data))
-        .catch((err) => console.error(err))
+        .catch(() => setIsFetchError(true))
         .finally(() => setIsLoading(false));
+
+      handle404Error();
     }, 1500);
   }, [paramsId]);
+
+  if (isFetchError) {
+    return (
+      <div className={styles.container}>
+        <h2>Something went wrong...</h2>
+        <button onClick={() => window.history.back()}>Go Back</button>
+      </div>
+    );
+  }
 
   if (!data) {
     return (

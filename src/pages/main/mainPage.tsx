@@ -83,7 +83,7 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
         <Search handleSubmitForm={handleSubmitForm} value={search} />
         {isLoading && <Loader />}
         {isFetchError && <p>Something went wrong</p>}
-        {results && <CardList results={results} />}
+        {results && <CardList results={results} isLoading={isLoading} />}
         {!isLoading && (
           <Pagination
             currentPage={page}
