@@ -13,26 +13,18 @@ const DetailsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchError, setIsFetchError] = useState(false);
 
-  const handle404Error = () => {
-    setTimeout(() => {
-      setIsFetchError(true);
-      setIsLoading(false);
-    }, 6000);
-  };
-
-  // use timeout for debounce request to api (api limit is 3 requests per second)
-  useEffect(() => {
+  const fetchCard = (id: string) => {
     setIsLoading(true);
     setIsFetchError(false);
-    setTimeout(() => {
-      fetchData
-        .getDetails(paramsId ?? '')
-        .then((data) => setData(data.data))
-        .catch(() => setIsFetchError(true))
-        .finally(() => setIsLoading(false));
+    fetchData
+      .getDetails(id)
+      .then((data) => setData(data.data))
+      .catch(() => setIsFetchError(true))
+      .finally(() => setIsLoading(false));
+  };
 
-      handle404Error();
-    }, 1500);
+  useEffect(() => {
+    fetchCard(paramsId ?? '');
   }, [paramsId]);
 
   if (isFetchError) {
@@ -40,6 +32,7 @@ const DetailsPage = () => {
       <div className={styles.container}>
         <h2>Something went wrong...</h2>
         <button onClick={() => window.history.back()}>Go Back</button>
+        <button onClick={() => window.location.reload()}>Reset</button>
       </div>
     );
   }
