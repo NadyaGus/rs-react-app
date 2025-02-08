@@ -5,7 +5,6 @@ export const handlers = [
   http.get('https://api.jikan.moe/v4/anime', ({ request }) => {
     const url = new URL(request.url);
     const searchQuery = url.searchParams.get('q');
-    console.log('mock calling api', searchQuery);
 
     if (searchQuery === 'naruto') {
       return HttpResponse.json(animeData);
@@ -27,7 +26,6 @@ export const handlers = [
     }
   }),
   http.get(`https://api.jikan.moe/v4/anime/20`, () => {
-    console.log('mock calling details api');
     return HttpResponse.json(animeData.data[0]);
   }),
 ];

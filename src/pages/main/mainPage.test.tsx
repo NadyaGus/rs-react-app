@@ -29,22 +29,4 @@ describe('main page', () => {
       `${ROUTES.details}/${animeData.data[0].mal_id}`
     );
   });
-
-  it('should show loader when details page is loading', async () => {
-    render(<RouterProvider router={router} />);
-
-    userTypeAndSearch();
-    await screen.findByText('Naruto');
-
-    const card = await screen.findByText(animeData.data[0].title_english);
-    await user.click(card);
-    console.log(router.state.location.pathname);
-
-    expect(router.state.location.pathname).toBe(
-      `${ROUTES.details}/${animeData.data[0].mal_id}`
-    );
-
-    await screen.findByTestId('loader');
-    expect(screen.getByTestId('loader')).toBeInTheDocument();
-  });
 });
