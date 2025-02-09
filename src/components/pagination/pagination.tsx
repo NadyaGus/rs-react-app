@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router';
+import styles from './pagination.module.css';
 
 type PaginationProps = {
   currentPage: number;
@@ -14,9 +15,14 @@ const Pagination = (props: PaginationProps) => {
     navigate(`?page=${page}`);
   };
 
+  if (props.totalPages === 1) {
+    return null;
+  }
+
   return (
-    <div className="pagination">
+    <div className={styles.pagination}>
       <button
+        className={styles.button}
         onClick={() => handlePageChange(props.currentPage - 1)}
         disabled={props.currentPage === 1}
       >
@@ -26,6 +32,7 @@ const Pagination = (props: PaginationProps) => {
         Page {props.currentPage} of {props.totalPages}
       </span>
       <button
+        className={styles.button}
         onClick={() => handlePageChange(props.currentPage + 1)}
         disabled={props.currentPage === props.totalPages}
       >

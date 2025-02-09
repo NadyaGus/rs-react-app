@@ -54,13 +54,13 @@ const DetailsPage = () => {
           <Loader />
         </div>
       ) : (
-        <>
+        <div className={styles.card}>
           <button onClick={() => window.history.back()}>Go Back</button>
           <h2>{data.title_english ?? 'No title in english'}</h2>
           <h3>{data.title_japanese ?? 'No title in japanese'}</h3>
           <img src={data.images.webp.image_url} alt={data.title_english} />
           <p>{data.synopsis}</p>
-        </>
+        </div>
       )}
     </div>
   );

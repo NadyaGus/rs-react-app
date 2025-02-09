@@ -4,10 +4,13 @@
     right: 0;
     width: 50%;
     height: 100%;
-    padding: 1rem;
     overflow: scroll;
-    background-color: black;
+    background-color: rgb(50, 50, 50);
     z-index: 2;
+
+    @media screen and (width <768px) {
+        width: 100%;
+    }
 }
 
 .loaderContainer {
@@ -15,4 +18,8 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+}
+
+.card {
+    margin: 1rem;
 }

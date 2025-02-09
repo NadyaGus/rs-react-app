@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { CardProps } from '../../types/cardTypes';
 import { Search } from '../../components/search/search';
 import { Loader } from '../../components/loader/loader';
-import { ErrorButton } from '../../components/errorButton/errorButton';
 import { fetchData } from '../../api/fetchData';
 import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
 import { Pagination } from '../../components/pagination/pagination';
@@ -71,7 +70,7 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
   };
 
   return (
-    <div className="content">
+    <div className={styles.container}>
       <div>
         {isOpen && (
           <Link
@@ -91,11 +90,8 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
             handlePageChange={setPage}
           />
         )}
-        <ErrorButton />
       </div>
-      <div className="sidebar">
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 };
