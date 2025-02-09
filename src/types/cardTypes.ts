@@ -4,6 +4,8 @@ type CardProps = {
   title_english: string;
   title_japanese: string;
   synopsis: string;
+  source: string;
+  status: string;
 };
 
 type CardsResponse = {
