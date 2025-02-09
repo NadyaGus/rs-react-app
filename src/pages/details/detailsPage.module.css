@@ -4,7 +4,7 @@
     right: 0;
     width: 50%;
     height: 100%;
-    overflow: scroll;
+    overflow-y: scroll;
     background-color: rgb(50, 50, 50);
     z-index: 2;
 
