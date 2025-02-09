@@ -11,8 +11,6 @@ import styles from './mainPage.module.css';
 import { CardList } from '../../components/cardList/cardList';
 import { ROUTES } from '../../utils/constants';
 
-export const LS_KEY = 'NADYA_GUS_KEY';
-
 const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
   const [storedValue, setStoredValue] = useLocalStorage(localStorageKey);
   const [search, setSearch] = useState(storedValue);
