@@ -12,10 +12,7 @@ const App = () => {
   return (
     <div className="App">
       <Routes>
-        <Route
-          path={ROUTES.root}
-          element={<MainPage localStorageKey={LS_KEY} />}
-        >
+        <Route path={ROUTES.root} element={<MainPage />}>
           <Route path={ROUTES.detailsWithId} element={<DetailsPage />} />
         </Route>
 

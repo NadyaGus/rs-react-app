@@ -1,17 +1,15 @@
-import { render, screen } from '@testing-library/react';
-import { RouterProvider } from 'react-router';
+import { screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import animeData from '../../__test__/mock/animeData.json';
 import { fetchData } from '../../api/fetchData';
-import { configureRouter, userTypeAndSearch } from '../../__test__/utils';
+import { renderApp, userTypeAndSearch } from '../../__test__/utils';
 
-const router = configureRouter();
 const user = userEvent.setup();
 
 describe('card tests', () => {
   it('should show relevant data', async () => {
-    render(<RouterProvider router={router} />);
+    renderApp();
 
     await userTypeAndSearch(user);
     await screen.findByText('Naruto');
@@ -26,7 +24,7 @@ describe('card tests', () => {
   it('should initiate api call', async () => {
     const spy = vi.spyOn(fetchData, 'getDetails');
 
-    render(<RouterProvider router={router} />);
+    renderApp();
 
     await userTypeAndSearch(user);
 

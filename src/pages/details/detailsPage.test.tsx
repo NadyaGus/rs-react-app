@@ -1,7 +1,10 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import { RouterProvider } from 'react-router';
+import { screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { configureRouter, userTypeAndSearch } from '../../__test__/utils';
+import {
+  configureRouter,
+  renderApp,
+  userTypeAndSearch,
+} from '../../__test__/utils';
 import userEvent from '@testing-library/user-event';
 import animeData from '../../__test__/mock/animeData.json';
 import { ROUTES } from '../../utils/constants';
@@ -11,7 +14,7 @@ const user = userEvent.setup();
 
 describe('details page', () => {
   it('should show loader when details page is loading', async () => {
-    render(<RouterProvider router={router} />);
+    renderApp();
 
     await userTypeAndSearch(user);
 
@@ -29,7 +32,7 @@ describe('details page', () => {
   });
 
   it('should show relevant data', async () => {
-    render(<RouterProvider router={router} />);
+    renderApp();
 
     await userTypeAndSearch(user);
 
@@ -48,7 +51,7 @@ describe('details page', () => {
   });
 
   it('should hide page when clicking back button ', async () => {
-    render(<RouterProvider router={router} />);
+    renderApp();
 
     waitFor(async () => {
       expect(

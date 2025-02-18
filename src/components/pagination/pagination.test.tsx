@@ -1,8 +1,7 @@
-import { configureRouter } from '../../__test__/utils';
+import { configureRouter, renderApp } from '../../__test__/utils';
 import userEvent from '@testing-library/user-event';
-import { screen, render, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { RouterProvider } from 'react-router';
 import { ROUTES } from '../../utils/constants';
 
 const router = configureRouter();
@@ -10,7 +9,7 @@ const user = userEvent.setup();
 
 describe('pagination tests', () => {
   it('should navigate between pages', async () => {
-    render(<RouterProvider router={router} />);
+    renderApp();
 
     waitFor(async () => {
       await screen.findByText('Naruto');

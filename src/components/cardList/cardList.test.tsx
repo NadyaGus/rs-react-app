@@ -1,35 +1,14 @@
-import { render, screen } from '@testing-library/react';
-import { createMemoryRouter, RouterProvider } from 'react-router';
+import { screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { LS_KEY } from '../../App';
-import { MainPage } from '../../pages/main/mainPage';
-import { DetailsPage } from '../../pages/details/detailsPage';
 import userEvent from '@testing-library/user-event';
 import { mockConstants } from '../../__test__/mock/mockConstants';
-import { ROUTES } from '../../utils/constants';
-
-const routes = [
-  {
-    path: ROUTES.root,
-    element: <MainPage localStorageKey={LS_KEY} />,
-    children: [
-      {
-        path: ROUTES.details,
-        element: <DetailsPage />,
-      },
-    ],
-  },
-];
-
-const router = createMemoryRouter(routes, {
-  initialEntries: [ROUTES.root],
-});
+import { renderApp } from '../../__test__/utils';
 
 const user = userEvent.setup();
 
 describe('card list tests', () => {
   it('should render 10 cards in result', async () => {
-    render(<RouterProvider router={router} />);
+    renderApp();
     await user.type(
       screen.getByRole('searchbox'),
       mockConstants.mockAnimeWithData
@@ -42,7 +21,7 @@ describe('card list tests', () => {
   });
 
   it('should render fallback message if no results', async () => {
-    render(<RouterProvider router={router} />);
+    renderApp();
 
     await user.clear(screen.getByRole('searchbox'));
     await user.type(
@@ -51,6 +30,8 @@ describe('card list tests', () => {
     );
     await screen.findByRole('button', { name: 'Search' });
     await user.click(screen.getByRole('button', { name: 'Search' }));
-    await screen.findByText('No results found');
+    waitFor(async () => {
+      expect(screen.getByText('No results found')).toBeInTheDocument();
+    });
   });
 });
