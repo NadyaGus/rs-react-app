@@ -3,30 +3,26 @@ import { useEffect, useState } from 'react';
 import { CardProps } from '../../types/cardTypes';
 import { Search } from '../../components/search/search';
 import { Loader } from '../../components/loader/loader';
-import { fetchData } from '../../api/fetchData';
-import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
 import { Pagination } from '../../components/pagination/pagination';
-import { Link, Outlet, useNavigate, useParams } from 'react-router';
+import { Link, Outlet, useParams, useSearchParams } from 'react-router';
 import styles from './mainPage.module.css';
 import { CardList } from '../../components/cardList/cardList';
 import { ROUTES } from '../../utils/constants';
+import { useGetResultsQuery } from '../../api/createApi';
 
-const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
-  const [storedValue, setStoredValue] = useLocalStorage(localStorageKey);
-  const [search, setSearch] = useState(storedValue);
+const MainPage = () => {
+  const [searchParams] = useSearchParams();
+  const params = useParams();
   const [results, setResults] = useState<CardProps[]>([]);
 
-  const [page, setPage] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('page') ? Number(params.get('page')) : 1;
-  });
   const [totalPages, setTotalPages] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
   const [isFetchError, setIsFetchError] = useState(false);
+  const { data, isFetching, isError } = useGetResultsQuery({
+    q: searchParams.get('q') ?? '',
+    page: Number(searchParams.get('page')) || 1,
+  });
 
-  const params = useParams();
   const [isOpen, setIsOpen] = useState(params.animeId ? true : false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (params.animeId) {
@@ -37,57 +33,38 @@ const MainPage = ({ localStorageKey }: { localStorageKey: string }) => {
   }, [params]);
 
   useEffect(() => {
-    handleFetch(search, page);
-  }, [search, page]);
+    if (data) {
+      setResults(data.data);
+      setTotalPages(data.pagination.last_visible_page);
+    }
+  }, [data]);
 
-  const handleSubmitForm = (searchValue: string) => {
-    setSearch(searchValue);
-    setStoredValue(searchValue);
-    setPage(1);
-    navigate(`?page=1`);
-  };
-
-  const handleFetch = (value: string, page = 1) => {
-    setIsLoading(true);
-    setIsFetchError(false);
-    setResults([]);
-
-    const data = fetchData.getPageForSearch(value, page);
-    data
-      .then((results) => {
-        setResults(results.data);
-        setPage(results.pagination.current_page);
-        setTotalPages(results.pagination.last_visible_page);
-      })
-      .catch(() => {
-        setIsFetchError(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  useEffect(() => {
+    if (isError) {
+      setIsFetchError(true);
+      setResults([]);
+    } else {
+      setIsFetchError(false);
+    }
+  }, [isError]);
 
   return (
     <div className={styles.container}>
       <div>
         {isOpen && (
           <Link
-            to={`${ROUTES.root}?page=${page}`}
+            to={`${ROUTES.root}?page=${searchParams.get('page') ?? '1'}`}
             className={styles.overlay}
             onClick={() => setIsOpen(false)}
           />
         )}
-        <Search handleSubmitForm={handleSubmitForm} value={search} />
-        {isLoading && <Loader />}
+        <Search />
+        {isFetching && <Loader />}
         {isFetchError && <p>Something went wrong</p>}
-        {results && <CardList results={results} isLoading={isLoading} />}
-        {!isLoading && (
-          <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            handlePageChange={setPage}
-          />
+        {results && !isFetching && !isFetchError && (
+          <CardList results={results} isLoading={isFetching} />
         )}
+        {!isFetching && <Pagination totalPages={totalPages} />}
       </div>
       <Outlet />
     </div>

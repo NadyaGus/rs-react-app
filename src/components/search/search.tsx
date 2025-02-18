@@ -1,25 +1,28 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import styles from './search.module.css';
+import { useSearchParams } from 'react-router';
+import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
+import { LS_KEY } from '../../App';
 
-interface SearchProps {
-  handleSubmitForm: (search: string) => void;
-  value: string;
-}
-
-const Search = (props: SearchProps) => {
-  const [searchValue, setSearchValue] = useState('');
+const Search = () => {
+  const [storedValue, setStoredValue] = useLocalStorage(LS_KEY);
+  const [searchValue, setSearchValue] = useState(storedValue);
+  const [inputValue, setInputValue] = useState(storedValue);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    setSearchValue(props.value);
-  }, [props.value]);
+    setSearchParams({ q: searchValue, page: searchParams.get('page') ?? '1' });
+  }, [setSearchParams, searchValue, searchParams]);
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+    setInputValue(e.target.value);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    props.handleSubmitForm(searchValue.trim());
+    setSearchValue(inputValue.trim());
+    setStoredValue(inputValue.trim());
+    setSearchParams({ q: inputValue.trim(), page: '1' });
   };
 
   return (
@@ -33,7 +36,7 @@ const Search = (props: SearchProps) => {
         <input
           type="search"
           placeholder="Search..."
-          value={searchValue}
+          value={inputValue}
           onChange={(e) => handleInput(e)}
           className={styles.input}
         />
