@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import styles from './search.module.css';
 import { useSearchParams } from 'react-router';
 import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
@@ -6,13 +6,8 @@ import { LS_KEY } from '../../App';
 
 const Search = () => {
   const [storedValue, setStoredValue] = useLocalStorage(LS_KEY);
-  const [searchValue, setSearchValue] = useState(storedValue);
   const [inputValue, setInputValue] = useState(storedValue);
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  useEffect(() => {
-    setSearchParams({ q: searchValue, page: searchParams.get('page') ?? '1' });
-  }, [setSearchParams, searchValue, searchParams]);
+  const setSearchParams = useSearchParams()[1];
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -20,7 +15,6 @@ const Search = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchValue(inputValue.trim());
     setStoredValue(inputValue.trim());
     setSearchParams({ q: inputValue.trim(), page: '1' });
   };
