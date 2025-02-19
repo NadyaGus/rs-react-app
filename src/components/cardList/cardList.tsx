@@ -1,13 +1,10 @@
-import { CardProps } from '../../types/cardTypes';
+import { useAppSelector } from '../../types/store';
 import { Card } from '../card/card';
 
-const CardList = ({
-  results,
-  isLoading,
-}: {
-  results: CardProps[];
-  isLoading: boolean;
-}) => {
+const CardList = () => {
+  const results = useAppSelector((state) => state.searchResults.cardList);
+  const isLoading = useAppSelector((state) => state.searchResults.isLoading);
+
   if (results.length === 0 && !isLoading) {
     return <h2>No results found</h2>;
   }

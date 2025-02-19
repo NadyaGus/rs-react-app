@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { CardProps } from '../../types/cardTypes';
 import { Search } from '../../components/search/search';
@@ -9,11 +9,24 @@ import styles from './mainPage.module.css';
 import { CardList } from '../../components/cardList/cardList';
 import { ROUTES } from '../../utils/constants';
 import { useGetResultsQuery } from '../../api/createApi';
+import { useAppDispatch } from '../../types/store';
+import { cardListSlice } from '../../components/cardList/cardListSlice';
 
 const MainPage = () => {
   const [searchParams] = useSearchParams();
   const params = useParams();
-  const [results, setResults] = useState<CardProps[]>([]);
+  const [isOpen, setIsOpen] = useState(params.animeId ? true : false);
+
+  const dispatch = useAppDispatch();
+  const setResults = useCallback(
+    (results: CardProps[]) => {
+      dispatch({
+        type: cardListSlice.actions.setCardList.type,
+        payload: results,
+      });
+    },
+    [dispatch]
+  );
 
   const [totalPages, setTotalPages] = useState(1);
   const [isFetchError, setIsFetchError] = useState(false);
@@ -21,8 +34,6 @@ const MainPage = () => {
     q: searchParams.get('q') ?? '',
     page: Number(searchParams.get('page')) || 1,
   });
-
-  const [isOpen, setIsOpen] = useState(params.animeId ? true : false);
 
   useEffect(() => {
     if (params.animeId) {
@@ -37,7 +48,7 @@ const MainPage = () => {
       setResults(data.data);
       setTotalPages(data.pagination.last_visible_page);
     }
-  }, [data]);
+  }, [data, setResults]);
 
   useEffect(() => {
     if (isError) {
@@ -46,7 +57,7 @@ const MainPage = () => {
     } else {
       setIsFetchError(false);
     }
-  }, [isError]);
+  }, [isError, setResults]);
 
   return (
     <div className={styles.container}>
@@ -61,9 +72,7 @@ const MainPage = () => {
         <Search />
         {isFetching && <Loader />}
         {isFetchError && <p>Something went wrong</p>}
-        {results && !isFetching && !isFetchError && (
-          <CardList results={results} isLoading={isFetching} />
-        )}
+        {!isFetching && !isFetchError && <CardList />}
         {!isFetching && <Pagination totalPages={totalPages} />}
       </div>
       <Outlet />
