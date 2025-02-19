@@ -18,7 +18,7 @@ describe('details page', () => {
 
     await userTypeAndSearch(user);
 
-    const card = await screen.findByText(animeData.data[0].title_english);
+    const card = await screen.findByAltText(animeData.data[0].title_english);
     await user.click(card);
 
     waitFor(async () => {
@@ -36,7 +36,7 @@ describe('details page', () => {
 
     await userTypeAndSearch(user);
 
-    const card = await screen.findByText(animeData.data[0].title_english);
+    const card = await screen.findByAltText(animeData.data[0].title_english);
     await user.click(card);
 
     waitFor(async () => {
