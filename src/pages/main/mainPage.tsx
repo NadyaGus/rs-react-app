@@ -11,6 +11,7 @@ import { ROUTES } from '../../utils/constants';
 import { useGetResultsQuery } from '../../api/createApi';
 import { useAppDispatch } from '../../types/store';
 import { cardListSlice } from '../../components/cardList/cardListSlice';
+import { Favorites } from '../../components/favorites/favorites';
 
 const MainPage = () => {
   const [searchParams] = useSearchParams();
@@ -69,6 +70,7 @@ const MainPage = () => {
             onClick={() => setIsOpen(false)}
           />
         )}
+        <Favorites />
         <Search />
         {isFetching && <Loader />}
         {isFetchError && <p>Something went wrong</p>}

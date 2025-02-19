@@ -2,6 +2,7 @@ import { Link, useSearchParams } from 'react-router';
 import { CardProps } from '../../types/cardTypes';
 import styles from './card.module.css';
 import { endPoints } from '../../api/fetchData';
+import { CheckBox } from '../checkbox/checkbox';
 
 const MAX_SYNOPSIS_LENGTH = 720;
 
@@ -22,10 +23,14 @@ const Card = (props: CardProps) => {
 
   return (
     <article className={styles.card}>
-      <Link to={`${endPoints.details}${props.mal_id}?page=${page}`}>
+      <div className={styles.headerAndCheckbox}>
         <h2 className={styles.title}>
           {props.title_english ?? props.title_japanese ?? 'No title'}
         </h2>
+        <CheckBox id={props.mal_id} />
+      </div>
+
+      <Link to={`${endPoints.details}${props.mal_id}?page=${page}`}>
         <div className={styles.container}>
           <div className={styles.imageContainer}>
             <img

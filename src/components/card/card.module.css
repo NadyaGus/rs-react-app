@@ -7,8 +7,16 @@
   margin: 1rem 0;
 }
 
+.headerAndCheckbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
 .title {
-  margin: 0 0 1rem 0;
+  margin: 1rem 1rem 1rem 0;
+  justify-self: center;
   text-align: center;
 }
 
