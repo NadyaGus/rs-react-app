@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CardProps } from '../../types/cardTypes';
 
 interface FavoritesState {
-  favorites: number[];
+  favorites: CardProps[];
 }
 
 const initialState: FavoritesState = {
@@ -12,12 +13,14 @@ const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,
   reducers: {
-    addFavorite: (state, action: PayloadAction<number>) => {
+    addFavorite: (state, action: PayloadAction<CardProps>) => {
       if (state.favorites.includes(action.payload)) return;
       state.favorites.push(action.payload);
     },
-    removeFavorite: (state, action: PayloadAction<number>) => {
-      state.favorites = state.favorites.filter((id) => id !== action.payload);
+    removeFavorite: (state, action: PayloadAction<CardProps>) => {
+      state.favorites = state.favorites.filter(
+        (card) => card.mal_id !== action.payload.mal_id
+      );
     },
     clearFavorites: (state) => {
       state.favorites = [];

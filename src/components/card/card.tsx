@@ -27,7 +27,7 @@ const Card = (props: CardProps) => {
         <h2 className={styles.title}>
           {props.title_english ?? props.title_japanese ?? 'No title'}
         </h2>
-        <CheckBox id={props.mal_id} />
+        <CheckBox card={props} />
       </div>
 
       <Link to={`${endPoints.details}${props.mal_id}?page=${page}`}>
