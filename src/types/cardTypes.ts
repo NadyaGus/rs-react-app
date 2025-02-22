@@ -6,6 +6,7 @@ type CardProps = {
   synopsis: string;
   source: string;
   status: string;
+  url: string;
 };
 
 type CardsResponse = {

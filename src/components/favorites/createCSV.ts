@@ -1,20 +1,22 @@
 import { CardProps } from '../../types/cardTypes';
 
 export const createCSV = (data: CardProps[]): string => {
-  const titles = Object.keys(data[0] ?? {});
+  const titles =
+    ['title_english', 'title_japanese', 'link', 'source', 'status'].join(',') +
+    '\n';
 
-  const csv = [];
-  csv.push(titles);
+  const values = data
+    .map((card) => {
+      console.log(card.synopsis);
+      return [
+        card.title_english,
+        card.title_japanese,
+        card.url,
+        card.source,
+        card.status,
+      ];
+    })
+    .join('\n');
 
-  data.forEach((item) => {
-    csv.push(Object.values(item));
-  });
-
-  let csvContent = '';
-
-  csv.forEach((row) => {
-    csvContent += row.join(';') + '\r\n';
-  });
-
-  return csvContent;
+  return titles + values;
 };

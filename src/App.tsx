@@ -17,12 +17,14 @@ const App = () => {
   return (
     <themeContext.Provider value={{ theme, setTheme }}>
       <div className={'App' + ' ' + theme}>
-        <Routes>
-          <Route path={ROUTES.root} element={<MainPage />}>
-            <Route path={ROUTES.detailsWithId} element={<DetailsPage />} />
-          </Route>
-          <Route path={ROUTES.notFound} element={<ErrorPage />} />
-        </Routes>
+        <div className={'app-container'}>
+          <Routes>
+            <Route path={ROUTES.root} element={<MainPage />}>
+              <Route path={ROUTES.detailsWithId} element={<DetailsPage />} />
+            </Route>
+            <Route path={ROUTES.notFound} element={<ErrorPage />} />
+          </Routes>
+        </div>
       </div>
     </themeContext.Provider>
   );
