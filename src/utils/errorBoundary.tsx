@@ -1,8 +1,6 @@
 import { Component } from 'react';
 import { type ErrorInfo } from 'react-dom/client';
 
-import { FallbackUI } from './fallbackUI';
-
 interface Props {
   children?: React.ReactNode;
 }
@@ -25,7 +23,16 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return <FallbackUI />;
+      return (
+        <div>
+          <h1>
+            Sorry. Something went wrong...
+            <br />
+            Please, reload the page
+          </h1>
+          <button onClick={() => window.location.reload()}>Reset</button>
+        </div>
+      );
     }
 
     return this.props.children;

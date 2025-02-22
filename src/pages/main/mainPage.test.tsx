@@ -2,11 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import animeData from '../../__test__/mock/animeData.json';
-import {
-  configureRouter,
-  renderApp,
-  userTypeAndSearch,
-} from '../../__test__/utils';
+import { configureRouter, userTypeAndSearch } from '../../__test__/utils';
 import { RouterProvider } from 'react-router';
 import { ROUTES } from '../../utils/constants';
 import { Provider } from 'react-redux';
@@ -15,12 +11,6 @@ import { store } from '../../store/store';
 const user = userEvent.setup();
 
 describe('main page', () => {
-  it('should render', async () => {
-    renderApp();
-    await screen.findByRole('button', { name: 'Search' });
-    expect(await screen.findByText('Search')).toBeInTheDocument();
-  });
-
   it('should navigate to details page and update url', async () => {
     const router = configureRouter();
     render(

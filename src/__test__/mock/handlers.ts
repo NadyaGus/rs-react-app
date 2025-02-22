@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import animeData from './animeData.json';
+import { mockConstants } from './mockConstants';
 
 export const handlers = [
   http.get('https://api.jikan.moe/v4/anime', ({ request }) => {
@@ -28,7 +29,16 @@ export const handlers = [
       });
     }
   }),
-  http.get(`https://api.jikan.moe/v4/anime/20`, () => {
-    return HttpResponse.json(animeData.data[0]);
-  }),
+  http.get(
+    `https://api.jikan.moe/v4/anime/${mockConstants.mockAnimeId}`,
+    () => {
+      return HttpResponse.json(animeData.data[0]);
+    }
+  ),
+  http.get(
+    `https://api.jikan.moe/v4/anime/${mockConstants.mockAnimeDetailsError.mal_id}`,
+    () => {
+      return new HttpResponse(null, { status: 404 });
+    }
+  ),
 ];
