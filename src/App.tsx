@@ -5,20 +5,26 @@ import { MainPage } from './pages/main/mainPage';
 import { ErrorPage } from './pages/error/errorPage';
 import { DetailsPage } from './pages/details/detailsPage';
 import { ROUTES } from './utils/constants';
+import { useState } from 'react';
+import { ThemeContextType } from './utils/theme';
+import { themeContext } from './utils/theme';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
 
 const App = () => {
-  return (
-    <div className="App">
-      <Routes>
-        <Route path={ROUTES.root} element={<MainPage />}>
-          <Route path={ROUTES.detailsWithId} element={<DetailsPage />} />
-        </Route>
+  const [theme, setTheme] = useState<ThemeContextType['theme']>('dark');
 
-        <Route path={ROUTES.notFound} element={<ErrorPage />} />
-      </Routes>
-    </div>
+  return (
+    <themeContext.Provider value={{ theme, setTheme }}>
+      <div className={'App' + ' ' + theme}>
+        <Routes>
+          <Route path={ROUTES.root} element={<MainPage />}>
+            <Route path={ROUTES.detailsWithId} element={<DetailsPage />} />
+          </Route>
+          <Route path={ROUTES.notFound} element={<ErrorPage />} />
+        </Routes>
+      </div>
+    </themeContext.Provider>
   );
 };
 

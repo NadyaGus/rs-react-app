@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color);
   padding: 1rem;
   margin: 1rem 0;
 }
@@ -37,13 +37,13 @@
   min-width: 220px;
   max-width: 220px;
   height: 300px;
-  background-color: #121212;
+  background-color: var(--color);
   overflow: hidden;
 }
 
 .synopsis {
   margin: 1rem;
-  color: rgb(228, 236, 243);
+  color: var(--color);
 
   @media screen and (width <768px) {
     margin: 1rem 1rem 0 1rem;

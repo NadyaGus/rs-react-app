@@ -32,6 +32,7 @@ const CheckBox = (props: CheckBoxProps) => {
       <label>
         {isChecked ? 'Remove from favorites' : 'Add to favorites'}
         <input
+          name="checkbox"
           type="checkbox"
           checked={isChecked}
           onChange={() => setIsChecked(!isChecked)}

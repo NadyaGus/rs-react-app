@@ -12,6 +12,7 @@ import { useGetResultsQuery } from '../../api/createApi';
 import { useAppDispatch } from '../../types/store';
 import { cardListSlice } from '../../components/cardList/cardListSlice';
 import { Favorites } from '../../components/favorites/favorites';
+import { ButtonChangeTheme } from '../../components/changeTheme/changeThemeButton';
 
 const MainPage = () => {
   const [searchParams] = useSearchParams();
@@ -72,6 +73,7 @@ const MainPage = () => {
         )}
         <Favorites />
         <Search />
+        <ButtonChangeTheme />
         {isFetching && <Loader />}
         {isFetchError && <p>Something went wrong</p>}
         {!isFetching && !isFetchError && <CardList />}
