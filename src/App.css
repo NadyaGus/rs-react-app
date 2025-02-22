@@ -11,6 +11,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-color: var(--bg-color);
 }
 
 .App {
@@ -19,6 +21,7 @@
   --color-dark: #1a1919;
   --color-light: #e8e8e8;
 
+  min-height: 100vh;
   padding: 2rem;
   color: var(--color);
   background-color: var(--bg-color);

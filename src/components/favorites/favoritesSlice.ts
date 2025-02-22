@@ -13,14 +13,16 @@ const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,
   reducers: {
-    addFavorite: (state, action: PayloadAction<CardProps>) => {
-      if (state.favorites.includes(action.payload)) return;
-      state.favorites.push(action.payload);
-    },
-    removeFavorite: (state, action: PayloadAction<CardProps>) => {
-      state.favorites = state.favorites.filter(
-        (card) => card.mal_id !== action.payload.mal_id
-      );
+    toggleFavorite: (state, action: PayloadAction<CardProps>) => {
+      if (
+        state.favorites.find((card) => card.mal_id === action.payload.mal_id)
+      ) {
+        state.favorites = state.favorites.filter(
+          (card) => card.mal_id !== action.payload.mal_id
+        );
+      } else {
+        state.favorites.push(action.payload);
+      }
     },
     clearFavorites: (state) => {
       state.favorites = [];
@@ -28,6 +30,5 @@ const favoritesSlice = createSlice({
   },
 });
 
-export const { addFavorite, removeFavorite, clearFavorites } =
-  favoritesSlice.actions;
+export const { toggleFavorite, clearFavorites } = favoritesSlice.actions;
 export { favoritesSlice };

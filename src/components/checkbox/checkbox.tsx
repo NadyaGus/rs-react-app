@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../types/store';
 import { favoritesSlice } from '../favorites/favoritesSlice';
 import { CardProps } from '../../types/cardTypes';
@@ -8,24 +7,14 @@ type CheckBoxProps = {
 };
 
 const CheckBox = (props: CheckBoxProps) => {
-  const initChecked = useAppSelector((state) =>
-    state.favorites.favorites.includes(props.card)
-  );
-  const [isChecked, setIsChecked] = useState(initChecked);
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector((state) => state.favorites.favorites);
+  const isChecked = useAppSelector((state) =>
+    state.favorites.favorites.some((card) => card.mal_id === props.card.mal_id)
+  );
 
-  useEffect(() => {
-    setIsChecked(favorites.includes(props.card));
-  }, [favorites, props.card]);
-
-  useEffect(() => {
-    if (isChecked) {
-      dispatch(favoritesSlice.actions.addFavorite(props.card));
-    } else {
-      dispatch(favoritesSlice.actions.removeFavorite(props.card));
-    }
-  }, [isChecked, props.card, dispatch]);
+  const handleClick = () => {
+    dispatch(favoritesSlice.actions.toggleFavorite(props.card));
+  };
 
   return (
     <>
@@ -35,7 +24,7 @@ const CheckBox = (props: CheckBoxProps) => {
           name="checkbox"
           type="checkbox"
           checked={isChecked}
-          onChange={() => setIsChecked(!isChecked)}
+          onChange={() => handleClick()}
           title={isChecked ? 'Remove from favorites' : 'Add to favorites'}
         />
       </label>
