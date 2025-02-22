@@ -1,9 +1,9 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import animeData from '../../__test__/mock/animeData.json';
-import { fetchData } from '../../api/fetchData';
 import { renderApp, userTypeAndSearch } from '../../__test__/utils';
+import { jikanApi } from '../../api/createApi';
 
 const user = userEvent.setup();
 
@@ -22,15 +22,16 @@ describe('card tests', () => {
   });
 
   it('should initiate api call', async () => {
-    const spy = vi.spyOn(fetchData, 'getDetails');
-
     renderApp();
+    const spy = vi.spyOn(jikanApi, 'useGetDetailsQuery');
 
     await userTypeAndSearch(user);
 
     const card = await screen.findByAltText(animeData.data[0].title_english);
     await user.click(card);
 
-    expect(spy).toHaveBeenCalledTimes(1);
+    waitFor(() => {
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
   });
 });

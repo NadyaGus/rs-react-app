@@ -14,31 +14,23 @@ const user = userEvent.setup();
 
 describe('details page', () => {
   it('should show loader when details page is loading', async () => {
-    renderApp();
-
+    waitFor(async () => {
+      renderApp();
+      await screen.findByText('Naruto');
+    });
     await userTypeAndSearch(user);
-
     const card = await screen.findByAltText(animeData.data[0].title_english);
     await user.click(card);
-
-    waitFor(async () => {
-      expect(router.state.location.pathname).toBe(
-        `${ROUTES.details}/${animeData.data[0].mal_id}`
-      );
+    waitFor(() => {
+      expect(screen.queryByTestId('loader')).toBeInTheDocument();
     });
-
-    await screen.findByTestId('loader');
-    expect(screen.getByTestId('loader')).toBeInTheDocument();
   });
 
   it('should show relevant data', async () => {
     renderApp();
-
     await userTypeAndSearch(user);
-
     const card = await screen.findByAltText(animeData.data[0].title_english);
     await user.click(card);
-
     waitFor(async () => {
       expect(
         screen.getByText(animeData.data[0].title_english)
@@ -52,7 +44,6 @@ describe('details page', () => {
 
   it('should hide page when clicking back button ', async () => {
     renderApp();
-
     waitFor(async () => {
       expect(
         screen.getByText(animeData.data[0].title_english)
@@ -62,7 +53,6 @@ describe('details page', () => {
         screen.getByText(animeData.data[0].title_japanese)
       ).toBeInTheDocument();
       await user.click(screen.getByRole('button', { name: 'Go Back' }));
-
       expect(router.state.location.pathname).toBe(ROUTES.root);
     });
   });

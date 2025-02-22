@@ -1,8 +1,8 @@
 import { Link, useSearchParams } from 'react-router';
 import { CardProps } from '../../types/cardTypes';
 import styles from './card.module.css';
-import { endPoints } from '../../api/fetchData';
 import { CheckBox } from '../checkbox/checkbox';
+import { endPoints } from '../../api/createApi';
 
 const MAX_SYNOPSIS_LENGTH = 720;
 

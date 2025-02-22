@@ -36,7 +36,7 @@ const configureRouter = () => {
 };
 
 const router = configureRouter();
-const renderApp = () => {
+const renderApp = async () => {
   return render(
     <Provider store={store}>
       <RouterProvider router={router} />
