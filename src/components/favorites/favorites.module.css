@@ -1,0 +1,27 @@
+.container {
+    position: fixed;
+    bottom: -100px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    transition: all .5s ease-in-out;
+}
+
+.active {
+    bottom: 0;
+}
+
+.favorites {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    color: var(--bg-color);
+    background-color: var(--color);
+}
+
+.count {
+    width: 120px;
+    text-align: center;
+}
