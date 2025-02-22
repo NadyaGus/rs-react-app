@@ -7,14 +7,14 @@ export const createCSV = (data: CardProps[]): string => {
     'url',
     'source',
     'status',
-  ].join(',');
+  ].join(';');
 
   const csv = [];
   csv.push(titles);
 
   data.forEach((item) => {
     csv.push(
-      `${item.title_english ?? 'No title'},${item.title_japanese ?? 'No title'},${item.url ?? 'No url'},${item.source ?? 'Unknown source'},${item.status ?? 'Unknown status'}`
+      `${item.title_english ?? 'No title'};${item.title_japanese ?? 'No title'};${item.url ?? 'No url'};${item.source ?? 'Unknown source'};${item.status ?? 'Unknown status'}`
     );
   });
 
