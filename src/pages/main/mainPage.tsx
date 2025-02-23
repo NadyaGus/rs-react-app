@@ -77,7 +77,7 @@ const MainPage = () => {
         {isFetching && <Loader />}
         {isFetchError && <p>Something went wrong</p>}
         {!isFetching && !isFetchError && <CardList />}
-        {!isFetching && <Pagination totalPages={totalPages} />}
+        {!isFetching && !isFetchError && <Pagination totalPages={totalPages} />}
       </div>
       <Outlet />
     </div>
