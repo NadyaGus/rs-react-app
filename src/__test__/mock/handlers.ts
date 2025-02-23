@@ -7,10 +7,7 @@ export const handlers = [
     const url = new URL(request.url);
     const searchQuery = url.searchParams.get('q');
 
-    if (searchQuery === 'naruto') {
-      return HttpResponse.json(animeData);
-    }
-    if (searchQuery === '') {
+    if (searchQuery === 'naruto' || searchQuery === '') {
       return HttpResponse.json(animeData);
     }
     if (searchQuery === 'naruto12345') {
