@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import App from '../../App';
+import App from '..';
 
 describe('error page tests', () => {
   it('should render with error route', () => {

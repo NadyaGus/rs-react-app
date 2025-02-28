@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { renderApp, userTypeAndSearch } from '../../__test__/utils';
 import userEvent from '@testing-library/user-event';
 import animeData from '../../__test__/mock/animeData.json';
-import { LS_KEY } from '../../App';
+import { LS_KEY } from '../../pages';
 
 const user = userEvent.setup();
 

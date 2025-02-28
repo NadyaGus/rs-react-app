@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import styles from './search.module.css';
 import { useSearchParams } from 'react-router';
 import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
-import { LS_KEY } from '../../App';
+import { LS_KEY } from '../../pages';
 
 const Search = () => {
   const [storedValue, setStoredValue] = useLocalStorage(LS_KEY);
