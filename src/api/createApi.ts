@@ -10,13 +10,10 @@ export const jikanApi = createApi({
   reducerPath: 'jikanApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.jikan.moe/v4/' }),
   endpoints: (builder) => ({
-    getResults: builder.query<
-      CardsResponse,
-      { q: string | string[]; page: string | string[] }
-    >({
+    getResults: builder.query<CardsResponse, { q: string[]; page: string[] }>({
       query: (params) => ({
         url: endPoints.search,
-        params: { limit: 10, q: params.q, page: params.page },
+        params: { limit: 10, q: params.q.join(''), page: params.page.join('') },
       }),
     }),
     getDetails: builder.query<{ data: CardProps }, string>({

@@ -5,6 +5,7 @@ import { LS_KEY } from '../../pages';
 import { useRouter } from 'next/router';
 
 const Search = () => {
+  // TODO: fix local storage for SSR
   const [storedValue, setStoredValue] = useLocalStorage(LS_KEY);
   const [inputValue, setInputValue] = useState(storedValue);
   const router = useRouter();

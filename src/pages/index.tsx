@@ -6,10 +6,12 @@ import { jikanApi } from '../api/createApi';
 import { CardProps } from '../types/cardTypes';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useAppDispatch } from '../types/store';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { cardListSlice } from '../components/cardList/cardListSlice';
 import { CardList } from '../components/cardList/cardList';
 import { Search } from '../components/search/search';
+import { useRouter } from 'next/router';
+import { Loader } from '../components/loader/loader';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
 
@@ -18,8 +20,8 @@ export const getServerSideProps = (async (context) => {
   const res = await store
     .dispatch(
       jikanApi.endpoints.getResults.initiate({
-        q,
-        page,
+        q: [...q],
+        page: [...page],
       })
     )
     .unwrap();
@@ -32,6 +34,9 @@ export const getServerSideProps = (async (context) => {
 const App: NextPageWithLayout<{ data: CardProps[] }> = ({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFetchError, setIsFetchError] = useState(false);
   // const [searchParams] = useSearchParams();
   // const params = useParams();
   // const [isOpen, setIsOpen] = useState(params.animeId ? true : false);
@@ -43,16 +48,24 @@ const App: NextPageWithLayout<{ data: CardProps[] }> = ({
         type: cardListSlice.actions.setCardList.type,
         payload: results,
       });
+      setIsLoading(false);
     },
     [dispatch]
   );
 
+  useEffect(() => {
+    router.events.on('routeChangeStart', () => {
+      setIsLoading(true);
+    });
+
+    router.events.on('routeChangeError', () => {
+      setIsLoading(false);
+      setIsFetchError(true);
+      setResults([]);
+    });
+  }, [router, setResults]);
+
   // const [totalPages, setTotalPages] = useState(1);
-  // const [isFetchError, setIsFetchError] = useState(false);
-  // const { data, isFetching, isError } = useGetResultsQuery({
-  //   q: searchParams.get('q') ?? '',
-  //   page: Number(searchParams.get('page')) || 1,
-  // });
 
   // useEffect(() => {
   //   if (params.animeId) {
@@ -69,15 +82,6 @@ const App: NextPageWithLayout<{ data: CardProps[] }> = ({
     }
   }, [data, setResults]);
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     setIsFetchError(true);
-  //     setResults([]);
-  //   } else {
-  //     setIsFetchError(false);
-  //   }
-  // }, [isError, setResults]);
-
   return (
     <div className="app-container">
       <div>
@@ -91,9 +95,9 @@ const App: NextPageWithLayout<{ data: CardProps[] }> = ({
         {/* <Favorites /> */}
         <Search />
         <ButtonChangeTheme />
-        {/* {isFetching && <Loader />} */}
-        {/* {isFetchError && <p>Something went wrong</p>} */}
-        {<CardList />}
+        {isLoading && <Loader />}
+        {isFetchError && <p>Something went wrong</p>}
+        {!isLoading && <CardList />}
         {/* {!isFetching && !isFetchError && <Pagination totalPages={totalPages} />} */}
       </div>
       {/* <Outlet /> */}
