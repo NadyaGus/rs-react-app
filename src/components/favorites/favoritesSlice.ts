@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CardProps } from '../../types/cardTypes';
 
-interface FavoritesState {
+export interface FavoritesState {
   favorites: CardProps[];
 }
 
