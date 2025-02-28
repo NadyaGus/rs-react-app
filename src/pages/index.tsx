@@ -3,7 +3,7 @@ import Layout from '../components/layout/layout';
 import { ButtonChangeTheme } from '../components/changeTheme/changeThemeButton';
 import { store } from '../store/store';
 import { jikanApi } from '../api/createApi';
-import { CardProps } from '../types/cardTypes';
+import { CardProps, CardsResponse } from '../types/cardTypes';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useAppDispatch } from '../types/store';
 import { useCallback, useEffect, useState } from 'react';
@@ -12,11 +12,12 @@ import { CardList } from '../components/cardList/cardList';
 import { Search } from '../components/search/search';
 import { useRouter } from 'next/router';
 import { Loader } from '../components/loader/loader';
+import { Pagination } from '../components/pagination/pagination';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
 
 export const getServerSideProps = (async (context) => {
-  const { q = 'naruto', page = '1' } = context.query;
+  const { q = '', page = '1' } = context.query;
   const res = await store
     .dispatch(
       jikanApi.endpoints.getResults.initiate({
@@ -25,13 +26,13 @@ export const getServerSideProps = (async (context) => {
       })
     )
     .unwrap();
-  const data: CardProps[] = res.data;
+  const data: CardsResponse = res;
   return {
     props: { data },
   };
-}) satisfies GetServerSideProps<{ data: CardProps[] }>;
+}) satisfies GetServerSideProps<{ data: CardsResponse }>;
 
-const App: NextPageWithLayout<{ data: CardProps[] }> = ({
+const App: NextPageWithLayout<{ data: CardsResponse }> = ({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
@@ -65,7 +66,7 @@ const App: NextPageWithLayout<{ data: CardProps[] }> = ({
     });
   }, [router, setResults]);
 
-  // const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   // useEffect(() => {
   //   if (params.animeId) {
@@ -77,8 +78,8 @@ const App: NextPageWithLayout<{ data: CardProps[] }> = ({
 
   useEffect(() => {
     if (data) {
-      setResults(data);
-      // setTotalPages(data.pagination.last_visible_page);
+      setResults(data.data);
+      setTotalPages(data.pagination.last_visible_page);
     }
   }, [data, setResults]);
 
@@ -98,7 +99,7 @@ const App: NextPageWithLayout<{ data: CardProps[] }> = ({
         {isLoading && <Loader />}
         {isFetchError && <p>Something went wrong</p>}
         {!isLoading && <CardList />}
-        {/* {!isFetching && !isFetchError && <Pagination totalPages={totalPages} />} */}
+        {!isLoading && !isFetchError && <Pagination totalPages={+totalPages} />}
       </div>
       {/* <Outlet /> */}
     </div>
