@@ -13,6 +13,7 @@ import { Search } from '../components/search/search';
 import { useRouter } from 'next/router';
 import { Loader } from '../components/loader/loader';
 import { Pagination } from '../components/pagination/pagination';
+import { Favorites } from '../components/favorites/favorites';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
 
@@ -93,7 +94,7 @@ const App: NextPageWithLayout<{ data: CardsResponse }> = ({
             onClick={() => setIsOpen(false)}
           />
         )} */}
-        {/* <Favorites /> */}
+        <Favorites />
         <Search />
         <ButtonChangeTheme />
         {isLoading && <Loader />}
