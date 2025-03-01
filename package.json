@@ -11,7 +11,6 @@
     "format:fix": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "preview": "vite preview",
     "prepare": "husky",
     "test": "vitest run",
     "coverage": "vitest run --coverage"
@@ -52,7 +51,6 @@
     "prettier": "^3.4.2",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",
-    "vite": "^6.0.5",
     "vitest": "^3.0.5"
   }
 }

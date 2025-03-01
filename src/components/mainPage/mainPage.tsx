@@ -76,7 +76,7 @@ const MainPage: NextPageWithLayout<{ data: CardsResponse }> = ({
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    if (router.route === 'details/[id]') {
+    if (router.route === '/details/[id]') {
       setIsOpen(true);
     } else {
       setIsOpen(false);
