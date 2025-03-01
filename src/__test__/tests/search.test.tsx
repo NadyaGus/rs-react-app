@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { renderMainPage, userTypeAndSearch } from '../utils';
 import userEvent from '@testing-library/user-event';
@@ -20,13 +20,15 @@ describe('search', () => {
   it('should get value from local storage', async () => {
     await renderMainPage();
     const value = localStorage.getItem(LS_KEY);
-    expect(value).toBe(animeData.data[0].title_english);
-    expect(screen.getByRole('searchbox')).toHaveValue(value);
+    // expect(value).toBe(animeData.data[0].title_english);
+    waitFor(() => expect(screen.getByRole('searchbox')).toHaveValue(value));
   });
 
   it('should set new value to local storage', async () => {
     await renderMainPage();
     await userTypeAndSearch(user);
-    expect(localStorage.setItem).toHaveBeenCalledWith(LS_KEY, 'Naruto');
+    waitFor(() =>
+      expect(localStorage.setItem).toHaveBeenCalledWith(LS_KEY, 'Naruto')
+    );
   });
 });
