@@ -1,13 +1,13 @@
 import { screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { renderDetailsPage, renderMainPage } from '../../__test__/utils';
+import { renderDetailsPage, renderMainPage } from '../utils';
 import userEvent from '@testing-library/user-event';
-import animeData from '../../__test__/mock/animeData.json';
+import animeData from '../mock/animeData.json';
 import { ROUTES } from '../../utils/constants';
-import useRouter from '../../__test__/router';
-import { getServerSideProps } from './[id]';
+import useRouter from '../router';
+import { getServerSideProps } from '../../pages/details/[id]';
 import { GetServerSidePropsContext } from 'next';
-import { server } from '../../__test__/setup-test';
+import { server } from '../setup-test';
 import { http, HttpResponse } from 'msw';
 
 const user = userEvent.setup();

@@ -1,8 +1,8 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { renderMainPage, userTypeAndSearch } from '../../__test__/utils';
+import { renderMainPage, userTypeAndSearch } from '../utils';
 import userEvent from '@testing-library/user-event';
-import animeData from '../../__test__/mock/animeData.json';
+import animeData from '../mock/animeData.json';
 import { LS_KEY } from '../../pages';
 
 const user = userEvent.setup();

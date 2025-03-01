@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import animeData from '../../__test__/mock/animeData.json';
-import { renderMainPage, userTypeAndSearch } from '../../__test__/utils';
+import animeData from '../mock/animeData.json';
+import { renderMainPage, userTypeAndSearch } from '../utils';
 import { ROUTES } from '../../utils/constants';
-import useRouter from '../../__test__/router';
+import useRouter from '../router';
 
 const user = userEvent.setup();
 

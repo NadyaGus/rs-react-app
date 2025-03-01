@@ -1,8 +1,8 @@
 import { screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { mockConstants } from '../../__test__/mock/mockConstants';
-import { renderMainPage } from '../../__test__/utils';
+import { mockConstants } from '../mock/mockConstants';
+import { renderMainPage } from '../utils';
 
 const user = userEvent.setup();
 
