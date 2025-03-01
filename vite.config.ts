@@ -16,7 +16,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text'],
     },
-    environment: 'jsdom',
+    environment: 'happy-dom',
     globals: true,
     setupFiles: ['src/__test__/setup-test.ts'],
   },

@@ -1,25 +1,30 @@
-import { configureRouter, renderApp } from '../../__test__/utils';
+import { renderMainPage } from '../../__test__/utils';
 import userEvent from '@testing-library/user-event';
 import { screen, waitFor } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { ROUTES } from '../../utils/constants';
+import useRouter from '../../__test__/router';
 
-const router = configureRouter();
 const user = userEvent.setup();
 
 describe('pagination tests', () => {
   it('should navigate between pages', async () => {
-    renderApp();
+    await renderMainPage();
+
+    const mockPush = vi.fn();
+    (useRouter as ReturnType<typeof vi.fn>).mockReturnValue({
+      ...useRouter(),
+    });
 
     waitFor(async () => {
       await screen.findByText('Naruto');
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      expect(router.state.location.pathname).toBe(`${ROUTES.root}?page=2`);
+      expect(mockPush).toHaveBeenCalledWith(`${ROUTES.root}?page=2`);
     });
 
     waitFor(async () => {
       await user.click(screen.getByRole('button', { name: 'Previous' }));
-      expect(router.state.location.pathname).toBe(`${ROUTES.root}?page=1`);
+      expect(mockPush).toHaveBeenCalledWith(`${ROUTES.root}?page=1`);
     });
   });
 });

@@ -1,10 +1,10 @@
-import { Link } from 'react-router';
+import Link from 'next/link';
 
 const ErrorPage = () => {
   return (
     <div>
       <h1>Something went wrong</h1>
-      <Link to="/">Go Home</Link>
+      <Link href="/">Go Home</Link>
     </div>
   );
 };
