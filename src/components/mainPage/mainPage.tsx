@@ -1,19 +1,19 @@
-import { NextPageWithLayout } from '../_app';
-import { ButtonChangeTheme } from '../../components/changeTheme/changeThemeButton';
+import { NextPageWithLayout } from '../../pages/_app';
+import { ButtonChangeTheme } from '../changeTheme/changeThemeButton';
 import { store } from '../../store/store';
 import { jikanApi } from '../../api/createApi';
 import { CardProps, CardsResponse } from '../../types/cardTypes';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useAppDispatch } from '../../types/store';
 import { useCallback, useEffect, useState } from 'react';
-import { cardListSlice } from '../../components/cardList/cardListSlice';
-import { CardList } from '../../components/cardList/cardList';
-import { Search } from '../../components/search/search';
+import { cardListSlice } from '../cardList/cardListSlice';
+import { CardList } from '../cardList/cardList';
+import { Search } from '../search/search';
 import { useRouter } from 'next/router';
-import { Loader } from '../../components/loader/loader';
-import { Pagination } from '../../components/pagination/pagination';
-import { Favorites } from '../../components/favorites/favorites';
-import Layout from '../../components/layout/layout';
+import { Loader } from '../loader/loader';
+import { Pagination } from '../pagination/pagination';
+import { Favorites } from '../favorites/favorites';
+import Layout from '../layout/layout';
 import Link from 'next/link';
 
 import styles from './mainPage.module.css';
@@ -76,7 +76,7 @@ const MainPage: NextPageWithLayout<{ data: CardsResponse }> = ({
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    if (router.route !== '/') {
+    if (router.route === 'details/[id]') {
       setIsOpen(true);
     } else {
       setIsOpen(false);
