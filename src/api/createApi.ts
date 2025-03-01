@@ -16,8 +16,8 @@ export const jikanApi = createApi({
         params: { limit: 10, q: params.q.join(''), page: params.page.join('') },
       }),
     }),
-    getDetails: builder.query<{ data: CardProps }, string>({
-      query: (id) => endPoints.details + id,
+    getDetails: builder.query<{ data: CardProps }, { id: string[] }>({
+      query: (id) => endPoints.details + id.id.join(''),
     }),
   }),
 });

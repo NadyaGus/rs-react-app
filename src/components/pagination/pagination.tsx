@@ -9,7 +9,7 @@ const Pagination = (props: PaginationProps) => {
   const router = useRouter();
 
   const handlePageChange = (page: number) => {
-    router.push(`${router.pathname}?q=${router.query.q}&page=${page}`);
+    router.push(`${router.pathname}?q=${router.query.q || ''}&page=${page}`);
     window.scrollTo(0, 0);
   };
 

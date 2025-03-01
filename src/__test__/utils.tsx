@@ -1,6 +1,6 @@
 import { createMemoryRouter, RouterProvider } from 'react-router';
-import { DetailsPage } from '../pages/details/detailsPage';
-import MainPage from '../pages/main';
+import { DetailsPage } from '../pages/details/[id]';
+import MainPage from '../pages/main/mainPage';
 import animeData from './mock/animeData.json';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/dom';

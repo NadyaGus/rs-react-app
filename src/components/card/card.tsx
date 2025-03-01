@@ -1,12 +1,13 @@
 import { CardProps } from '../../types/cardTypes';
 import styles from './card.module.css';
 import { CheckBox } from '../checkbox/checkbox';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const MAX_SYNOPSIS_LENGTH = 720;
 
 const Card = (props: CardProps) => {
-  // const searchParams = useSearchParams()[0];
-  // const page = searchParams.get('page') ?? '1';
+  const router = useRouter();
 
   const handleSynopsis = (str: string) => {
     if (!str) {
@@ -28,18 +29,20 @@ const Card = (props: CardProps) => {
         <CheckBox card={props} />
       </div>
 
-      {/* <Link to={`${endPoints.details}${props.mal_id}?page=${page}`}> */}
-      <div className={styles.container}>
-        <div className={styles.imageContainer}>
-          <img
-            className={styles.image}
-            src={props.images.webp.image_url}
-            alt={props.title_english}
-          />
+      <Link
+        href={`/details/${props.mal_id}?q=${router.query.q || ''}&page=${router.query.page || '1'}`}
+      >
+        <div className={styles.container}>
+          <div className={styles.imageContainer}>
+            <img
+              className={styles.image}
+              src={props.images.webp.image_url}
+              alt={props.title_english}
+            />
+          </div>
+          <p className={styles.synopsis}>{handleSynopsis(props.synopsis)}</p>
         </div>
-        <p className={styles.synopsis}>{handleSynopsis(props.synopsis)}</p>
-      </div>
-      {/* </Link> */}
+      </Link>
     </article>
   );
 };
