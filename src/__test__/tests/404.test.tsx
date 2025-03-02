@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { screen } from '@testing-library/dom';
-import ErrorPage404, { getServerSideProps } from '../../pages/404';
+import ErrorPage404, { getStaticProps } from '../../pages/404';
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 
@@ -15,7 +15,7 @@ vi.mock('next/router', () => ({
 describe('404', async () => {
   it('should render 404 page with no existing route', async () => {
     const context = {} as GetServerSidePropsContext;
-    const response = await getServerSideProps(context);
+    const response = await getStaticProps(context);
 
     expect(response).toEqual({
       notFound: true,

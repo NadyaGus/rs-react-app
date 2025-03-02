@@ -41,7 +41,12 @@ const DetailsPage: NextPageWithLayout<{ data: CardProps }> = ({
           <button onClick={() => window.history.back()}>Go Back</button>
           <h2>{data.title_english ?? 'No title in english'}</h2>
           <h3>{data.title_japanese ?? 'No title in japanese'}</h3>
-          <Image src={data.images.webp.image_url} alt={data.title_english} />
+          <Image
+            width={400}
+            height={600}
+            src={data.images.webp.image_url}
+            alt={data.title_english}
+          />
           <p>Status: {data.status ?? 'Unknown'}</p>
           <p> Source: {data.source ?? 'Unknown'}</p>
           <p>{data.synopsis}</p>

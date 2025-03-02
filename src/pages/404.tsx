@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { NextPageWithLayout } from './_app';
 import Layout from '../components/layout/layout';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   return {
     notFound: true,
   };

@@ -36,6 +36,8 @@ const Card = (props: CardProps) => {
         <div className={styles.container}>
           <div className={styles.imageContainer}>
             <Image
+              width={220}
+              height={300}
               className={styles.image}
               src={props.images.webp.image_url}
               alt={props.title_english}
