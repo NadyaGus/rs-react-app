@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { CardProps } from '../../../types/cardTypes';
 import styles from './card.module.css';
 import { CheckBox } from './checkbox/checkbox';
@@ -34,7 +35,7 @@ const Card = (props: CardProps) => {
       >
         <div className={styles.container}>
           <div className={styles.imageContainer}>
-            <img
+            <Image
               className={styles.image}
               src={props.images.webp.image_url}
               alt={props.title_english}
