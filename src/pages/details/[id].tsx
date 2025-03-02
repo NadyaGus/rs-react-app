@@ -43,7 +43,7 @@ const DetailsPage: NextPageWithLayout<{ data: CardProps }> = ({
           <h3>{data.title_japanese ?? 'No title in japanese'}</h3>
           <Image
             width={400}
-            height={600}
+            height={550}
             src={data.images.webp.image_url}
             alt={data.title_english}
           />

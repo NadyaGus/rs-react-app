@@ -10,7 +10,6 @@ import { cardListSlice } from '../cardList/cardListSlice';
 import { CardList } from '../cardList/cardList';
 import { Search } from '../search/search';
 import { useRouter } from 'next/router';
-import { Loader } from '../loader/loader';
 import { Pagination } from '../pagination/pagination';
 import { Favorites } from './favorites/favorites';
 import Layout from '../layout/layout';
@@ -41,7 +40,6 @@ const MainPage: NextPageWithLayout<{ data: CardsResponse }> = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(() => router.route === 'details/[id]');
-  const [isLoading, setIsLoading] = useState(true);
   const [isFetchError, setIsFetchError] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -51,23 +49,16 @@ const MainPage: NextPageWithLayout<{ data: CardsResponse }> = ({
         type: cardListSlice.actions.setCardList.type,
         payload: results,
       });
-      setIsLoading(false);
     },
     [dispatch]
   );
 
   useEffect(() => {
-    router.events.on('routeChangeStart', () => {
-      setIsLoading(true);
-    });
-
     router.events.on('routeChangeComplete', () => {
-      setIsLoading(false);
       setIsFetchError(false);
     });
 
     router.events.on('routeChangeError', () => {
-      setIsLoading(false);
       setIsFetchError(true);
       setResults([]);
     });
@@ -101,10 +92,9 @@ const MainPage: NextPageWithLayout<{ data: CardsResponse }> = ({
       <Favorites />
       <Search />
       <ButtonChangeTheme />
-      {isLoading && <Loader />}
       {isFetchError && <p>Something went wrong</p>}
-      {!isLoading && <CardList />}
-      {!isLoading && !isFetchError && <Pagination totalPages={+totalPages} />}
+      <CardList />
+      {!isFetchError && <Pagination totalPages={+totalPages} />}
     </div>
   );
 };
