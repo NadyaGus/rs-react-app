@@ -9,18 +9,24 @@ import { store } from '../../store/store';
 
 export const getServerSideProps = (async (context) => {
   const { id = '' } = context.params ?? {};
-  const res = await store
-    .dispatch(
-      jikanApi.endpoints.getDetails.initiate({
-        id: [...id],
-      })
-    )
-    .unwrap();
-  const data = res.data;
-  return {
-    props: { data },
-  };
-}) satisfies GetServerSideProps<{ data: CardProps }>;
+  try {
+    const res = await store
+      .dispatch(
+        jikanApi.endpoints.getDetails.initiate({
+          id: [...id],
+        })
+      )
+      .unwrap();
+    const data = res.data;
+    return {
+      props: { data },
+    };
+  } catch {
+    return {
+      props: { data: null },
+    };
+  }
+}) satisfies GetServerSideProps<{ data: CardProps | null }>;
 
 const DetailsPage: NextPageWithLayout<{ data: CardProps }> = ({
   data,
@@ -44,9 +50,11 @@ const DetailsPage: NextPageWithLayout<{ data: CardProps }> = ({
   } else {
     return (
       <div className={styles.container}>
-        <h2>Something went wrong...</h2>
-        <button onClick={() => router.back()}>Go Back</button>
-        <button onClick={() => router.reload()}>Reset</button>
+        <h2 className={styles.errorTitle}>Something went wrong...</h2>
+        <div className={styles.buttons}>
+          <button onClick={() => router.back()}>Go Back</button>
+          <button onClick={() => router.reload()}>Reset</button>
+        </div>
       </div>
     );
   }

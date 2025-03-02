@@ -1,22 +1,11 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import styles from './search.module.css';
-import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
-import { LS_KEY } from '../../pages';
 import { useRouter } from 'next/router';
 
 const Search = () => {
-  const [storedValue, setStoredValue] = useLocalStorage(LS_KEY);
-  const [inputValue, setInputValue] = useState(storedValue);
   const router = useRouter();
-  const { q: queryParam } = router.query;
-
-  useEffect(() => {
-    if (storedValue && queryParam !== storedValue) {
-      router.push({
-        query: { q: storedValue },
-      });
-    }
-  }, [storedValue, queryParam, router]);
+  const { q: queryParam = '' } = router.query;
+  const [inputValue, setInputValue] = useState([...queryParam].join(''));
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -24,7 +13,6 @@ const Search = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStoredValue(inputValue.trim());
     router.push(`?q=${inputValue.trim()}`);
   };
 

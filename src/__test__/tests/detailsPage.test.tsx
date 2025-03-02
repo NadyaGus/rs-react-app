@@ -44,6 +44,19 @@ describe('details page', () => {
     });
   });
 
+  it('should show fallback message if no data', async () => {
+    await renderDetailsPage();
+    server.use(
+      http.get('https://api.jikan.moe/v4/anime/100500', () => {
+        return HttpResponse.error();
+      })
+    );
+    waitFor(async () => {
+      expect(screen.getByText('Something went wrong...')).toBeInTheDocument();
+      expect(screen.getByText('Go Back')).toBeInTheDocument();
+    });
+  });
+
   it('should hide page when clicking back button ', async () => {
     await renderMainPage();
 
