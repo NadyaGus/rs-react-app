@@ -12,7 +12,7 @@ import { Search } from '../search/search';
 import { useRouter } from 'next/router';
 import { Loader } from '../loader/loader';
 import { Pagination } from '../pagination/pagination';
-import { Favorites } from '../favorites/favorites';
+import { Favorites } from './favorites/favorites';
 import Layout from '../layout/layout';
 import Link from 'next/link';
 

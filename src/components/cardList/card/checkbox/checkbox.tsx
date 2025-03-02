@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from '../../types/store';
-import { favoritesSlice } from '../favorites/favoritesSlice';
-import { CardProps } from '../../types/cardTypes';
+import { CardProps } from '../../../../types/cardTypes';
+import { useAppDispatch, useAppSelector } from '../../../../types/store';
+import { favoritesSlice } from '../../../mainPage/favorites/favoritesSlice';
 
 type CheckBoxProps = {
   card: CardProps;

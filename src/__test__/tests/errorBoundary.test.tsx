@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import { ErrorBoundary } from './errorBoundary';
+import { ErrorBoundary } from '../../utils/errorBoundary';
 
 const BuggyComponent = () => {
   throw new Error('Something went wrong.');

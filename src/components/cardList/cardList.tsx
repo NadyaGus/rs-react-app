@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useAppSelector } from '../../types/store';
-import { Card } from '../card/card';
+import { Card } from './card/card';
 import { useEffect, useState } from 'react';
 
 const CardList = () => {

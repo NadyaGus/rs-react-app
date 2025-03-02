@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { jikanApi } from '../api/createApi';
 import { cardListSlice } from '../components/cardList/cardListSlice';
-import { favoritesSlice } from '../components/favorites/favoritesSlice';
+import { favoritesSlice } from '../components/mainPage/favorites/favoritesSlice';
 
 export const store = configureStore({
   reducer: {

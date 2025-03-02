@@ -1,4 +1,3 @@
-// tests/_app.test.tsx
 import { render, screen } from '@testing-library/react';
 
 import { AppProps } from 'next/app';
@@ -9,7 +8,6 @@ import { expect } from 'vitest';
 import animeData from '../mock/animeData.json';
 import { Router } from 'next/router';
 
-// Мок компонента страницы
 function MockPage() {
   return <div>Mock Page Content</div>;
 }

@@ -1,6 +1,6 @@
-import { CardProps } from '../../types/cardTypes';
+import { CardProps } from '../../../types/cardTypes';
 import styles from './card.module.css';
-import { CheckBox } from '../checkbox/checkbox';
+import { CheckBox } from './checkbox/checkbox';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
