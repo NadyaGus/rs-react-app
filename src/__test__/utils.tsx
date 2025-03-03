@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from '../shared/store/store';
 import { expect, vi } from 'vitest';
 import MainPage from '../app/page';
-import DetailsPage from '../_pages/details/[id]';
+import DetailsPage from '../app/details/[id]/page';
 
 const mockRouter = () => {
   return vi.mock('next/router', () => ({

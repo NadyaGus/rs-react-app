@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import animeData from '../mock/animeData.json';
 import { ROUTES } from '../../utils/constants';
 import useRouter from '../router';
-import { getServerSideProps } from '../../_pages/details/[id]';
+import { getServerSideProps } from '../../app/details/[id]/page';
 import { GetServerSidePropsContext } from 'next';
 import { server } from '../setup-test';
 import { http, HttpResponse } from 'msw';
