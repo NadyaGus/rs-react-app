@@ -6,8 +6,8 @@ import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { store } from '../store/store';
 import { expect, vi } from 'vitest';
-import MainPage from '../components/mainPage/mainPage';
-import DetailsPage from '../pages/details/[id]';
+import MainPage from '../app/page';
+import DetailsPage from '../_pages/details/[id]';
 
 const mockRouter = () => {
   return vi.mock('next/router', () => ({

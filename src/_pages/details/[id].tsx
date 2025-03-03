@@ -1,7 +1,7 @@
 import styles from './detailsPage.module.css';
-import { NextPageWithLayout } from '../_app';
+import { NextPageWithLayout } from '../_delete._app';
 import { CardProps } from '../../types/cardTypes';
-import Layout from '../../components/layout/layout';
+import Layout from '../../app/layout';
 import { useRouter } from 'next/router';
 import { jikanApi } from '../../api/createApi';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';

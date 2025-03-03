@@ -61,6 +61,7 @@ cd rs-react-app
 ```
 
 3. Switch to task branch (e.g. class-components)
+
 ```
 git checkout class-components
 ```

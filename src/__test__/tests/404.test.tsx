@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { screen } from '@testing-library/dom';
-import ErrorPage404, { getStaticProps } from '../../pages/404';
+import ErrorPage404, { getStaticProps } from '../../_pages/404';
 import { render } from '@testing-library/react';
 import { GetServerSidePropsContext } from 'next';
 

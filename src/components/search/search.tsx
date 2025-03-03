@@ -1,11 +1,12 @@
+'use client';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import styles from './search.module.css';
-import { useRouter } from 'next/router';
+import { useParams, useRouter } from 'next/navigation';
 
 const Search = () => {
   const router = useRouter();
-  const { q: queryParam = '' } = router.query;
-  const [inputValue, setInputValue] = useState([...queryParam].join(''));
+  const { q: queryParam } = useParams();
+  const [inputValue, setInputValue] = useState(queryParam || '');
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -13,7 +14,7 @@ const Search = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`?q=${inputValue.trim()}`);
+    router.push(`?q=${inputValue}`);
   };
 
   return (

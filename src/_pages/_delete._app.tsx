@@ -2,7 +2,7 @@ import './index.css';
 import { NextPage } from 'next';
 import { ReactElement, ReactNode, useEffect, useState } from 'react';
 import App, { AppContext, AppProps } from 'next/app';
-import MainPage from '../components/mainPage/mainPage';
+import MainPage from '../app/page';
 import { CardsResponse } from '../types/cardTypes';
 import { jikanApi } from '../api/createApi';
 import { store } from '../store/store';

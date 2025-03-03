@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { NextPageWithLayout } from './_app';
-import Layout from '../components/layout/layout';
+import { NextPageWithLayout } from './_delete._app';
+import Layout from '../app/layout';
 import { GetStaticProps } from 'next';
 
 export const getStaticProps: GetStaticProps = async () => {

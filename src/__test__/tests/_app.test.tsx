@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { AppProps } from 'next/app';
 import { it, vi } from 'vitest';
 import { describe } from 'vitest';
-import MyApp from '../../pages/_app';
+import MyApp from '../../_pages/_delete._app';
 import { expect } from 'vitest';
 import animeData from '../mock/animeData.json';
 import { Router } from 'next/router';

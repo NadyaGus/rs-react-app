@@ -9,7 +9,7 @@
     "build": "tsc -b && next build",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "lint": "eslint .",
+    "lint": "eslint ./src",
     "lint:fix": "eslint . --fix",
     "prepare": "husky",
     "test": "vitest run",
