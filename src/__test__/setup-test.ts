@@ -5,7 +5,7 @@ import { afterAll, afterEach, beforeAll, vi } from 'vitest';
 import { setupServer } from 'msw/node';
 
 import { handlers } from './mock/handlers';
-import { store } from '../store/store';
+import { store } from '../shared/store/store';
 import { jikanApi } from '../api/createApi';
 
 export const server = setupServer(...handlers);

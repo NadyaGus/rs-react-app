@@ -4,7 +4,7 @@ import { screen, waitFor } from '@testing-library/dom';
 import { mockConstants } from './mock/mockConstants';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { store } from '../store/store';
+import { store } from '../shared/store/store';
 import { expect, vi } from 'vitest';
 import MainPage from '../app/page';
 import DetailsPage from '../_pages/details/[id]';

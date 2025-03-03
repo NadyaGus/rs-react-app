@@ -1,39 +1,29 @@
-import { NextPageWithLayout } from '../_pages/_delete._app';
 import { ButtonChangeTheme } from '../components/changeTheme/changeThemeButton';
 // import { store } from '../store/store';
 // import { jikanApi } from '../api/createApi';
-import { CardsResponse } from '../types/cardTypes';
 // import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 // import { useAppDispatch } from '../types/store';
 // import { useCallback, useEffect, useState } from 'react';
 // import { cardListSlice } from '../components/cardList/cardListSlice';
-// import { CardList } from '../components/cardList/cardList';
+import { CardList } from '../components/cardList/cardList';
 import { Search } from '../components/search/search';
-// import { useRouter } from 'next/router';
+import { fetchData } from '../api/fetchData';
+import { Pagination } from '../components/pagination/pagination';
+// import { useRouter } from 'next/navigation';
 // import { Pagination } from '../components/pagination/pagination';
-// import { Favorites } from '../components/mainPage/favorites/favorites';
+// import { Favorites } from '../components/favorites/favorites';
 // import Layout from './layout';
 // import Link from 'next/link';
 
 // import styles from '../components/mainPage/mainPage.module.css';
 
-// export const getServerSideProps = (async (context) => {
-//   const { q = '', page = '1' } = context.query;
-//   const res = await store
-//     .dispatch(
-//       jikanApi.endpoints.getResults.initiate({
-//         q: [...q],
-//         page: [...page],
-//       })
-//     )
-//     .unwrap();
-//   const data: CardsResponse = res;
-//   return {
-//     props: { data },
-//   };
-// }) satisfies GetServerSideProps<{ data: CardsResponse }>;
-
-const MainPage: NextPageWithLayout<{ data: CardsResponse }> = () => {
+const MainPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ q: string; page: string }>;
+}) => {
+  const { q = '', page = '1' } = await searchParams;
+  const data = await fetchData.getResults(q, +page);
   // const router = useRouter();
   // const [isOpen, setIsOpen] = useState(() => router.route === 'details/[id]');
   // const [isFetchError, setIsFetchError] = useState(false);
@@ -60,8 +50,6 @@ const MainPage: NextPageWithLayout<{ data: CardsResponse }> = () => {
   //   });
   // }, [router, setResults]);
 
-  // const [totalPages, setTotalPages] = useState(1);
-
   // useEffect(() => {
   //   if (router.route === '/details/[id]') {
   //     setIsOpen(true);
@@ -82,21 +70,18 @@ const MainPage: NextPageWithLayout<{ data: CardsResponse }> = () => {
       {/* {isOpen && (
         <Link
           href={`/?q=${router.query.q || ''}&page=${router.query.page || '1'}`}
-          className={styles.overlay}
+          className="overlay"
         />
       )} */}
       {/* <Favorites /> */}
       <Search />
       <ButtonChangeTheme />
       {/* {isFetchError && <p>Something went wrong</p>} */}
-      {/* <CardList /> */}
+      <CardList data={data.data} />
       {/* {!isFetchError && <Pagination totalPages={+totalPages} />} */}
+      <Pagination totalPages={+data.pagination.last_visible_page} />
     </div>
   );
 };
-
-// MainPage.getLayout = function getLayout(page) {
-//   return <Layout>{page}</Layout>;
-// };
 
 export default MainPage;

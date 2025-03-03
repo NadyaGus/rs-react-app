@@ -1,19 +1,23 @@
-import { useRouter } from 'next/router';
+'use client';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './pagination.module.css';
 
 type PaginationProps = {
   totalPages: number;
 };
 
-const Pagination = (props: PaginationProps) => {
+const Pagination = ({ totalPages }: PaginationProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const page = searchParams.get('page');
+  const q = searchParams.get('q');
 
-  const handlePageChange = (page: number) => {
-    router.push(`${router.pathname}?q=${router.query.q || ''}&page=${page}`);
+  const handlePageChange = (currentPage: number) => {
+    router.push(`?q=${q || ''}&page=${currentPage}`);
     window.scrollTo(0, 0);
   };
 
-  if (props.totalPages === 1) {
+  if (totalPages === 1) {
     return null;
   }
 
@@ -21,18 +25,18 @@ const Pagination = (props: PaginationProps) => {
     <div className={styles.pagination}>
       <button
         className={styles.button}
-        onClick={() => handlePageChange(+(router.query.page || 1) - 1)}
-        disabled={+(router.query.page || 1) === 1}
+        onClick={() => handlePageChange(+(page || 1) - 1)}
+        disabled={+(page || 1) === 1}
       >
         Previous
       </button>
       <span>
-        Page {router.query.page || 1} of {props.totalPages}
+        Page {page || 1} of {totalPages}
       </span>
       <button
         className={styles.button}
-        onClick={() => handlePageChange(+(router.query.page || 1) + 1)}
-        disabled={+(router.query.page || 1) === props.totalPages}
+        onClick={() => handlePageChange(+(page || 1) + 1)}
+        disabled={+(page || 1) === totalPages}
       >
         Next
       </button>

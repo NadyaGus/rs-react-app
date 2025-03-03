@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { CardProps, CardsResponse } from '../types/cardTypes';
+import { CardProps, CardsResponse } from '../shared/types/cardTypes';
 
 export const endPoints = {
   search: '/anime?q=',

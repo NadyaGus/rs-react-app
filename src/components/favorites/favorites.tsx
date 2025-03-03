@@ -1,8 +1,9 @@
-import { useAppDispatch, useAppSelector } from '../../../types/store';
+'use client';
+import { useAppDispatch, useAppSelector } from '../../shared/types/store';
 import { favoritesSlice } from './favoritesSlice';
 
 import styles from './favorites.module.css';
-import { createCSV } from '../../../utils/createCSV';
+import { createCSV } from '../../shared/utils/createCSV';
 
 const Favorites = () => {
   const count = useAppSelector((state) => state.favorites.favorites.length);

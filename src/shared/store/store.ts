@@ -1,12 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { jikanApi } from '../api/createApi';
-import { cardListSlice } from '../components/cardList/cardListSlice';
-import { favoritesSlice } from '../components/mainPage/favorites/favoritesSlice';
+import { jikanApi } from '../../api/createApi';
+import { favoritesSlice } from '../../components/favorites/favoritesSlice';
 
 export const store = configureStore({
   reducer: {
     [jikanApi.reducerPath]: jikanApi.reducer,
-    searchResults: cardListSlice.reducer,
     favorites: favoritesSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

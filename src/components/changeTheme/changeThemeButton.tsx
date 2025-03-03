@@ -1,6 +1,6 @@
 'use client';
 import { useContext } from 'react';
-import { ThemeContext } from '../../utils/theme';
+import { ThemeContext } from '../../shared/theme/theme';
 
 const ButtonChangeTheme = () => {
   const theme = useContext(ThemeContext);

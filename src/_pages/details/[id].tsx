@@ -1,11 +1,9 @@
 import styles from './detailsPage.module.css';
-import { NextPageWithLayout } from '../_delete._app';
-import { CardProps } from '../../types/cardTypes';
-import Layout from '../../app/layout';
+import { CardProps } from '../../shared/types/cardTypes';
 import { useRouter } from 'next/router';
 import { jikanApi } from '../../api/createApi';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { store } from '../../store/store';
+import { store } from '../../shared/store/store';
 import Image from 'next/image';
 
 export const getServerSideProps = (async (context) => {
@@ -29,7 +27,7 @@ export const getServerSideProps = (async (context) => {
   }
 }) satisfies GetServerSideProps<{ data: CardProps | null }>;
 
-const DetailsPage: NextPageWithLayout<{ data: CardProps }> = ({
+const DetailsPage = ({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
@@ -64,10 +62,6 @@ const DetailsPage: NextPageWithLayout<{ data: CardProps }> = ({
       </div>
     );
   }
-};
-
-DetailsPage.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>;
 };
 
 export default DetailsPage;
