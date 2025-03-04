@@ -5,16 +5,34 @@ import { afterAll, afterEach, beforeAll, vi } from 'vitest';
 import { setupServer } from 'msw/node';
 
 import { handlers } from './mock/handlers';
-import { store } from '../shared/store/store';
-import { jikanApi } from '../api/_createApi';
 
 export const server = setupServer(...handlers);
 
 window.URL.createObjectURL = vi.fn();
 
+const push = vi.fn();
+const replace = vi.fn();
+const prefetch = vi.fn();
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push,
+    replace,
+    prefetch,
+  }),
+  useSearchParams: () => {
+    const params = new URLSearchParams({ q: '', page: '1' });
+    return {
+      get: (key: string) => params.get(key),
+    };
+  },
+  usePathname: () => '/',
+}));
+
 beforeAll(() => server.listen());
 afterEach(() => {
   server.resetHandlers();
-  store.dispatch(jikanApi.util.resetApiState());
 });
 afterAll(() => server.close());
+
+export { push, replace, prefetch };

@@ -3,7 +3,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import animeData from '../mock/animeData.json';
 import { renderMainPage, userTypeAndSearch } from '../utils';
-import { ROUTES } from '../../utils/constants';
+import { ROUTES } from '../../shared/utils/constants';
 import useRouter from '../router';
 
 const user = userEvent.setup();

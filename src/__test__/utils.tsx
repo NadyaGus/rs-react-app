@@ -9,45 +9,43 @@ import { expect, vi } from 'vitest';
 import MainPage from '../app/@root/page';
 import DetailsPage from '../app/details/[id]/page';
 
-const mockRouter = () => {
-  return vi.mock('next/router', () => ({
-    useRouter: vi.fn(() => ({
-      route: '/',
-      pathname: '/',
-      query: {},
-      asPath: '/',
-      push: vi.fn(),
-      replace: vi.fn(),
-      reload: vi.fn(),
-      back: vi.fn(),
-      prefetch: vi.fn(),
-      beforePopState: vi.fn(),
-      events: {
-        on: vi.fn(),
-        off: vi.fn(),
-        emit: vi.fn(),
-      },
-      isFallback: false,
-    })),
-  }));
-};
+const push = vi.fn();
+const replace = vi.fn();
+const prefetch = vi.fn();
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push,
+    replace,
+    prefetch,
+  }),
+  useSearchParams: () => {
+    const params = new URLSearchParams({ q: '', page: '1' });
+    return {
+      get: (key: string) => params.get(key),
+    };
+  },
+  useParams: () => ({ id: '1' }),
+  usePathname: () => '/',
+}));
 
 const renderMainPage = async () => {
-  mockRouter();
-  return render(
-    <Provider store={store}>
-      <MainPage data={animeData} />
-    </Provider>
-  );
+  vi.mock('../api/fetchData', () => ({
+    fetchData: {
+      getResults: vi.fn(() => Promise.resolve(animeData)),
+    },
+  }));
+  const page = await MainPage({
+    searchParams: Promise.resolve({ q: '', page: '1' }),
+  });
+  return render(<Provider store={store}>{page}</Provider>);
 };
 
 const renderDetailsPage = async () => {
-  mockRouter();
-  return render(
-    <Provider store={store}>
-      <DetailsPage data={animeData.data[0]} />
-    </Provider>
-  );
+  const page = await DetailsPage({
+    params: Promise.resolve({ id: '1' }),
+  });
+  return render(<Provider store={store}>{page}</Provider>);
 };
 
 const userTypeAndSearch = async (user: ReturnType<typeof userEvent.setup>) => {

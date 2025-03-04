@@ -3,34 +3,14 @@ import { describe, expect, it, vi } from 'vitest';
 import { renderDetailsPage, renderMainPage } from '../utils';
 import userEvent from '@testing-library/user-event';
 import animeData from '../mock/animeData.json';
-import { ROUTES } from '../../utils/constants';
+import { ROUTES } from '../../shared/utils/constants';
 import useRouter from '../router';
-import { getServerSideProps } from '../../app/@details/[id]/page';
-import { GetServerSidePropsContext } from 'next';
 import { server } from '../setup-test';
 import { http, HttpResponse } from 'msw';
 
 const user = userEvent.setup();
 
 describe('details page', () => {
-  it('should initiate api call', async () => {
-    server.use(
-      http.get('https://api.jikan.moe/v4/anime', () => {
-        return HttpResponse.json({
-          data: [animeData.data[0]],
-        });
-      })
-    );
-    const context = {} as GetServerSidePropsContext;
-    const response = await getServerSideProps(context);
-
-    expect(response).toEqual({
-      props: {
-        data: [animeData.data[0]],
-      },
-    });
-  });
-
   it('should show relevant data', async () => {
     await renderDetailsPage();
     waitFor(async () => {

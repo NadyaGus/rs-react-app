@@ -2,7 +2,7 @@ import { renderMainPage } from '../utils';
 import userEvent from '@testing-library/user-event';
 import { screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { ROUTES } from '../../utils/constants';
+import { ROUTES } from '../../shared/utils/constants';
 import useRouter from '../router';
 
 const user = userEvent.setup();
