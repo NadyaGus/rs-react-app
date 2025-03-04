@@ -2,7 +2,7 @@ import { Params } from 'next/dist/server/request/params';
 import styles from '../detailsPage.module.css';
 import { fetchData } from '../../../api/fetchData';
 import Image from 'next/image';
-import BackButton from '../../../components/buttons/backButton';
+import BackButton from '../../../components/buttons/closeDetailsButton';
 
 const DetailsPage = async ({ params }: { params: Promise<Params> }) => {
   try {

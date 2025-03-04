@@ -6,7 +6,7 @@ import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { store } from '../shared/store/store';
 import { expect, vi } from 'vitest';
-import MainPage from '../app/page';
+import MainPage from '../app/@root/page';
 import DetailsPage from '../app/details/[id]/page';
 
 const mockRouter = () => {
