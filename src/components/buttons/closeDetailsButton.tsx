@@ -10,7 +10,7 @@ export default function CloseDetailsButton() {
 
   return (
     <button onClick={() => router.push(`/?q=${q || ''}&page=${page}`)}>
-      Go Back
+      Close
     </button>
   );
 }

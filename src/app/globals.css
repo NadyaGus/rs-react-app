@@ -21,7 +21,6 @@
   --color-light: #e8e8e8;
 
   width: 100%;
-  /* new style */
   min-height: 100vh;
   padding: 2rem;
   color: var(--color);

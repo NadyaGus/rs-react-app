@@ -3,6 +3,7 @@ import ReduxProvider from '../shared/store/reduxProvider';
 import ThemeProvider from '../shared/theme/themeContext';
 import './globals.css';
 import { Loader } from '../components/loader/loader';
+import { ErrorBoundary } from '../shared/utils/errorBoundary';
 
 export default function Layout({
   root,
@@ -16,16 +17,16 @@ export default function Layout({
   return (
     <html lang="en">
       <body id="__next">
-        {/* <ErrorBoundary> */}
-        <ThemeProvider>
-          <ReduxProvider>
-            <Suspense fallback={<Loader isLoading />}>
-              {root}
-              {children}
-            </Suspense>
-          </ReduxProvider>
-        </ThemeProvider>
-        {/* </ErrorBoundary> */}
+        <ErrorBoundary>
+          <ThemeProvider>
+            <ReduxProvider>
+              <Suspense fallback={<Loader isLoading />}>
+                {root}
+                {children}
+              </Suspense>
+            </ReduxProvider>
+          </ThemeProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

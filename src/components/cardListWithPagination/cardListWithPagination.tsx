@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { CardProps } from '../../shared/types/cardTypes';
-import { CardList } from '../cardList/cardList';
-import { Pagination } from '../pagination/pagination';
+import { CardList } from './cardList/cardList';
+import { Pagination } from './pagination/pagination';
 import { Loader } from '../loader/loader';
 
 export const CardListWithPagination = ({

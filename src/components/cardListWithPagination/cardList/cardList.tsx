@@ -1,5 +1,5 @@
 import { Card } from './card/card';
-import { CardProps } from '../../shared/types/cardTypes';
+import { CardProps } from '../../../shared/types/cardTypes';
 
 const CardList = ({ data }: { data: CardProps[] }) => {
   if (data.length === 0) {

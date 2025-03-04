@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { CardProps } from '../../../shared/types/cardTypes';
+import { CardProps } from '../../../../shared/types/cardTypes';
 import styles from './card.module.css';
 import { CheckBox } from './checkbox/checkbox';
 import Link from 'next/link';
