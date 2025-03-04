@@ -4,9 +4,10 @@ import styles from './pagination.module.css';
 
 type PaginationProps = {
   totalPages: number;
+  setIsLoading: (loading: boolean) => void;
 };
 
-const Pagination = ({ totalPages }: PaginationProps) => {
+const Pagination = ({ totalPages, setIsLoading }: PaginationProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
@@ -14,6 +15,7 @@ const Pagination = ({ totalPages }: PaginationProps) => {
 
   const handlePageChange = (currentPage: number) => {
     router.push(`?q=${q || ''}&page=${currentPage}`);
+    setIsLoading(true);
     window.scrollTo(0, 0);
   };
 

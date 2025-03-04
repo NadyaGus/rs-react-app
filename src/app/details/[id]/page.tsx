@@ -22,7 +22,7 @@ const DetailsPage = async ({ params }: { params: Promise<Params> }) => {
               width={400}
               height={550}
               src={data.images.webp.image_url}
-              alt={data.title_english}
+              alt={data.title_english ?? data.title_japanese ?? 'No title'}
             />
             <p>Status: {data.status ?? 'Unknown'}</p>
             <p> Source: {data.source ?? 'Unknown'}</p>

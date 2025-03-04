@@ -1,10 +1,8 @@
 import { ButtonChangeTheme } from '../../components/buttons/changeThemeButton';
-import { CardList } from '../../components/cardList/cardList';
 import { Search } from '../../components/search/search';
 import { fetchData } from '../../api/fetchData';
-import { Pagination } from '../../components/pagination/pagination';
 import { Favorites } from '../../components/favorites/favorites';
-import { Suspense } from 'react';
+import { CardListWithPagination } from '../../components/cardListWithPagination/cardListWithPagination';
 
 const MainPage = async ({
   searchParams,
@@ -13,46 +11,16 @@ const MainPage = async ({
 }) => {
   const { q = '', page = '1' } = await searchParams;
   const data = await fetchData.getResults(q, +page);
-  // const router = useRouter();
-  // const [isOpen, setIsOpen] = useState(() => router.route === 'details/[id]');
-  // const [isFetchError, setIsFetchError] = useState(false);
-
-  // useEffect(() => {
-  //   router.events.on('routeChangeComplete', () => {
-  //     setIsFetchError(false);
-  //   });
-
-  //   router.events.on('routeChangeError', () => {
-  //     setIsFetchError(true);
-  //     setResults([]);
-  //   });
-  // }, [router, setResults]);
-
-  // useEffect(() => {
-  //   if (router.route === '/details/[id]') {
-  //     setIsOpen(true);
-  //   } else {
-  //     setIsOpen(false);
-  //   }
-  // }, [router.route]);
 
   return (
     <div className="app-container">
-      <Suspense fallback={<h1>Loading...</h1>}>
-        {/* {isOpen && (
-        <Link
-          href={`/?q=${router.query.q || ''}&page=${router.query.page || '1'}`}
-          className="overlay"
-        />
-      )} */}
-        <Favorites />
-        <Search />
-        <ButtonChangeTheme />
-        {/* {isFetchError && <p>Something went wrong</p>} */}
-        <CardList data={data.data} />
-        {/* {!isFetchError && <Pagination totalPages={+totalPages} />} */}
-        <Pagination totalPages={+data.pagination.last_visible_page} />
-      </Suspense>
+      <Favorites />
+      <Search />
+      <ButtonChangeTheme />
+      <CardListWithPagination
+        data={data.data}
+        totalPages={+data.pagination.last_visible_page}
+      />
     </div>
   );
 };
