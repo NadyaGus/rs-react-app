@@ -6,7 +6,7 @@ import { setupServer } from 'msw/node';
 
 import { handlers } from './mock/handlers';
 import { store } from '../shared/store/store';
-import { jikanApi } from '../api/createApi';
+import { jikanApi } from '../api/_createApi';
 
 export const server = setupServer(...handlers);
 

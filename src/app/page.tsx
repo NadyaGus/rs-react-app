@@ -1,3 +1,6 @@
+import { Suspense } from 'react';
+import { Loader } from '../components/loader/loader';
+
 export default function Home() {
-  return null;
+  return <Suspense fallback={<Loader isLoading />}></Suspense>;
 }

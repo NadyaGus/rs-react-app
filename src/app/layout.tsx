@@ -1,6 +1,8 @@
+import { Suspense } from 'react';
 import ReduxProvider from '../shared/store/reduxProvider';
 import ThemeProvider from '../shared/theme/themeContext';
 import './globals.css';
+import { Loader } from '../components/loader/loader';
 
 export default function Layout({
   root,
@@ -17,8 +19,10 @@ export default function Layout({
         {/* <ErrorBoundary> */}
         <ThemeProvider>
           <ReduxProvider>
-            {root}
-            {children}
+            <Suspense fallback={<Loader isLoading />}>
+              {root}
+              {children}
+            </Suspense>
           </ReduxProvider>
         </ThemeProvider>
         {/* </ErrorBoundary> */}

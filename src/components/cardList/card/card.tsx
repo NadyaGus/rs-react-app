@@ -4,12 +4,14 @@ import { CardProps } from '../../../shared/types/cardTypes';
 import styles from './card.module.css';
 import { CheckBox } from './checkbox/checkbox';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 const MAX_SYNOPSIS_LENGTH = 720;
 
 const Card = ({ card }: { card: CardProps }) => {
-  const { q, page } = useParams();
+  const query = useSearchParams();
+  const q = query.get('q');
+  const page = query.get('page');
 
   const handleSynopsis = (str: string) => {
     if (!str) {

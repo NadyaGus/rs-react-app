@@ -4,7 +4,7 @@ import { Search } from '../../components/search/search';
 import { fetchData } from '../../api/fetchData';
 import { Pagination } from '../../components/pagination/pagination';
 import { Favorites } from '../../components/favorites/favorites';
-// import Link from 'next/link';
+import { Suspense } from 'react';
 
 const MainPage = async ({
   searchParams,
@@ -38,19 +38,21 @@ const MainPage = async ({
 
   return (
     <div className="app-container">
-      {/* {isOpen && (
+      <Suspense fallback={<h1>Loading...</h1>}>
+        {/* {isOpen && (
         <Link
           href={`/?q=${router.query.q || ''}&page=${router.query.page || '1'}`}
           className="overlay"
         />
       )} */}
-      <Favorites />
-      <Search />
-      <ButtonChangeTheme />
-      {/* {isFetchError && <p>Something went wrong</p>} */}
-      <CardList data={data.data} />
-      {/* {!isFetchError && <Pagination totalPages={+totalPages} />} */}
-      <Pagination totalPages={+data.pagination.last_visible_page} />
+        <Favorites />
+        <Search />
+        <ButtonChangeTheme />
+        {/* {isFetchError && <p>Something went wrong</p>} */}
+        <CardList data={data.data} />
+        {/* {!isFetchError && <Pagination totalPages={+totalPages} />} */}
+        <Pagination totalPages={+data.pagination.last_visible_page} />
+      </Suspense>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { jikanApi } from '../../api/createApi';
+import { jikanApi } from '../../api/_createApi';
 import { favoritesSlice } from '../../components/favorites/favoritesSlice';
 
 export const store = configureStore({
