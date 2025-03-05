@@ -1,9 +1,7 @@
 import { NextPageWithLayout } from '../../pages/_app';
 import { ButtonChangeTheme } from '../changeTheme/changeThemeButton';
-import { store } from '../../store/store';
-import { jikanApi } from '../../api/createApi';
 import { CardProps, CardsResponse } from '../../types/cardTypes';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { InferGetServerSidePropsType } from 'next';
 import { useAppDispatch } from '../../types/store';
 import { useCallback, useEffect, useState } from 'react';
 import { cardListSlice } from '../cardList/cardListSlice';
@@ -14,26 +12,11 @@ import { Pagination } from '../pagination/pagination';
 import { Favorites } from './favorites/favorites';
 import Layout from '../layout/layout';
 import Link from 'next/link';
+import { getServerSideProps } from '../../pages';
 
 import styles from './mainPage.module.css';
 
 export const LS_KEY = 'NADYA_GUS_KEY';
-
-export const getServerSideProps = (async (context) => {
-  const { q = '', page = '1' } = context.query;
-  const res = await store
-    .dispatch(
-      jikanApi.endpoints.getResults.initiate({
-        q: [...q],
-        page: [...page],
-      })
-    )
-    .unwrap();
-  const data: CardsResponse = res;
-  return {
-    props: { data },
-  };
-}) satisfies GetServerSideProps<{ data: CardsResponse }>;
 
 const MainPage: NextPageWithLayout<{ data: CardsResponse }> = ({
   data,

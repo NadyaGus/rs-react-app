@@ -2,7 +2,6 @@ import './index.css';
 import { NextPage } from 'next';
 import { ReactElement, ReactNode, useEffect, useState } from 'react';
 import App, { AppContext, AppProps } from 'next/app';
-import MainPage from '../components/mainPage/mainPage';
 import { CardsResponse } from '../types/cardTypes';
 import { jikanApi } from '../api/createApi';
 import { store } from '../store/store';
@@ -20,11 +19,7 @@ type AppPropsWithLayout = AppProps & {
   mainPageData: CardsResponse;
 };
 
-export default function MyApp({
-  Component,
-  pageProps,
-  mainPageData,
-}: AppPropsWithLayout) {
+export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   const router = useRouter();
@@ -47,7 +42,6 @@ export default function MyApp({
   }
   return getLayout(
     <Provider store={store}>
-      <MainPage data={mainPageData} />
       <Loader isLoading={isLoading} />
       <Component {...pageProps} />
     </Provider>
