@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router';
 import './App.css';
-
 import { MainPage } from './pages/main/mainPage';
 import { ErrorPage } from './pages/error/errorPage';
 import { DetailsPage } from './pages/details/detailsPage';
