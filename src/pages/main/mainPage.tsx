@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { CardProps } from '../../types/cardTypes';
+import { CardProps, CardsResponse } from '../../types/cardTypes';
 import { Search } from '../../components/search/search';
 import { Loader } from '../../components/loader/loader';
 import { Pagination } from '../../components/pagination/pagination';
@@ -14,40 +14,13 @@ import {
 import styles from './mainPage.module.css';
 import { CardList } from '../../components/cardList/cardList';
 import { ROUTES } from '../../utils/constants';
-import { jikanApi } from '../../api/createApi';
 import { useAppDispatch } from '../../types/store';
 import { cardListSlice } from '../../components/cardList/cardListSlice';
 import { Favorites } from '../../components/favorites/favorites';
 import { ButtonChangeTheme } from '../../components/changeTheme/changeThemeButton';
-import { store } from '../../store/store';
-import { Route } from './+types/mainPage';
 
-export async function loader({ request }: Route.LoaderArgs) {
-  try {
-    const url = new URL(request.url);
-    const q = url.searchParams.get('q') ?? '';
-    const page = url.searchParams.get('page') ?? '1';
-
-    const data = await store
-      .dispatch(
-        jikanApi.endpoints.getResults.initiate({
-          q,
-          page,
-        })
-      )
-      .unwrap();
-    return {
-      data,
-    };
-  } catch (error) {
-    return {
-      error,
-    };
-  }
-}
-
-export default function MainPage({ loaderData }: Route.ComponentProps) {
-  const data = loaderData.data;
+export default function MainPage(loaderData: CardsResponse) {
+  const data = loaderData;
   const navigation = useNavigation();
 
   const [searchParams] = useSearchParams();

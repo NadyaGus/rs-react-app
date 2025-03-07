@@ -1,10 +1,58 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 import { ErrorBoundary } from './utils/errorBoundary';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import './App.css';
 import { useState } from 'react';
 import { ThemeContextType, themeContext } from './utils/theme';
+import MainPage from './pages/main/mainPage';
+import { jikanApi } from './api/createApi';
+import { Route } from './+types/root';
+
+export async function loader({ request }: Route.LoaderArgs) {
+  try {
+    const url = new URL(request.url);
+    const q = url.searchParams.get('q') ?? '';
+    const page = url.searchParams.get('page') ?? '1';
+
+    const data = await store
+      .dispatch(
+        jikanApi.endpoints.getResults.initiate({
+          q,
+          page,
+        })
+      )
+      .unwrap();
+    return {
+      data,
+    };
+  } catch (error) {
+    return {
+      error,
+    };
+  }
+}
+
+export default function Root({ loaderData }: Route.ComponentProps) {
+  const [theme, setTheme] = useState<ThemeContextType['theme']>('dark');
+  const data = loaderData.data;
+
+  return (
+    <>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <themeContext.Provider value={{ theme, setTheme }}>
+            <div className={'App' + ' ' + theme} id="root">
+              <div className={'app-container'}>
+                {data && data.data && <MainPage {...data} />}
+              </div>
+            </div>
+          </themeContext.Provider>
+        </Provider>
+      </ErrorBoundary>
+    </>
+  );
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -22,24 +70,5 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  );
-}
-
-export default function Root() {
-  const [theme, setTheme] = useState<ThemeContextType['theme']>('dark');
-  return (
-    <>
-      <ErrorBoundary>
-        <Provider store={store}>
-          <themeContext.Provider value={{ theme, setTheme }}>
-            <div className={'App' + ' ' + theme} id="root">
-              <div className={'app-container'}>
-                <Outlet />
-              </div>
-            </div>
-          </themeContext.Provider>
-        </Provider>
-      </ErrorBoundary>
-    </>
   );
 }
