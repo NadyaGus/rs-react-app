@@ -22,8 +22,11 @@ export async function loader({ params }: Route.LoaderArgs) {
 }
 
 export default function DetailsPage({ loaderData }: Route.ComponentProps) {
-  const data = loaderData.data;
   const navigation = useNavigation();
+
+  if (!loaderData) return null;
+
+  const data = loaderData.data;
 
   if (data && data.data) {
     return (
