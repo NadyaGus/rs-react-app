@@ -2,6 +2,9 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import { ErrorBoundary } from './utils/errorBoundary';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import './App.css';
+import { useState } from 'react';
+import { ThemeContextType, themeContext } from './utils/theme';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -23,13 +26,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function Root() {
+  const [theme, setTheme] = useState<ThemeContextType['theme']>('dark');
   return (
     <>
       <ErrorBoundary>
         <Provider store={store}>
-          <div className={'App' + ' ' + 'dark'} id="root">
-            <Outlet />
-          </div>
+          <themeContext.Provider value={{ theme, setTheme }}>
+            <div className={'App' + ' ' + theme} id="root">
+              <div className={'app-container'}>
+                <Outlet />
+              </div>
+            </div>
+          </themeContext.Provider>
         </Provider>
       </ErrorBoundary>
     </>

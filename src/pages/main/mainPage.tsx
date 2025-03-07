@@ -4,20 +4,58 @@ import { CardProps } from '../../types/cardTypes';
 import { Search } from '../../components/search/search';
 import { Loader } from '../../components/loader/loader';
 import { Pagination } from '../../components/pagination/pagination';
-import { Link, Outlet, useParams, useSearchParams } from 'react-router';
+import {
+  Link,
+  Outlet,
+  useNavigation,
+  useParams,
+  useSearchParams,
+} from 'react-router';
 import styles from './mainPage.module.css';
 import { CardList } from '../../components/cardList/cardList';
 import { ROUTES } from '../../utils/constants';
-import { useGetResultsQuery } from '../../api/createApi';
+import { jikanApi } from '../../api/createApi';
 import { useAppDispatch } from '../../types/store';
 import { cardListSlice } from '../../components/cardList/cardListSlice';
 import { Favorites } from '../../components/favorites/favorites';
 import { ButtonChangeTheme } from '../../components/changeTheme/changeThemeButton';
+import { store } from '../../store/store';
+import { Route } from './+types/mainPage';
 
-const MainPage = () => {
+export async function loader({ request }: Route.LoaderArgs) {
+  try {
+    const url = new URL(request.url);
+    const q = url.searchParams.get('q') ?? '';
+    const page = url.searchParams.get('page') ?? '1';
+
+    const data = await store
+      .dispatch(
+        jikanApi.endpoints.getResults.initiate({
+          q,
+          page,
+        })
+      )
+      .unwrap();
+    return {
+      data,
+    };
+  } catch (error) {
+    return {
+      error,
+    };
+  }
+}
+
+export default function MainPage({ loaderData }: Route.ComponentProps) {
+  const data = loaderData.data;
+  const navigation = useNavigation();
+
   const [searchParams] = useSearchParams();
   const params = useParams();
   const [isOpen, setIsOpen] = useState(params.animeId ? true : false);
+
+  const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   const dispatch = useAppDispatch();
   const setResults = useCallback(
@@ -29,13 +67,6 @@ const MainPage = () => {
     },
     [dispatch]
   );
-
-  const [totalPages, setTotalPages] = useState(1);
-  const [isFetchError, setIsFetchError] = useState(false);
-  const { data, isFetching, isError } = useGetResultsQuery({
-    q: searchParams.get('q') ?? '',
-    page: Number(searchParams.get('page')) || 1,
-  });
 
   useEffect(() => {
     if (params.animeId) {
@@ -53,13 +84,12 @@ const MainPage = () => {
   }, [data, setResults]);
 
   useEffect(() => {
-    if (isError) {
-      setIsFetchError(true);
-      setResults([]);
+    if (navigation.state === 'loading') {
+      setIsLoading(true);
     } else {
-      setIsFetchError(false);
+      setIsLoading(false);
     }
-  }, [isError, setResults]);
+  }, [navigation.state]);
 
   return (
     <div className={styles.container}>
@@ -74,14 +104,11 @@ const MainPage = () => {
         <Favorites />
         <Search />
         <ButtonChangeTheme />
-        {isFetching && <Loader />}
-        {isFetchError && <p>Something went wrong</p>}
-        {!isFetching && !isFetchError && <CardList />}
-        {!isFetching && !isFetchError && <Pagination totalPages={totalPages} />}
+        {isLoading && <Loader />}
+        {!isLoading && <CardList />}
+        {!isLoading && <Pagination totalPages={totalPages} />}
       </div>
       <Outlet />
     </div>
   );
-};
-
-export { MainPage };
+}

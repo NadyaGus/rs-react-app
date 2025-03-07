@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "prepare": "husky",
     "test": "vitest run",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
     "@react-router/node": "^7.3.0",
