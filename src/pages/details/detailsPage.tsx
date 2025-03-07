@@ -1,27 +1,38 @@
-import { useParams } from 'react-router';
+import { useNavigation } from 'react-router';
 import { Loader } from '../../components/loader/loader';
-
 import styles from './detailsPage.module.css';
-import { useGetDetailsQuery } from '../../api/createApi';
+import { jikanApi } from '../../api/createApi';
+import { store } from '../../store/store';
+import { Route } from './+types/detailsPage';
 
-const DetailsPage = () => {
-  const params = useParams();
-  const paramsId = params.animeId;
-  const { data, isFetching } = useGetDetailsQuery(paramsId ?? '');
+export async function loader({ params }: Route.LoaderArgs) {
+  try {
+    // const url = new URL(request.url);
+    // const q = url.searchParams.get('q') ?? '';
+    // const page = url.searchParams.get('page') ?? '1';
+    const q = params.animeId ?? '';
 
-  if (isFetching) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.loaderContainer}>
-          <Loader />
-        </div>
-      </div>
-    );
+    const data = await store
+      .dispatch(jikanApi.endpoints.getDetails.initiate(q))
+      .unwrap();
+    return {
+      data,
+    };
+  } catch (error) {
+    return {
+      error,
+    };
   }
+}
+
+export default function DetailsPage({ loaderData }: Route.ComponentProps) {
+  const data = loaderData.data;
+  const navigation = useNavigation();
 
   if (data && data.data) {
     return (
       <div className={styles.container}>
+        {navigation.state === 'loading' && <Loader />}
         <div className={styles.card}>
           <button onClick={() => window.history.back()}>Go Back</button>
           <h2>{data.data.title_english ?? 'No title in english'}</h2>
@@ -45,6 +56,4 @@ const DetailsPage = () => {
       </div>
     );
   }
-};
-
-export { DetailsPage };
+}
