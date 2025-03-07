@@ -7,11 +7,7 @@ import { Route } from './+types/detailsPage';
 
 export async function loader({ params }: Route.LoaderArgs) {
   try {
-    // const url = new URL(request.url);
-    // const q = url.searchParams.get('q') ?? '';
-    // const page = url.searchParams.get('page') ?? '1';
     const q = params.animeId ?? '';
-
     const data = await store
       .dispatch(jikanApi.endpoints.getDetails.initiate(q))
       .unwrap();

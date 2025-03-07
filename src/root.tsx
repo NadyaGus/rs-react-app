@@ -2,12 +2,12 @@ import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 import { ErrorBoundary } from './utils/errorBoundary';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import './App.css';
 import { useState } from 'react';
 import { ThemeContextType, themeContext } from './utils/theme';
 import MainPage from './pages/main/mainPage';
 import { jikanApi } from './api/createApi';
 import { Route } from './+types/root';
+import './App.css';
 
 export async function loader({ request }: Route.LoaderArgs) {
   try {
