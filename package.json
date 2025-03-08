@@ -4,19 +4,22 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "react-router dev",
     "build": "tsc -b && vite build",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "lint": "eslint .",
+    "lint": "eslint ./src",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "prepare": "husky",
     "test": "vitest run",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@react-router/node": "^7.3.0",
     "@reduxjs/toolkit": "^2.5.1",
+    "isbot": "^5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^9.2.0",
@@ -24,10 +27,12 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@react-router/dev": "^7.3.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^22.13.9",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",

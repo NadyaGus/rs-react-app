@@ -9,6 +9,7 @@ const MAX_SYNOPSIS_LENGTH = 720;
 const Card = (props: CardProps) => {
   const searchParams = useSearchParams()[0];
   const page = searchParams.get('page') ?? '1';
+  const query = searchParams.get('q') ?? '';
 
   const handleSynopsis = (str: string) => {
     if (!str) {
@@ -30,7 +31,12 @@ const Card = (props: CardProps) => {
         <CheckBox card={props} />
       </div>
 
-      <Link to={`${endPoints.details}${props.mal_id}?page=${page}`}>
+      <Link
+        to={{
+          pathname: `${endPoints.details}${props.mal_id}`,
+          search: `?q=${query}&page=${page}`,
+        }}
+      >
         <div className={styles.container}>
           <div className={styles.imageContainer}>
             <img

@@ -1,6 +1,6 @@
 import { createMemoryRouter, RouterProvider } from 'react-router';
-import { DetailsPage } from '../pages/details/detailsPage';
-import { MainPage } from '../pages/main/mainPage';
+import DetailsPage from '../pages/details/detailsPage';
+import MainPage from '../pages/main/mainPage';
 import animeData from './mock/animeData.json';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/dom';
@@ -9,16 +9,31 @@ import { ROUTES } from '../utils/constants';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { store } from '../store/store';
+import { CardsResponse } from '../types/cardTypes';
+import { Route } from '../pages/details/+types/detailsPage';
 
 const configureRouter = () => {
   const routes = [
     {
       path: ROUTES.root,
-      element: <MainPage />,
+      element: <MainPage {...(animeData as CardsResponse)} />,
       children: [
         {
           path: ROUTES.detailsWithId,
-          element: <DetailsPage />,
+          element: (
+            <DetailsPage
+              {...({
+                data: {
+                  data: {
+                    data: {
+                      ...animeData.data[0],
+                    },
+                  },
+                },
+                error: null,
+              } as unknown as Route.ComponentProps)}
+            />
+          ),
         },
       ],
     },
