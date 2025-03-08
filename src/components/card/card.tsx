@@ -31,7 +31,12 @@ const Card = (props: CardProps) => {
         <CheckBox card={props} />
       </div>
 
-      <Link to={`${endPoints.details}${props.mal_id}?q=${query}&page=${page}`}>
+      <Link
+        to={{
+          pathname: `${endPoints.details}${props.mal_id}`,
+          search: `?q=${query}&page=${page}`,
+        }}
+      >
         <div className={styles.container}>
           <div className={styles.imageContainer}>
             <img

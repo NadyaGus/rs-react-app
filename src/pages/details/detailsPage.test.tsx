@@ -104,7 +104,7 @@ describe('details page', () => {
       expect(
         screen.getByText(animeData.data[0].title_japanese)
       ).toBeInTheDocument();
-      await user.click(screen.getByRole('button', { name: 'Go Back' }));
+      await user.click(screen.getByRole('link', { name: 'Go Back' }));
       expect(router.state.location.pathname).toBe(ROUTES.root);
     });
   });

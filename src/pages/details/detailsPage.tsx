@@ -1,4 +1,4 @@
-import { useNavigation } from 'react-router';
+import { Link, useNavigation, useSearchParams } from 'react-router';
 import { Loader } from '../../components/loader/loader';
 import styles from './detailsPage.module.css';
 import { jikanApi } from '../../api/createApi';
@@ -23,8 +23,24 @@ export async function loader({ params }: Route.LoaderArgs) {
 
 export default function DetailsPage({ loaderData }: Route.ComponentProps) {
   const navigation = useNavigation();
+  const searchParams = useSearchParams()[0];
+  const q = searchParams.get('q') ?? '';
+  const page = searchParams.get('page') ?? '1';
 
-  if (!loaderData) return null;
+  if (!loaderData) {
+    return (
+      <div className={styles.container}>
+        <h2>Something went wrong...</h2>
+        <Link
+          className={styles.link}
+          to={{ pathname: '/', search: `?q=${q}&page=${page}` }}
+        >
+          Go Home
+        </Link>
+        <button onClick={() => window.location.reload()}>Reset</button>
+      </div>
+    );
+  }
 
   const data = loaderData.data;
 
@@ -33,7 +49,12 @@ export default function DetailsPage({ loaderData }: Route.ComponentProps) {
       <div className={styles.container}>
         {navigation.state === 'loading' && <Loader />}
         <div className={styles.card}>
-          <button onClick={() => window.history.back()}>Go Back</button>
+          <Link
+            className={styles.link}
+            to={{ pathname: '/', search: `?q=${q}&page=${page}` }}
+          >
+            Go Back
+          </Link>
           <h2>{data.data.title_english ?? 'No title in english'}</h2>
           <h3>{data.data.title_japanese ?? 'No title in japanese'}</h3>
           <img
@@ -44,14 +65,6 @@ export default function DetailsPage({ loaderData }: Route.ComponentProps) {
           <p> Source: {data.data.source ?? 'Unknown'}</p>
           <p>{data.data.synopsis}</p>
         </div>
-      </div>
-    );
-  } else {
-    return (
-      <div className={styles.container}>
-        <h2>Something went wrong...</h2>
-        <button onClick={() => window.history.back()}>Go Back</button>
-        <button onClick={() => window.location.reload()}>Reset</button>
       </div>
     );
   }
