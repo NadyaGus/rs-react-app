@@ -1,7 +1,6 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   test: {
@@ -16,7 +15,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text'],
     },
-    environment: 'jsdom',
+    environment: 'happy-dom',
     globals: true,
     setupFiles: ['src/__test__/setup-test.ts'],
   },

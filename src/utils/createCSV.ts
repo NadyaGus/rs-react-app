@@ -1,4 +1,4 @@
-import { CardProps } from '../../types/cardTypes';
+import { CardProps } from '../types/cardTypes';
 
 export const createCSV = (data: CardProps[]): string => {
   const titles = [

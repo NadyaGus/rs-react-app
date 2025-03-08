@@ -1,14 +1,14 @@
 import { screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { mockConstants } from '../../__test__/mock/mockConstants';
-import { renderApp } from '../../__test__/utils';
+import { mockConstants } from '../mock/mockConstants';
+import { renderMainPage } from '../utils';
 
 const user = userEvent.setup();
 
 describe('card list tests', () => {
   it('should render 10 cards in result', async () => {
-    renderApp();
+    await renderMainPage();
     await user.type(
       screen.getByRole('searchbox'),
       mockConstants.mockAnimeWithData
@@ -21,7 +21,7 @@ describe('card list tests', () => {
   });
 
   it('should render fallback message if no results', async () => {
-    renderApp();
+    await renderMainPage();
 
     await user.clear(screen.getByRole('searchbox'));
     await user.type(

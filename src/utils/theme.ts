@@ -5,10 +5,10 @@ interface ThemeContextType {
   setTheme: React.Dispatch<React.SetStateAction<'light' | 'dark'>>;
 }
 
-const themeContext = createContext<ThemeContextType>({
+const ThemeContext = createContext<ThemeContextType>({
   theme: 'dark',
   setTheme: () => {},
 });
 
-export { themeContext };
+export { ThemeContext };
 export type { ThemeContextType };

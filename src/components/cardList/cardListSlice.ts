@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { CardProps } from '../../types/cardTypes';
 
-interface CardListSlice {
+export interface CardListSlice {
   cardList: CardProps[];
   isLoading: boolean;
 }
@@ -23,3 +23,4 @@ const cardListSlice = createSlice({
 
 export const { setCardList } = cardListSlice.actions;
 export { cardListSlice };
+export type CardListState = ReturnType<typeof cardListSlice.reducer>;

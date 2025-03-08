@@ -1,0 +1,89 @@
+import { NextPageWithLayout } from '../../pages/_app';
+import { ButtonChangeTheme } from '../changeTheme/changeThemeButton';
+import { CardProps, CardsResponse } from '../../types/cardTypes';
+import { InferGetServerSidePropsType } from 'next';
+import { useAppDispatch } from '../../types/store';
+import { useCallback, useEffect, useState } from 'react';
+import { cardListSlice } from '../cardList/cardListSlice';
+import { CardList } from '../cardList/cardList';
+import { Search } from '../search/search';
+import { useRouter } from 'next/router';
+import { Pagination } from '../pagination/pagination';
+import { Favorites } from './favorites/favorites';
+import Layout from '../layout/layout';
+import Link from 'next/link';
+import { getServerSideProps } from '../../pages';
+
+import styles from './mainPage.module.css';
+
+export const LS_KEY = 'NADYA_GUS_KEY';
+
+const MainPage: NextPageWithLayout<{ data: CardsResponse }> = ({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(() => router.route === 'details/[id]');
+  const [isFetchError, setIsFetchError] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const setResults = useCallback(
+    (results: CardProps[]) => {
+      dispatch({
+        type: cardListSlice.actions.setCardList.type,
+        payload: results,
+      });
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    router.events.on('routeChangeComplete', () => {
+      setIsFetchError(false);
+    });
+
+    router.events.on('routeChangeError', () => {
+      setIsFetchError(true);
+      setResults([]);
+    });
+  }, [router, setResults]);
+
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    if (router.route === '/details/[id]') {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  }, [router.route]);
+
+  useEffect(() => {
+    if (data) {
+      setResults(data.data);
+      setTotalPages(data.pagination.last_visible_page);
+    }
+  }, [data, setResults]);
+
+  return (
+    <div className="app-container">
+      {isOpen && (
+        <Link
+          href={`/?q=${router.query.q || ''}&page=${router.query.page || '1'}`}
+          className={styles.overlay}
+        />
+      )}
+      <Favorites />
+      <Search />
+      <ButtonChangeTheme />
+      {isFetchError && <p>Something went wrong</p>}
+      <CardList />
+      {!isFetchError && <Pagination totalPages={+totalPages} />}
+    </div>
+  );
+};
+
+MainPage.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
+
+export default MainPage;

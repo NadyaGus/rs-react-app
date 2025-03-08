@@ -1,13 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import styles from './search.module.css';
-import { useSearchParams } from 'react-router';
-import { useLocalStorage } from '../../utils/hooks/useLocalStorage';
-import { LS_KEY } from '../../App';
+import { useRouter } from 'next/router';
 
 const Search = () => {
-  const [storedValue, setStoredValue] = useLocalStorage(LS_KEY);
-  const [inputValue, setInputValue] = useState(storedValue);
-  const setSearchParams = useSearchParams()[1];
+  const router = useRouter();
+  const { q: queryParam = '' } = router.query;
+  const [inputValue, setInputValue] = useState([...queryParam].join(''));
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -15,8 +13,7 @@ const Search = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStoredValue(inputValue.trim());
-    setSearchParams({ q: inputValue.trim(), page: '1' });
+    router.push(`?q=${inputValue.trim()}`);
   };
 
   return (

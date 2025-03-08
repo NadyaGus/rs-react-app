@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { themeContext } from '../../utils/theme';
+import { ThemeContext } from '../../utils/theme';
 
 const ButtonChangeTheme = () => {
-  const theme = useContext(themeContext);
+  const theme = useContext(ThemeContext);
 
   return (
     <button
