@@ -1,0 +1,13 @@
+.error {
+  text-align: start;
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  height: 14px;
+  opacity: 0;
+}
+
+.errorActive {
+  opacity: 1;
+}

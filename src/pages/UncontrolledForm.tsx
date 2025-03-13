@@ -1,108 +1,144 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router';
-
-import formStyles from './form.module.css';
+import { formSchema } from '@/shared/formHandlers/validate';
+import { ValidationError } from 'yup';
+import { InputError } from '@/components/inputError/InputError';
+import { countriesData, genderData } from '@/shared/formHandlers/formsData';
+import { useAppDispatch } from '@/shared/store/store';
+import { addForm } from '@/shared/store/createFormsSlice';
+import { convertToBase64 } from '@/shared/formHandlers/convertToBase64';
+import formStyles from './styles/form.module.css';
 
 export const UncontrolledForm = () => {
-  const name = useRef<HTMLInputElement>(null);
-  const age = useRef<HTMLInputElement>(null);
-  const email = useRef<HTMLInputElement>(null);
-  const password = useRef<HTMLInputElement>(null);
-  const confirmPassword = useRef<HTMLInputElement>(null);
-  const gender = useRef<HTMLSelectElement>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const dispatch = useAppDispatch();
   const terms = useRef<HTMLInputElement>(null);
-  const image = useRef<HTMLInputElement>(null);
-  const country = useRef<HTMLSelectElement>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const validateForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log({
-      name: name.current?.value,
-      age: age.current?.value,
-      email: email.current?.value,
-      password: password.current?.value,
-      confirmPassword: confirmPassword.current?.value,
-      gender: gender.current?.value,
-      terms: terms.current?.checked,
-      image: image.current?.files,
-      country: country.current?.value,
-    });
+    const formData = new FormData(event.currentTarget);
+    if (!formData.has('terms')) {
+      formData.set('terms', 'off');
+    }
+
+    const data = Object.fromEntries(formData);
+    try {
+      const validatedData = await formSchema.validate(data, {
+        abortEarly: false,
+      });
+      setErrors({});
+      return validatedData;
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        const validationErrors: Record<string, string> = {};
+        error.inner.forEach((error: ValidationError) => {
+          if (error.path) {
+            validationErrors[error.path] = error.message;
+          }
+        });
+        setErrors(validationErrors);
+        return null;
+      }
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const validatedData = await validateForm(event);
+    if (validatedData) {
+      if (validatedData.image instanceof File) {
+        const fileBase64 = await convertToBase64(validatedData.image);
+        dispatch(
+          addForm({
+            ...validatedData,
+            image: fileBase64,
+          })
+        );
+      }
+    }
   };
 
   return (
     <>
-      <h1>Uncontrolled Form</h1>
-
       <form className={formStyles.form} onSubmit={handleSubmit}>
-        <label htmlFor="name">
-          Name:
-          <input type="text" id="name" name="name" ref={name} />
-        </label>
+        <fieldset>
+          <legend>Uncontrolled Form</legend>
+          <label htmlFor="name">
+            Name:
+            <input type="text" id="name" name="name" />
+            <InputError error={errors.name} />
+          </label>
 
-        <label htmlFor="age">
-          Age:
-          <input type="number" id="age" name="age" ref={age} />
-        </label>
+          <label htmlFor="age">
+            Age:
+            <input type="number" id="age" name="age" />
+            <InputError error={errors.age} />
+          </label>
 
-        <label htmlFor="email">
-          Email:
-          <input type="email" id="email" name="email" ref={email} />
-        </label>
+          <label htmlFor="email">
+            Email:
+            <input type="text" id="email" name="email" />
+            <InputError error={errors.email} />
+          </label>
 
-        <label htmlFor="password">
-          Password:
-          <input type="password" id="password" name="password" ref={password} />
-        </label>
+          <label htmlFor="password">
+            Password:
+            <input type="password" id="password" name="password" />
+            <InputError error={errors.password} />
+          </label>
 
-        <label htmlFor="confirmPassword">
-          Confirm Password:
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            ref={confirmPassword}
-          />
-        </label>
+          <label htmlFor="confirmPassword">
+            Confirm Password:
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+            />
+            <InputError error={errors.confirmPassword} />
+          </label>
 
-        <label htmlFor="gender">
-          Gender:
-          <select id="gender" name="gender" ref={gender} defaultValue="-">
-            <option value="---">---</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </label>
+          <label htmlFor="gender">
+            Gender:
+            <select id="gender" name="gender">
+              <option value="---">---</option>
+              {genderData.map((gender) => (
+                <option key={gender} value={gender}>
+                  {gender}
+                </option>
+              ))}
+            </select>
+            <InputError error={errors.gender} />
+          </label>
 
-        <label htmlFor="terms">
-          <div className={formStyles.terms}>
-            <input type="checkbox" id="terms" name="terms" ref={terms} />
-            <span>I agree to the terms and conditions</span>
-          </div>
-        </label>
+          <label htmlFor="terms">
+            <div className={formStyles.terms}>
+              <input type="checkbox" id="terms" name="terms" ref={terms} />
+              <span>I agree to the terms and conditions</span>
+            </div>
+            <InputError error={errors.terms} />
+          </label>
 
-        <label htmlFor="image">
-          Image:
-          <input type="file" id="image" name="image" ref={image} />
-        </label>
+          <label htmlFor="image">
+            Image:
+            <input type="file" id="image" name="image" />
+            <InputError error={errors.image} />
+          </label>
 
-        <label htmlFor="country">
-          Country:
-          <select
-            id="country"
-            name="country"
-            ref={country}
-            autoComplete="country"
-          >
-            <option value="blr">Belarus</option>
-            <option value="rus">Russian Federation</option>
-            <option value="pol">Poland</option>
-            <option value="ukr">Ukraine</option>
-            <option value="geo">Georgia</option>
-          </select>
-        </label>
+          <label htmlFor="country">
+            Country:
+            <select id="country" name="country" autoComplete="country">
+              <option value="---">---</option>
+              {countriesData.map((country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              ))}
+            </select>
+            <InputError error={errors.country} />
+          </label>
 
-        <button type="submit">Submit</button>
+          <button type="submit">Submit</button>
+        </fieldset>
       </form>
 
       <Link to="/">Go Home</Link>

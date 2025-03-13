@@ -1,0 +1,38 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  & input {
+    width: 98%;
+  }
+
+  & fieldset {
+    text-align: start;
+
+    & legend,
+    & button {
+      text-align: center;
+    }
+  }
+
+  & select {
+    margin-left: 0.5rem;
+  }
+
+  & button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+.terms {
+  display: flex;
+  gap: 1rem;
+
+  & input {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-left: 0;
+  }
+}
