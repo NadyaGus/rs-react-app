@@ -1,24 +1,26 @@
-import { useRef, useState } from 'react';
-import { InputError } from '../inputError/InputError';
+import { useCallback, useEffect, useState } from 'react';
 import { passwordSchema } from '@/shared/formHandlers/validateSchemas';
 import { ValidationError } from 'yup';
 import clsx from 'clsx';
 import styles from './password.module.css';
+import { useAppSelector } from '@/shared/store/store';
+import { InputError } from '../inputError/InputError';
 
-type PasswordInputProps = {
-  error?: string;
-};
-
-export const PasswordInput = ({ error }: PasswordInputProps) => {
-  const ref = useRef<HTMLInputElement>(null);
+export const PasswordStrength = ({ error }: { error?: string }) => {
   const [errors, setErrors] = useState<Record<string, string[]> | null>();
-  const [isFirstTouch, setFirstTouch] = useState(true);
+  const [isEmpty, setIsEmpty] = useState(true);
+  const password = useAppSelector((state) => state.forms.password);
 
-  const checkStrength = () => {
-    setFirstTouch(false);
-    console.log('checkStrength', ref.current?.value);
+  const checkStrength = useCallback((password: string) => {
+    if (password === '') {
+      setIsEmpty(true);
+      return;
+    } else {
+      setIsEmpty(false);
+    }
+
     passwordSchema
-      .validate({ password: ref.current?.value }, { abortEarly: false })
+      .validate({ password }, { abortEarly: false })
       .then(() => {
         setErrors(null);
       })
@@ -36,29 +38,18 @@ export const PasswordInput = ({ error }: PasswordInputProps) => {
           setErrors(validationErrors);
         }
       });
-  };
+  }, []);
+
+  useEffect(() => {
+    checkStrength(password);
+  }, [password, checkStrength]);
 
   return (
-    <label
-      className={clsx(
-        styles.passwordContainer,
-        !isFirstTouch && styles.passwordStrengthActive
-      )}
-      htmlFor="password"
-    >
-      Password
-      <input
-        type="password"
-        name="password"
-        id="password"
-        ref={ref}
-        onChange={() => checkStrength()}
-      />
-      {isFirstTouch && <InputError error={error} />}
+    <>
       <div
         className={clsx(
           styles.passwordStrength,
-          !isFirstTouch && styles.passwordStrengthActive
+          !isEmpty && styles.passwordStrengthActive
         )}
       >
         <div
@@ -68,10 +59,11 @@ export const PasswordInput = ({ error }: PasswordInputProps) => {
               ' ' + styles[`length${errors.password.length}`]
           )}
         ></div>
-        <div className={styles.passwordText}>
-          {errors?.password[0] || 'Password is strong'}
-        </div>
       </div>
-    </label>
+      <div className={styles.passwordText}>
+        {isEmpty ? '' : errors?.password[0] || 'Password is strong'}
+      </div>
+      <InputError error={error} />
+    </>
   );
 };

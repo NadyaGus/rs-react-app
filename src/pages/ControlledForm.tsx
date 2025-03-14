@@ -4,12 +4,13 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import formStyles from './styles/form.module.css';
 import { InputError } from '@/components/inputError/InputError';
-// import { PasswordInput } from '@/components/passwordInput/PasswordInput';
 import { countriesData, genderData } from '@/shared/formHandlers/formsData';
 import { FormType } from '@/shared/types/form';
 import { convertToBase64 } from '@/shared/formHandlers/convertToBase64';
 import { useAppDispatch } from '@/shared/store/store';
-import { addForm } from '@/shared/store/createFormsSlice';
+import { addForm, handlePasswordValue } from '@/shared/store/createFormsSlice';
+import { PasswordStrength } from '@/components/passwordInput/passwordStrength';
+import { useEffect } from 'react';
 
 export const ControlledForm = () => {
   const dispatch = useAppDispatch();
@@ -22,12 +23,7 @@ export const ControlledForm = () => {
     resolver: yupResolver(formSchema, { abortEarly: false, recursive: true }),
   });
 
-  const handleSubmitForm = async (
-    // event: React.FormEvent<HTMLFormElement>,
-    validatedData: FormType
-  ) => {
-    // event.preventDefault();
-
+  const handleSubmitForm = async (validatedData: FormType) => {
     if (validatedData) {
       if (validatedData.image instanceof File) {
         const fileBase64 = await convertToBase64(validatedData.image);
@@ -40,6 +36,17 @@ export const ControlledForm = () => {
       }
     }
   };
+
+  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    dispatch(handlePasswordValue(value));
+  };
+
+  useEffect(() => {
+    return () => {
+      dispatch(handlePasswordValue(''));
+    };
+  }, [dispatch]);
 
   return (
     <>
@@ -67,10 +74,18 @@ export const ControlledForm = () => {
             <InputError error={errors.email?.message} />
           </label>
 
-          {/* <PasswordInput
-            error={errors.password?.message}
-            {...register('password')}
-          />
+          <label htmlFor="password">
+            Password:
+            <input
+              type="password"
+              id="password"
+              {...register('password')}
+              onChange={(event) => {
+                handlePassword(event);
+              }}
+            />
+            <PasswordStrength error={errors.password?.message} />
+          </label>
 
           <label htmlFor="confirmPassword">
             Confirm Password:
@@ -80,7 +95,7 @@ export const ControlledForm = () => {
               {...register('confirmPassword')}
             />
             <InputError error={errors.confirmPassword?.message} />
-          </label> */}
+          </label>
 
           <label htmlFor="gender">
             Gender:
@@ -117,11 +132,7 @@ export const ControlledForm = () => {
           {/*TODO: add autocomplete */}
           <label htmlFor="country">
             Country:
-            <select
-              id="country"
-              {...register('country')}
-              // autoComplete="country"
-            >
+            <select id="country" {...register('country')}>
               <option value="---">---</option>
               {countriesData.map((country) => (
                 <option key={country} value={country}>

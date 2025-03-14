@@ -20,9 +20,6 @@ export const formSchema = object({
   password: string().required(requiredMessage),
   confirmPassword: string()
     .test('passwords-match', 'Passwords must match', function (value) {
-      // const password = ref('password');
-
-      console.log(value, this.parent.password, this.parent);
       return this.parent.password === value;
     })
     .required(requiredMessage),

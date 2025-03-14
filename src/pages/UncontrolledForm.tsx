@@ -1,14 +1,14 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { formSchema } from '@/shared/formHandlers/validateSchemas';
 import { ValidationError } from 'yup';
 import { InputError } from '@/components/inputError/InputError';
 import { countriesData, genderData } from '@/shared/formHandlers/formsData';
 import { useAppDispatch } from '@/shared/store/store';
-import { addForm } from '@/shared/store/createFormsSlice';
+import { addForm, handlePasswordValue } from '@/shared/store/createFormsSlice';
 import { convertToBase64 } from '@/shared/formHandlers/convertToBase64';
 import formStyles from './styles/form.module.css';
-import { PasswordInput } from '@/components/passwordInput/PasswordInput';
+import { PasswordStrength } from '@/components/passwordInput/passwordStrength';
 
 export const UncontrolledForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -59,6 +59,17 @@ export const UncontrolledForm = () => {
     }
   };
 
+  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    dispatch(handlePasswordValue(value));
+  };
+
+  useEffect(() => {
+    return () => {
+      dispatch(handlePasswordValue(''));
+    };
+  }, [dispatch]);
+
   return (
     <>
       <form className={formStyles.form} onSubmit={handleSubmit}>
@@ -82,7 +93,18 @@ export const UncontrolledForm = () => {
             <InputError error={errors.email} />
           </label>
 
-          <PasswordInput error={errors.password} />
+          <label htmlFor="password">
+            Password:
+            <input
+              type="password"
+              id="password"
+              name="password"
+              onChange={(event) => {
+                handlePassword(event);
+              }}
+            />
+            <PasswordStrength error={errors.password} />
+          </label>
 
           <label htmlFor="confirmPassword">
             Confirm Password:

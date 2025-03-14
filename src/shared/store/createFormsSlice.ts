@@ -5,12 +5,16 @@ export const createFormListSlice = createSlice({
   name: 'forms',
   initialState: {
     form: Array<FormType>(),
+    password: '',
   },
   reducers: {
     addForm: (state, action) => {
       state.form.push(action.payload);
     },
+    handlePasswordValue: (state, action) => {
+      state.password = action.payload;
+    },
   },
 });
 
-export const { addForm } = createFormListSlice.actions;
+export const { addForm, handlePasswordValue } = createFormListSlice.actions;
