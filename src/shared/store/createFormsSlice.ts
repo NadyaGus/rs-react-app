@@ -1,5 +1,5 @@
 import { InferType } from 'yup';
-import { formSchema } from '../formHandlers/validate';
+import { formSchema } from '../formHandlers/validateSchemas';
 import { createSlice } from '@reduxjs/toolkit';
 
 type FormItem = InferType<typeof formSchema>;

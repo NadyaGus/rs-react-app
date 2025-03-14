@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router';
-import { formSchema } from '@/shared/formHandlers/validate';
+import { formSchema } from '@/shared/formHandlers/validateSchemas';
 import { ValidationError } from 'yup';
 import { InputError } from '@/components/inputError/InputError';
 import { countriesData, genderData } from '@/shared/formHandlers/formsData';
@@ -8,6 +8,7 @@ import { useAppDispatch } from '@/shared/store/store';
 import { addForm } from '@/shared/store/createFormsSlice';
 import { convertToBase64 } from '@/shared/formHandlers/convertToBase64';
 import formStyles from './styles/form.module.css';
+import { PasswordInput } from '@/components/passwordInput/PasswordInput';
 
 export const UncontrolledForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -54,6 +55,7 @@ export const UncontrolledForm = () => {
             image: fileBase64,
           })
         );
+        console.log({ ...validatedData, image: fileBase64 });
       }
     }
   };
@@ -81,11 +83,7 @@ export const UncontrolledForm = () => {
             <InputError error={errors.email} />
           </label>
 
-          <label htmlFor="password">
-            Password:
-            <input type="password" id="password" name="password" />
-            <InputError error={errors.password} />
-          </label>
+          <PasswordInput error={errors.password} />
 
           <label htmlFor="confirmPassword">
             Confirm Password:
@@ -124,6 +122,7 @@ export const UncontrolledForm = () => {
             <InputError error={errors.image} />
           </label>
 
+          {/*TODO: add autocomplete */}
           <label htmlFor="country">
             Country:
             <select id="country" name="country" autoComplete="country">
@@ -137,6 +136,7 @@ export const UncontrolledForm = () => {
             <InputError error={errors.country} />
           </label>
 
+          {/* TODO: add disabled for button by TR*/}
           <button type="submit">Submit</button>
         </fieldset>
       </form>
