@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { formSchema } from '@/shared/formHandlers/validateSchemas';
 import { ValidationError } from 'yup';
 import { InputError } from '@/components/inputError/InputError';
@@ -8,12 +8,13 @@ import { useAppDispatch } from '@/shared/store/store';
 import { addForm, handlePasswordValue } from '@/shared/store/createFormsSlice';
 import { convertToBase64 } from '@/shared/formHandlers/convertToBase64';
 import formStyles from './styles/form.module.css';
-import { PasswordStrength } from '@/components/passwordInput/passwordStrength';
+import { PasswordStrength } from '@/components/passwordStrength/PasswordStrength';
 
 export const UncontrolledForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const dispatch = useAppDispatch();
   const terms = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const validateForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,6 +56,7 @@ export const UncontrolledForm = () => {
             image: fileBase64,
           })
         );
+        navigate('/');
       }
     }
   };

@@ -1,7 +1,7 @@
 import { formSchema } from '@/shared/formHandlers/validateSchemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import formStyles from './styles/form.module.css';
 import { InputError } from '@/components/inputError/InputError';
 import { countriesData, genderData } from '@/shared/formHandlers/formsData';
@@ -9,11 +9,13 @@ import { FormType } from '@/shared/types/form';
 import { convertToBase64 } from '@/shared/formHandlers/convertToBase64';
 import { useAppDispatch } from '@/shared/store/store';
 import { addForm, handlePasswordValue } from '@/shared/store/createFormsSlice';
-import { PasswordStrength } from '@/components/passwordInput/passwordStrength';
 import { useEffect } from 'react';
+import { PasswordStrength } from '@/components/passwordStrength/PasswordStrength';
 
 export const ControlledForm = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -25,14 +27,15 @@ export const ControlledForm = () => {
 
   const handleSubmitForm = async (validatedData: FormType) => {
     if (validatedData) {
-      if (validatedData.image instanceof File) {
-        const fileBase64 = await convertToBase64(validatedData.image);
+      if (validatedData.image instanceof FileList) {
+        const fileBase64 = await convertToBase64(validatedData.image[0]);
         dispatch(
           addForm({
             ...validatedData,
             image: fileBase64,
           })
         );
+        navigate('/');
       }
     }
   };
