@@ -55,7 +55,6 @@ export const UncontrolledForm = () => {
             image: fileBase64,
           })
         );
-        console.log({ ...validatedData, image: fileBase64 });
       }
     }
   };

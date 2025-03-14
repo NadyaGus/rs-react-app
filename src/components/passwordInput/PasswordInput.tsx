@@ -16,6 +16,7 @@ export const PasswordInput = ({ error }: PasswordInputProps) => {
 
   const checkStrength = () => {
     setFirstTouch(false);
+    console.log('checkStrength', ref.current?.value);
     passwordSchema
       .validate({ password: ref.current?.value }, { abortEarly: false })
       .then(() => {

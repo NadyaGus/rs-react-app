@@ -1,13 +1,10 @@
-import { InferType } from 'yup';
-import { formSchema } from '../formHandlers/validateSchemas';
+import { FormType } from '@/shared/types/form';
 import { createSlice } from '@reduxjs/toolkit';
-
-type FormItem = InferType<typeof formSchema>;
 
 export const createFormListSlice = createSlice({
   name: 'forms',
   initialState: {
-    form: Array<FormItem>(),
+    form: Array<FormType>(),
   },
   reducers: {
     addForm: (state, action) => {
