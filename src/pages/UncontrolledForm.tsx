@@ -26,7 +26,6 @@ export const UncontrolledForm = () => {
     }
 
     const data = Object.fromEntries(formData);
-    console.log(data);
     try {
       const validatedData = await formSchema.validate(data, {
         abortEarly: false,
@@ -143,14 +142,12 @@ export const UncontrolledForm = () => {
 
           <label htmlFor="image">
             Image:
-            <input type="file" id="image" name="image" />
+            <input type="file" id="image" name="image" accept="image/*" />
             <InputError error={errors.image} />
           </label>
 
-          {/*TODO: add autocomplete */}
           <InputCountryDatalist error={errors.country} />
 
-          {/* TODO: add disabled for button by TR*/}
           <button type="submit">Submit</button>
         </fieldset>
       </form>

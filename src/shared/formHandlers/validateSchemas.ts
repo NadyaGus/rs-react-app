@@ -10,8 +10,8 @@ const requiredMessage = 'This field is required';
 
 export const formSchema = object({
   name: string()
-    .matches(/^[A-Z]/, 'Name must start with a capital letter')
     .matches(/^[A-Za-z\s]+$/, 'Name must contain only latin letters and spaces')
+    .matches(/^[A-Z]/, 'Name must start with a capital letter')
     .required(requiredMessage),
   age: number()
     .typeError('Age must be a number')

@@ -21,6 +21,7 @@ export const ControlledForm = () => {
     handleSubmit,
     register,
     formState: { errors },
+    trigger,
   } = useForm<FormType>({
     mode: 'onChange',
     resolver: yupResolver(formSchema, { abortEarly: false, recursive: true }),
@@ -41,9 +42,12 @@ export const ControlledForm = () => {
     }
   };
 
-  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
+  const handlePassword = (event: React.FormEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget;
     dispatch(handlePasswordValue(value));
+    setTimeout(() => {
+      trigger(['password', 'confirmPassword']);
+    }, 0);
   };
 
   useEffect(() => {
@@ -84,12 +88,12 @@ export const ControlledForm = () => {
             <input
               type="password"
               id="password"
-              {...register('password')}
-              onChange={(event) => {
+              onInput={(event) => {
                 handlePassword(event);
               }}
+              {...register('password')}
             />
-            <PasswordStrength />
+            <PasswordStrength error={errors.password?.message} />
           </label>
 
           <label htmlFor="confirmPassword">
@@ -134,14 +138,14 @@ export const ControlledForm = () => {
             <InputError error={errors.image?.message} />
           </label>
 
-          {/*TODO: add autocomplete */}
           <InputCountryDatalist
             error={errors.country?.message}
             {...register('country')}
           />
 
-          {/* TODO: add disabled for button by TR*/}
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={Object.keys(errors).length > 0}>
+            Submit
+          </button>
         </fieldset>
       </form>
       <Link className={formStyles.link} to="/">

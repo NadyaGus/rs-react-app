@@ -44,6 +44,10 @@ export const PasswordStrength = ({ error }: { error?: string }) => {
     checkStrength(password);
   }, [password, checkStrength]);
 
+  if (error) {
+    return <InputError error={error} />;
+  }
+
   return (
     <>
       <div
@@ -63,7 +67,6 @@ export const PasswordStrength = ({ error }: { error?: string }) => {
       <div className={styles.passwordText}>
         {isEmpty ? '' : errors?.password[0] || 'Password is strong'}
       </div>
-      <InputError error={error} />
     </>
   );
 };
