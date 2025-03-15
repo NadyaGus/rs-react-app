@@ -8,9 +8,9 @@ export const Home = () => {
 
   return (
     <>
-      <h1>Home</h1>
+      <h1>Home Page</h1>
       <nav>
-        <ul>
+        <ul className={styles.list}>
           <li>
             <Link to="/uncontrolled-form">Uncontrolled Form</Link>
           </li>

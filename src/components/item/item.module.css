@@ -6,6 +6,11 @@
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
+  text-align: start;
+
+  &:last-child {
+    border: 1px solid red;
+  }
 
   & .imageContainer {
     display: flex;

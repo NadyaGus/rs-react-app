@@ -164,7 +164,9 @@ export const UncontrolledForm = () => {
         </fieldset>
       </form>
 
-      <Link to="/">Go Home</Link>
+      <Link className={formStyles.link} to="/">
+        Go Home
+      </Link>
     </>
   );
 };

@@ -150,7 +150,9 @@ export const ControlledForm = () => {
           <button type="submit">Submit</button>
         </fieldset>
       </form>
-      <Link to="/">Go Home</Link>
+      <Link className={formStyles.link} to="/">
+        Go Home
+      </Link>
     </>
   );
 };
