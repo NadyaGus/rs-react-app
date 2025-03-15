@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { createFormListSlice } from './createFormsSlice';
+import { createCountrySlice } from './createCountrySlice';
 
 export const store = configureStore({
   reducer: {
     forms: createFormListSlice.reducer,
+    country: createCountrySlice.reducer,
   },
 });
 

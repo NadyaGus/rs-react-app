@@ -3,12 +3,13 @@ import { Link, useNavigate } from 'react-router';
 import { formSchema } from '@/shared/formHandlers/validateSchemas';
 import { ValidationError } from 'yup';
 import { InputError } from '@/components/inputError/InputError';
-import { countriesData, genderData } from '@/shared/formHandlers/formsData';
+import { genderData } from '@/shared/formHandlers/formsData';
 import { useAppDispatch } from '@/shared/store/store';
 import { addForm, handlePasswordValue } from '@/shared/store/createFormsSlice';
 import { convertToBase64 } from '@/shared/formHandlers/convertToBase64';
 import formStyles from './styles/form.module.css';
 import { PasswordStrength } from '@/components/passwordStrength/PasswordStrength';
+import { InputCountryDatalist } from '@/components/inputCountryDatalist/inputCountryDatalist';
 
 export const UncontrolledForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -25,6 +26,7 @@ export const UncontrolledForm = () => {
     }
 
     const data = Object.fromEntries(formData);
+    console.log(data);
     try {
       const validatedData = await formSchema.validate(data, {
         abortEarly: false,
@@ -146,18 +148,7 @@ export const UncontrolledForm = () => {
           </label>
 
           {/*TODO: add autocomplete */}
-          <label htmlFor="country">
-            Country:
-            <select id="country" name="country" autoComplete="country">
-              <option value="---">---</option>
-              {countriesData.map((country) => (
-                <option key={country} value={country}>
-                  {country}
-                </option>
-              ))}
-            </select>
-            <InputError error={errors.country} />
-          </label>
+          <InputCountryDatalist error={errors.country} />
 
           {/* TODO: add disabled for button by TR*/}
           <button type="submit">Submit</button>

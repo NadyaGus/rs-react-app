@@ -4,13 +4,14 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
 import formStyles from './styles/form.module.css';
 import { InputError } from '@/components/inputError/InputError';
-import { countriesData, genderData } from '@/shared/formHandlers/formsData';
+import { genderData } from '@/shared/formHandlers/formsData';
 import { FormType } from '@/shared/types/form';
 import { convertToBase64 } from '@/shared/formHandlers/convertToBase64';
 import { useAppDispatch } from '@/shared/store/store';
 import { addForm, handlePasswordValue } from '@/shared/store/createFormsSlice';
 import { useEffect } from 'react';
 import { PasswordStrength } from '@/components/passwordStrength/PasswordStrength';
+import { InputCountryDatalist } from '@/components/inputCountryDatalist/inputCountryDatalist';
 
 export const ControlledForm = () => {
   const dispatch = useAppDispatch();
@@ -54,6 +55,7 @@ export const ControlledForm = () => {
   return (
     <>
       <form
+        autoComplete="on"
         className={formStyles.form}
         onSubmit={handleSubmit((data) => handleSubmitForm(data))}
       >
@@ -87,7 +89,7 @@ export const ControlledForm = () => {
                 handlePassword(event);
               }}
             />
-            <PasswordStrength error={errors.password?.message} />
+            <PasswordStrength />
           </label>
 
           <label htmlFor="confirmPassword">
@@ -133,18 +135,10 @@ export const ControlledForm = () => {
           </label>
 
           {/*TODO: add autocomplete */}
-          <label htmlFor="country">
-            Country:
-            <select id="country" {...register('country')}>
-              <option value="---">---</option>
-              {countriesData.map((country) => (
-                <option key={country} value={country}>
-                  {country}
-                </option>
-              ))}
-            </select>
-            <InputError error={errors.country?.message} />
-          </label>
+          <InputCountryDatalist
+            error={errors.country?.message}
+            {...register('country')}
+          />
 
           {/* TODO: add disabled for button by TR*/}
           <button type="submit">Submit</button>
