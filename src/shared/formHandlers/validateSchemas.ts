@@ -16,7 +16,14 @@ export const formSchema = object({
   age: number()
     .typeError('Age must be a number')
     .positive('Age must be a positive number'),
-  email: string().email('Invalid email').required(requiredMessage),
+  email: string()
+    .email('Invalid email')
+    .test('email', 'Invalid email', (value) => {
+      if (!value) return false;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return emailRegex.test(value);
+    })
+    .required(requiredMessage),
   password: string().required(requiredMessage),
   confirmPassword: string()
     .test('passwords-match', 'Passwords must match', function (value) {

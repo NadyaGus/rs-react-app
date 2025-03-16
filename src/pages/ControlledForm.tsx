@@ -1,7 +1,7 @@
 import { formSchema } from '@/shared/formHandlers/validateSchemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import formStyles from './styles/form.module.css';
 import { InputError } from '@/components/inputError/InputError';
 import { genderData } from '@/shared/formHandlers/formsData';
@@ -148,9 +148,6 @@ export const ControlledForm = () => {
           </button>
         </fieldset>
       </form>
-      <Link className={formStyles.link} to="/">
-        Go Home
-      </Link>
     </>
   );
 };

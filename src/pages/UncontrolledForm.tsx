@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { formSchema } from '@/shared/formHandlers/validateSchemas';
 import { ValidationError } from 'yup';
 import { InputError } from '@/components/inputError/InputError';
@@ -151,10 +151,6 @@ export const UncontrolledForm = () => {
           <button type="submit">Submit</button>
         </fieldset>
       </form>
-
-      <Link className={formStyles.link} to="/">
-        Go Home
-      </Link>
     </>
   );
 };

@@ -12,9 +12,11 @@ export const Item = (form: FormType) => {
   return (
     <li className={styles.item}>
       <p>Name: {form.name}</p>
+      <p>Age: {form.age}</p>
       <p>Email: {form.email}</p>
       <p>Password:{form.password}</p>
       <p>Gender: {form.gender}</p>
+      <p>Terms: {form.terms ? 'Accepted' : 'Not accepted'}</p>
       <p>Country: {form.country}</p>
       {protectedImage && (
         <div className={styles.imageContainer}>
