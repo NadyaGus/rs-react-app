@@ -73,7 +73,7 @@ export const ControlledForm = () => {
 
           <label htmlFor="age">
             Age:
-            <input type="number" id="age" {...register('age')} />
+            <input type="text" id="age" {...register('age')} />
             <InputError error={errors.age?.message} />
           </label>
 

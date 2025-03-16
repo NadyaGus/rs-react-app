@@ -86,7 +86,7 @@ export const UncontrolledForm = () => {
 
           <label htmlFor="age">
             Age:
-            <input type="number" id="age" name="age" />
+            <input type="text" id="age" name="age" />
             <InputError error={errors.age} />
           </label>
 
