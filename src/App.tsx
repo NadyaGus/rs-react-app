@@ -1,0 +1,16 @@
+import { Provider } from 'react-redux';
+import { store } from './shared/store/store';
+import { RouterProvider } from 'react-router';
+import { router } from './shared/router';
+
+function App() {
+  return (
+    <>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </>
+  );
+}
+
+export default App;
