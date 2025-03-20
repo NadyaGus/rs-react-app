@@ -1,25 +1,32 @@
-import { useEffect, useState } from 'react';
-import { CountryData } from '../types/countryData';
+import { useEffect, useReducer } from 'react';
 import { CountryList } from '../components/countryList/CountryList';
+import { FilterByRegion } from '../components/filterByRegion/filterByRegion';
+import { reducer } from '../utils/reducer';
 
 function App() {
-  const [data, setData] = useState<CountryData[]>([]);
+  const [data, dispatch] = useReducer(reducer, {
+    allData: [],
+    filteredData: [],
+  });
 
   useEffect(() => {
-    try {
-      fetch('https://restcountries.com/v3.1/all')
-        .then((response) => response.json())
-        .then((data) => setData(data));
-    } catch (error) {
-      console.error(error);
-      setData([]);
+    async function fetchData() {
+      try {
+        const response = await fetch('https://restcountries.com/v3.1/all');
+        const result = await response.json();
+        dispatch({ type: 'init', payload: result });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     }
-  }, []);
 
+    fetchData();
+  }, []);
   return (
     <>
       <h1>Countries</h1>
-      <CountryList countries={data} />
+      <FilterByRegion dispatch={dispatch} />
+      <CountryList countries={data.filteredData} />
     </>
   );
 }
