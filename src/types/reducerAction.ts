@@ -1,10 +1,8 @@
 import { CountryData } from './countryData';
+import { Regions } from './regions';
 
 export type ReducerAction =
   | { type: 'init'; payload: CountryData[] }
   | { type: 'all' }
-  | { type: 'africa' }
-  | { type: 'americas' }
-  | { type: 'asia' }
-  | { type: 'europe' }
-  | { type: 'oceania' };
+  | { type: 'filter'; payload: Regions }
+  | { type: 'search'; payload: string };

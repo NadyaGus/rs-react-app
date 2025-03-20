@@ -1,10 +1,7 @@
-import { ReducerAction } from '../types/reducerAction';
+import { Regions } from '../types/regions';
 
-export function isReducerActionType(
-  value: string
-): value is ReducerAction['type'] {
-  const actionTypes: ReducerAction['type'][] = [
-    'init',
+export function isRegion(value: string): value is Regions {
+  const actionTypes: Regions[] = [
     'all',
     'africa',
     'americas',
@@ -12,5 +9,5 @@ export function isReducerActionType(
     'europe',
     'oceania',
   ];
-  return actionTypes.includes(value as ReducerAction['type']);
+  return actionTypes.includes(value as Regions);
 }

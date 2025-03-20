@@ -1,6 +1,6 @@
 import { ActionDispatch } from 'react';
 import { ReducerAction } from '../../types/reducerAction';
-import { isReducerActionType } from '../../utils/typeGuards';
+import { isRegion } from '../../utils/typeGuards';
 
 export const FilterByRegion = ({
   dispatch,
@@ -9,9 +9,11 @@ export const FilterByRegion = ({
 }) => {
   const handleClick = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    if (isReducerActionType(value)) {
-      if (value !== 'init') {
-        dispatch({ type: value });
+    if (isRegion(value)) {
+      if (value === 'all') {
+        dispatch({ type: 'all' });
+      } else {
+        dispatch({ type: 'filter', payload: value });
       }
     }
   };
