@@ -3,12 +3,15 @@ import { CountryList } from '../components/countryList/CountryList';
 import { FilterByRegion } from '../components/filterByRegion/filterByRegion';
 import { reducer } from '../utils/reducer';
 import { Search } from '../components/search/search';
+import { SortByPopulation } from '../components/sortByPopulation/sortByPopulation';
 
 function App() {
   const [data, dispatch] = useReducer(reducer, {
     allData: [],
     filteredData: [],
     filter: 'all',
+    sort: 'default',
+    search: '',
   });
 
   useEffect(() => {
@@ -30,6 +33,7 @@ function App() {
       <h1>Countries</h1>
       <FilterByRegion dispatch={dispatch} />
       <Search dispatch={dispatch} />
+      <SortByPopulation dispatch={dispatch} />
       <CountryList countries={data.filteredData} />
     </>
   );
