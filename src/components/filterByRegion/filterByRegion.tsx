@@ -1,6 +1,7 @@
 import { ActionDispatch } from 'react';
 import { ReducerAction } from '../../types/reducerAction';
 import { isRegion } from '../../utils/typeGuards';
+import { regions } from '../../types/regions';
 
 export const FilterByRegion = ({
   dispatch,
@@ -9,6 +10,7 @@ export const FilterByRegion = ({
 }) => {
   const handleClick = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
+
     if (isRegion(value)) {
       if (value === 'all') {
         dispatch({ type: 'all' });
@@ -25,12 +27,11 @@ export const FilterByRegion = ({
       defaultValue="all"
       autoComplete="off"
     >
-      <option value="all">All</option>
-      <option value="africa">Africa</option>
-      <option value="americas">Americas</option>
-      <option value="asia">Asia</option>
-      <option value="europe">Europe</option>
-      <option value="oceania">Oceania</option>
+      {regions.map((region) => (
+        <option key={region} value={region}>
+          {region.charAt(0).toUpperCase() + region.slice(1)}
+        </option>
+      ))}
     </select>
   );
 };

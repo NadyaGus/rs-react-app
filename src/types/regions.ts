@@ -4,4 +4,15 @@ export type Regions =
   | 'americas'
   | 'asia'
   | 'europe'
-  | 'oceania';
+  | 'oceania'
+  | 'antarctic';
+
+export const regions: Regions[] = [
+  'all',
+  'africa',
+  'americas',
+  'antarctic',
+  'asia',
+  'europe',
+  'oceania',
+];
