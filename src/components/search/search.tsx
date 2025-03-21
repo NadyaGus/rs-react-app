@@ -1,4 +1,4 @@
-import { ActionDispatch } from 'react';
+import { ActionDispatch, useCallback } from 'react';
 import { ReducerAction } from '../../types/reducerAction';
 
 export const Search = ({
@@ -6,10 +6,13 @@ export const Search = ({
 }: {
   dispatch: ActionDispatch<[action: ReducerAction]>;
 }) => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    dispatch({ type: 'search', payload: value });
-  };
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value;
+      dispatch({ type: 'search', payload: value });
+    },
+    [dispatch]
+  );
 
   return (
     <input

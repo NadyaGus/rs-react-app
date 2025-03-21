@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import { CountryData } from '../../types/countryData';
 import styles from './countryItem.module.css';
 
-export const CountryItem = ({ data }: { data: CountryData }) => {
+export const CountryItem = memo(({ data }: { data: CountryData }) => {
   return (
     <li className={styles.item}>
       <div className={styles.info}>
@@ -13,4 +14,6 @@ export const CountryItem = ({ data }: { data: CountryData }) => {
       <span className={styles.flag}>{data.flag}</span>
     </li>
   );
-};
+});
+
+CountryItem.displayName = 'CountryItem';

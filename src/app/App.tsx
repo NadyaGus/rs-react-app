@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useMemo } from 'react';
 import { CountryList } from '../components/countryList/CountryList';
 import { FilterByRegion } from '../components/filterByRegion/filterByRegion';
 import { reducer } from '../utils/reducer';
@@ -13,6 +13,10 @@ function App() {
     sort: 'default',
     search: '',
   });
+
+  const filteredCountries = useMemo(() => {
+    return data.filteredData;
+  }, [data.filteredData]);
 
   useEffect(() => {
     async function fetchData() {
@@ -38,7 +42,7 @@ function App() {
         <SortByPopulation dispatch={dispatch} />
       </div>
 
-      <CountryList countries={data.filteredData} />
+      <CountryList countries={filteredCountries} />
     </>
   );
 }

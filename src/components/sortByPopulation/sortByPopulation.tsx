@@ -1,4 +1,4 @@
-import { ActionDispatch } from 'react';
+import { ActionDispatch, useCallback } from 'react';
 import { ReducerAction } from '../../types/reducerAction';
 import { isPopulation } from '../../utils/typeGuards';
 
@@ -7,12 +7,15 @@ export const SortByPopulation = ({
 }: {
   dispatch: ActionDispatch<[action: ReducerAction]>;
 }) => {
-  const handleClick = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
-    if (isPopulation(value)) {
-      dispatch({ type: 'sortByPopulation', payload: value });
-    }
-  };
+  const handleClick = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      const value = event.target.value;
+      if (isPopulation(value)) {
+        dispatch({ type: 'sortByPopulation', payload: value });
+      }
+    },
+    [dispatch]
+  );
 
   return (
     <label className="label" htmlFor="region">

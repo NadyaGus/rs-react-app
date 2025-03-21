@@ -1,4 +1,4 @@
-import { ActionDispatch } from 'react';
+import { ActionDispatch, useCallback } from 'react';
 import { ReducerAction } from '../../types/reducerAction';
 import { isRegion } from '../../utils/typeGuards';
 import { regions } from '../../types/regions';
@@ -8,17 +8,20 @@ export const FilterByRegion = ({
 }: {
   dispatch: ActionDispatch<[action: ReducerAction]>;
 }) => {
-  const handleClick = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
+  const handleClick = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      const value = event.target.value;
 
-    if (isRegion(value)) {
-      if (value === 'all') {
-        dispatch({ type: 'all' });
-      } else {
-        dispatch({ type: 'filter', payload: value });
+      if (isRegion(value)) {
+        if (value === 'all') {
+          dispatch({ type: 'all' });
+        } else {
+          dispatch({ type: 'filter', payload: value });
+        }
       }
-    }
-  };
+    },
+    [dispatch]
+  );
 
   return (
     <label className="label" htmlFor="region">
