@@ -13,8 +13,26 @@
   -moz-osx-font-smoothing: grayscale;
 
   max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  width: 22rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.label {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  text-wrap: nowrap;
 }
 
 a {
@@ -59,6 +77,20 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+input {
+  width: 98%;
+  height: 24px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+select {
+  width: 100%;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
 @media (prefers-color-scheme: light) {

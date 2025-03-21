@@ -21,17 +21,20 @@ export const FilterByRegion = ({
   };
 
   return (
-    <select
-      onChange={handleClick}
-      name="region"
-      defaultValue="all"
-      autoComplete="off"
-    >
-      {regions.map((region) => (
-        <option key={region} value={region}>
-          {region.charAt(0).toUpperCase() + region.slice(1)}
-        </option>
-      ))}
-    </select>
+    <label className="label" htmlFor="region">
+      Region:
+      <select
+        onChange={handleClick}
+        id="region"
+        defaultValue="all"
+        autoComplete="off"
+      >
+        {regions.map((region) => (
+          <option key={region} value={region}>
+            {region.charAt(0).toUpperCase() + region.slice(1)}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 };

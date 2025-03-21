@@ -15,15 +15,18 @@ export const SortByPopulation = ({
   };
 
   return (
-    <select
-      onChange={handleClick}
-      name="region"
-      defaultValue="all"
-      autoComplete="off"
-    >
-      <option value="default">Default</option>
-      <option value="asc">Ascending</option>
-      <option value="desc">Descending</option>
-    </select>
+    <label className="label" htmlFor="region">
+      Population Order:
+      <select
+        onChange={handleClick}
+        id="population"
+        defaultValue="all"
+        autoComplete="off"
+      >
+        <option value="default">Default</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </label>
   );
 };

@@ -31,9 +31,13 @@ function App() {
   return (
     <>
       <h1>Countries</h1>
-      <FilterByRegion dispatch={dispatch} />
-      <Search dispatch={dispatch} />
-      <SortByPopulation dispatch={dispatch} />
+
+      <div className="filters">
+        <FilterByRegion dispatch={dispatch} />
+        <Search dispatch={dispatch} />
+        <SortByPopulation dispatch={dispatch} />
+      </div>
+
       <CountryList countries={data.filteredData} />
     </>
   );
