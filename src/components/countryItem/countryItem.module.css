@@ -23,6 +23,12 @@
   gap: 1rem;
 }
 
+.visited {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .flag {
   font-size: 5rem;
 }
