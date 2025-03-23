@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/store';
 import { CountryData } from '../../types/countryData';
 import { toggleVisited } from '../../utils/visitedSlice';
+import styles from './checkbox.module.css';
 
 export const Checkbox = memo(({ country }: { country: CountryData }) => {
   const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ export const Checkbox = memo(({ country }: { country: CountryData }) => {
   };
 
   return (
-    <label htmlFor="visited">
+    <label className={styles.label} htmlFor="visited">
       Visited:
       <input
         type="checkbox"
