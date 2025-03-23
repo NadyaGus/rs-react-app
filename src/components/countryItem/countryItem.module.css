@@ -24,9 +24,7 @@
 }
 
 .visited {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  background-color: rgba(144, 238, 144, 0.162);
 }
 
 .flag {

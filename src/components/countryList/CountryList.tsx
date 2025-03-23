@@ -15,7 +15,7 @@ export const CountryList = memo(({ countries }: CountryListProps) => {
   return (
     <ul className={styles.list}>
       {countries.map((country) => (
-        <CountryItem data={country} key={country.cca3} />
+        <CountryItem country={country} key={country.cca3} />
       ))}
     </ul>
   );
